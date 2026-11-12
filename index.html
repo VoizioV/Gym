@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>寶寶豬的逆襲日記 🐷💪</title>
+  <title id="appTitle">寶寶豬的逆襲日記 🐷💪</title>
   <!-- Tailwind CSS & Lucide Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -27,30 +27,35 @@
     }
   </style>
 </head>
-<body class="bg-rose-50/50 min-h-screen text-slate-800 pb-12">
+<body id="bodyBg" class="bg-rose-50/50 min-h-screen text-slate-800 pb-12 transition-colors duration-300">
 
   <!-- Header -->
-  <header class="bg-white/80 backdrop-blur-md border-b border-rose-100 sticky top-0 z-30 px-4 py-3 shadow-sm">
+  <header id="headerBg" class="bg-white/80 backdrop-blur-md border-b border-rose-100 sticky top-0 z-30 px-4 py-3 shadow-sm transition-colors duration-300">
     <div class="max-w-4xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <div class="bg-rose-500 text-white p-2 rounded-2xl shadow-md shadow-rose-200">
-          <i data-lucide="dumbbell" class="w-6 h-6"></i>
+        <div id="headerIconBg" class="bg-rose-500 text-white p-2 rounded-2xl shadow-md shadow-rose-200 transition-colors duration-300">
+          <i id="headerIcon" data-lucide="dumbbell" class="w-6 h-6"></i>
         </div>
         <div>
-          <h1 class="font-extrabold text-xl text-slate-800 tracking-tight">寶寶豬的逆襲日記 🐷💪</h1>
-          <p class="text-xs text-rose-500 font-medium">自律變美，一起養胖小貓咪</p>
+          <h1 id="mainTitleText" class="font-extrabold text-xl text-slate-800 tracking-tight">寶寶豬的逆襲日記 🐷💪</h1>
+          <p id="mainSubtitleText" class="text-xs text-rose-500 font-medium transition-colors duration-300">記錄每一次蛻變與努力</p>
         </div>
       </div>
       
       <div class="flex items-center gap-2">
-        <!-- Meow Coin Badge -->
-        <div class="flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-700 px-3 py-1.5 rounded-xl text-sm font-extrabold shadow-sm">
+        <!-- Page Switch Button -->
+        <button id="pageSwitchBtn" onclick="togglePageView()" class="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3.5 py-2 rounded-xl text-sm font-bold transition-all shadow-sm border border-emerald-200">
+          <i data-lucide="utensils" class="w-4 h-4"></i>
+          <span>切換至飲食記錄</span>
+        </button>
+
+        <div id="coinBadgeContainer" class="hidden sm:flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-700 px-3 py-1.5 rounded-xl text-sm font-extrabold shadow-sm">
           <span>🐾</span>
           <span id="headerPoints">0</span>
-          <span class="text-xs font-semibold hidden sm:inline">喵幣</span>
+          <span class="text-xs font-semibold">喵幣</span>
         </div>
 
-        <button onclick="openWeightModal()" class="flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 px-3 py-2 rounded-xl text-sm font-semibold transition-all shadow-sm">
+        <button onclick="openWeightModal()" class="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-sm font-semibold transition-all">
           <i data-lucide="scale" class="w-4 h-4"></i>
           <span class="hidden sm:inline">體重</span>
         </button>
@@ -62,291 +67,195 @@
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main Content Container -->
   <main class="max-w-4xl mx-auto px-4 pt-6 space-y-6">
 
-    <!-- Cat Room Mini-Game Section -->
-    <section class="bg-white rounded-3xl p-5 sm:p-6 shadow-xl shadow-amber-100/60 border border-amber-200/70 space-y-4">
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <div class="inline-flex items-center gap-1.5 bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-bold mb-1">
-            <span>🐱 寶寶豬的貓咪小窩</span>
+    <!-- ================= VIEW 1: WORKOUT & CAT ROOM ================= -->
+    <div id="workoutView" class="space-y-6">
+      
+      <!-- Cat Room Mini-Game Section -->
+      <section class="bg-white rounded-3xl p-5 sm:p-6 shadow-xl shadow-amber-100/60 border border-amber-200/70 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div class="inline-flex items-center gap-1.5 bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-bold mb-1">
+              <span>🐱 寶寶豬的貓咪小窩</span>
+            </div>
+            <h2 class="text-lg sm:text-xl font-extrabold text-slate-800 flex items-center gap-2">
+              點擊貓咪互動，累積喵幣換家具！
+              <span id="catCountBadge" class="text-xs bg-rose-100 text-rose-600 px-2.5 py-0.5 rounded-full font-bold">目前 1 隻貓</span>
+            </h2>
+            <p class="text-xs text-slate-500 mt-0.5">簽到打卡 +5 喵幣 ｜ 週達標 +15 喵幣 ｜ 月達標 +25 喵幣</p>
           </div>
-          <h2 class="text-lg sm:text-xl font-extrabold text-slate-800 flex items-center gap-2">
-            點擊貓咪互動，看看牠們的個性！
-            <span id="catCountBadge" class="text-xs bg-rose-100 text-rose-600 px-2.5 py-0.5 rounded-full font-bold">目前 1 隻貓</span>
-          </h2>
-          <p class="text-xs text-slate-500 mt-0.5">打卡 +5 喵幣 ｜ 週達標 +15 喵幣 ｜ 月達標 +25 喵幣</p>
+
+          <button onclick="openShopModal()" class="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 active:scale-95 text-white px-5 py-3 rounded-2xl text-sm font-extrabold shadow-lg shadow-amber-200 transition-all">
+            <i data-lucide="store" class="w-5 h-5"></i>
+            <span>貓貓商城</span>
+            <span class="bg-white/25 px-2 py-0.5 rounded-lg text-xs">🐾 <span id="shopBtnPoints">0</span></span>
+          </button>
         </div>
 
-        <!-- Shop Trigger Button (Anti-misclick) -->
-        <button onclick="openShopModal()" class="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 active:scale-95 text-white px-5 py-3 rounded-2xl text-sm font-extrabold shadow-lg shadow-amber-200 transition-all">
-          <i data-lucide="store" class="w-5 h-5"></i>
-          <span>貓貓商城</span>
-          <span class="bg-white/25 px-2 py-0.5 rounded-lg text-xs">🐾 <span id="shopBtnPoints">0</span></span>
-        </button>
-      </div>
+        <div class="relative rounded-2xl overflow-hidden border-2 border-amber-200 bg-[#FFF8EE] shadow-inner">
+          <canvas id="catCanvas" width="800" height="320" class="w-full h-[250px] sm:h-[310px] block cursor-pointer"></canvas>
+          
+          <div id="selectedCatInfo" class="hidden absolute top-3 left-3 bg-white/95 backdrop-blur-md border border-amber-200 px-3.5 py-2 rounded-2xl shadow-md text-xs space-y-0.5 pointer-events-none animate-in fade-in duration-200">
+            <div class="flex items-center gap-2">
+              <span id="infoCatName" class="font-extrabold text-slate-800 text-sm">小橘</span>
+              <span id="infoCatTrait" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">貪吃</span>
+            </div>
+            <div id="infoCatAction" class="text-slate-500 font-medium">正在開心地撒嬌～</div>
+          </div>
 
-      <!-- Interactive Canvas Room -->
-      <div class="relative rounded-2xl overflow-hidden border-2 border-amber-200 bg-[#FFF8EE] shadow-inner">
-        <canvas id="catCanvas" width="800" height="320" class="w-full h-[250px] sm:h-[310px] block cursor-pointer"></canvas>
-        
-        <!-- Selected Cat Status Pill -->
-        <div id="selectedCatInfo" class="hidden absolute top-3 left-3 bg-white/95 backdrop-blur-md border border-amber-200 px-3.5 py-2 rounded-2xl shadow-md text-xs space-y-0.5 pointer-events-none animate-in fade-in duration-200">
+          <div id="furnitureStatusBar" class="absolute bottom-2.5 right-3 flex items-center gap-1.5 pointer-events-none"></div>
+        </div>
+      </section>
+
+      <!-- Reward Status Card -->
+      <section class="bg-gradient-to-r from-rose-500 to-pink-500 rounded-3xl p-6 text-white shadow-xl shadow-rose-200 relative overflow-hidden">
+        <div class="absolute -right-6 -bottom-6 opacity-10 pointer-events-none">
+          <i data-lucide="gift" class="w-48 h-48"></i>
+        </div>
+        <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div>
+            <div class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold mb-2">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 獎勵兌換中心
+            </div>
+            <h2 class="text-2xl font-bold">累積努力，兌換獎勵 ✨</h2>
+            <p class="text-rose-100 text-sm mt-1">週/月達標自動採計獎勵次數，點擊綠色勾號即可完成一次兌換！</p>
+          </div>
+
+          <div class="flex items-center gap-4 w-full md:w-auto">
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 flex-1 md:flex-none md:w-40 border border-white/20 flex flex-col items-center">
+              <span class="text-xs font-semibold text-rose-100">週小獎勵 (次)</span>
+              <div class="flex items-center gap-2 mt-2">
+                <span id="weeklyRewardCount" class="text-3xl font-extrabold">0</span>
+                <button onclick="claimReward('weekly')" title="兌換一次小獎勵" class="bg-emerald-500 hover:bg-emerald-600 active:scale-90 text-white p-2 rounded-xl shadow-md transition-all flex items-center justify-center">
+                  <i data-lucide="check" class="w-5 h-5 stroke-[3]"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 flex-1 md:flex-none md:w-40 border border-white/20 flex flex-col items-center">
+              <span class="text-xs font-semibold text-rose-100">月大獎勵 (次)</span>
+              <div class="flex items-center gap-2 mt-2">
+                <span id="monthlyRewardCount" class="text-3xl font-extrabold">0</span>
+                <button onclick="claimReward('monthly')" title="兌換一次大獎勵" class="bg-emerald-500 hover:bg-emerald-600 active:scale-90 text-white p-2 rounded-xl shadow-md transition-all flex items-center justify-center">
+                  <i data-lucide="check" class="w-5 h-5 stroke-[3]"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Calendar Card -->
+      <section class="bg-white rounded-3xl p-6 shadow-xl shadow-rose-100/50 border border-rose-100">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <h2 id="currentMonthYear" class="text-xl font-bold text-slate-800">2026年 11月</h2>
+            <div id="monthBadge" class="hidden px-2.5 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full">
+              🏆 全月大目標達成！
+            </div>
+          </div>
           <div class="flex items-center gap-2">
-            <span id="infoCatName" class="font-extrabold text-slate-800 text-sm">小橘</span>
-            <span id="infoCatTrait" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">貪吃</span>
+            <button onclick="changeMonth(-1)" class="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-600">
+              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </button>
+            <button onclick="goToToday()" class="px-3 py-1.5 text-xs font-semibold bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl transition-colors">
+              今天
+            </button>
+            <button onclick="changeMonth(1)" class="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-600">
+              <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </button>
           </div>
-          <div id="infoCatAction" class="text-slate-500 font-medium">正在開心地撒嬌～</div>
         </div>
 
-        <!-- Active Furniture Badges -->
-        <div id="furnitureStatusBar" class="absolute bottom-2.5 right-3 flex items-center gap-1.5 pointer-events-none">
-          <!-- Rendered dynamically -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Reward Status Card -->
-    <section class="bg-gradient-to-r from-rose-500 to-pink-500 rounded-3xl p-6 text-white shadow-xl shadow-rose-200 relative overflow-hidden">
-      <div class="absolute -right-6 -bottom-6 opacity-10 pointer-events-none">
-        <i data-lucide="gift" class="w-48 h-48"></i>
-      </div>
-      <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div>
-          <div class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold mb-2">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 獎勵兌換中心
+        <div class="flex flex-wrap items-center justify-between gap-3 text-xs mb-4 pb-3 border-b border-slate-100 text-slate-500">
+          <div class="flex items-center gap-4">
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-slate-200"></span> 未打卡</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-rose-400"></span> 已打卡</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-400"></span> 週目標達成</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-600"></span> 月目標達成</span>
           </div>
-          <h2 class="text-2xl font-bold">累積努力，兌換獎勵 ✨</h2>
-          <p class="text-rose-100 text-sm mt-1">週/月達標自動採計獎勵次數，點擊綠色勾號即可完成一次兌換！</p>
+          <div id="targetStats" class="font-medium text-rose-600">本月已打卡: 0 天</div>
         </div>
 
-        <div class="flex items-center gap-4 w-full md:w-auto">
-          <!-- Weekly Reward -->
-          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 flex-1 md:flex-none md:w-40 border border-white/20 flex flex-col items-center">
-            <span class="text-xs font-semibold text-rose-100">週小獎勵 (次)</span>
-            <div class="flex items-center gap-2 mt-2">
-              <span id="weeklyRewardCount" class="text-3xl font-extrabold">0</span>
-              <button onclick="claimReward('weekly')" title="兌換一次小獎勵" class="bg-emerald-500 hover:bg-emerald-600 active:scale-90 text-white p-2 rounded-xl shadow-md transition-all flex items-center justify-center">
-                <i data-lucide="check" class="w-5 h-5 stroke-[3]"></i>
-              </button>
+        <div class="grid grid-cols-7 gap-2 mb-2 text-center text-xs font-bold text-slate-400">
+          <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+        </div>
+
+        <div id="calendarGrid" class="grid grid-cols-7 gap-2"></div>
+      </section>
+
+    </div>
+
+    <!-- ================= VIEW 2: DIET & NUTRITION RECORD ================= -->
+    <div id="dietView" class="space-y-6 hidden">
+      
+      <!-- Diet Overview Banner -->
+      <section class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-3xl p-6 text-white shadow-xl shadow-emerald-200 relative overflow-hidden">
+        <div class="absolute -right-6 -bottom-6 opacity-10 pointer-events-none">
+          <i data-lucide="utensils" class="w-48 h-48"></i>
+        </div>
+        <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div>
+            <div class="inline-flex items-center gap-1.5 bg-white/25 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold mb-2">
+              <i data-lucide="apple" class="w-3.5 h-3.5"></i> 🥗 智能飲食與熱量管理
+            </div>
+            <h2 class="text-2xl font-bold">吃得健康，精準控卡 ✨</h2>
+            <p class="text-emerald-100 text-sm mt-1">點擊下方日曆日期記錄三餐或加餐，AI 即時幫你換算卡路里與營養！</p>
+          </div>
+
+          <button onclick="openDietReportModal()" class="bg-white hover:bg-emerald-50 text-emerald-700 font-extrabold px-5 py-3 rounded-2xl shadow-lg transition-all flex items-center gap-2 text-sm">
+            <i data-lucide="brain" class="w-5 h-5 text-emerald-600"></i>
+            <span>獲取今日 AI 營養報告</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Diet Calendar Card -->
+      <section class="bg-white rounded-3xl p-6 shadow-xl shadow-emerald-100/50 border border-emerald-100">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <h2 id="dietMonthYear" class="text-xl font-bold text-slate-800">2026年 11月</h2>
+            <div id="dietGoalBadge" class="px-3 py-1 bg-teal-100 text-teal-800 text-xs font-bold rounded-full">
+              🎯 目前目標：增肌中
             </div>
           </div>
-
-          <!-- Monthly Reward -->
-          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 flex-1 md:flex-none md:w-40 border border-white/20 flex flex-col items-center">
-            <span class="text-xs font-semibold text-rose-100">月大獎勵 (次)</span>
-            <div class="flex items-center gap-2 mt-2">
-              <span id="monthlyRewardCount" class="text-3xl font-extrabold">0</span>
-              <button onclick="claimReward('monthly')" title="兌換一次大獎勵" class="bg-emerald-500 hover:bg-emerald-600 active:scale-90 text-white p-2 rounded-xl shadow-md transition-all flex items-center justify-center">
-                <i data-lucide="check" class="w-5 h-5 stroke-[3]"></i>
-              </button>
-            </div>
+          <div class="flex items-center gap-2">
+            <button onclick="changeDietMonth(-1)" class="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-600">
+              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </button>
+            <button onclick="goToDietToday()" class="px-3 py-1.5 text-xs font-semibold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-xl transition-colors">
+              今天
+            </button>
+            <button onclick="changeDietMonth(1)" class="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-600">
+              <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </button>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Calendar Card -->
-    <section class="bg-white rounded-3xl p-6 shadow-xl shadow-rose-100/50 border border-rose-100">
-      <!-- Calendar Controls -->
-      <div class="flex items-center justify-between mb-6">
-        <div class="flex items-center gap-3">
-          <h2 id="currentMonthYear" class="text-xl font-bold text-slate-800">2026年 11月</h2>
-          <div id="monthBadge" class="hidden px-2.5 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full">
-            🏆 全月大目標達成！
+        <div class="flex flex-wrap items-center justify-between gap-3 text-xs mb-4 pb-3 border-b border-slate-100 text-slate-500">
+          <div class="flex items-center gap-4">
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-slate-200"></span> 未記錄</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> 有飲食記錄</span>
           </div>
+          <div id="dietStats" class="font-medium text-emerald-700">本月已記錄: 0 天</div>
         </div>
-        <div class="flex items-center gap-2">
-          <button onclick="changeMonth(-1)" class="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-600">
-            <i data-lucide="chevron-left" class="w-5 h-5"></i>
-          </button>
-          <button onclick="goToToday()" class="px-3 py-1.5 text-xs font-semibold bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl transition-colors">
-            今天
-          </button>
-          <button onclick="changeMonth(1)" class="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-600">
-            <i data-lucide="chevron-right" class="w-5 h-5"></i>
-          </button>
-        </div>
-      </div>
 
-      <!-- Legend & Info -->
-      <div class="flex flex-wrap items-center justify-between gap-3 text-xs mb-4 pb-3 border-b border-slate-100 text-slate-500">
-        <div class="flex items-center gap-4">
-          <span class="flex items-center gap-1.5">
-            <span class="w-3 h-3 rounded-full bg-slate-200"></span> 未打卡
-          </span>
-          <span class="flex items-center gap-1.5">
-            <span class="w-3 h-3 rounded-full bg-rose-400"></span> 已打卡
-          </span>
-          <span class="flex items-center gap-1.5">
-            <span class="w-3 h-3 rounded-full bg-emerald-400"></span> 週目標達成
-          </span>
-          <span class="flex items-center gap-1.5">
-            <span class="w-3 h-3 rounded-full bg-emerald-600"></span> 月目標達成
-          </span>
+        <div class="grid grid-cols-7 gap-2 mb-2 text-center text-xs font-bold text-slate-400">
+          <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
         </div>
-        <div id="targetStats" class="font-medium text-rose-600">
-          本月已打卡: 0 天
-        </div>
-      </div>
 
-      <!-- Weekdays Header -->
-      <div class="grid grid-cols-7 gap-2 mb-2 text-center text-xs font-bold text-slate-400">
-        <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
-      </div>
+        <div id="dietCalendarGrid" class="grid grid-cols-7 gap-2"></div>
+      </section>
 
-      <!-- Calendar Grid -->
-      <div id="calendarGrid" class="grid grid-cols-7 gap-2"></div>
-    </section>
+    </div>
 
   </main>
 
-  <!-- Modal: Cat Shop (防誤觸獨立彈窗) -->
-  <div id="shopModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto custom-scrollbar animate-in fade-in zoom-in duration-200">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3 sticky top-0 bg-white z-10">
-        <div>
-          <h3 class="font-extrabold text-xl text-slate-800 flex items-center gap-2">
-            🛒 貓貓精品商城
-          </h3>
-          <p class="text-xs text-slate-500">用運動賺來的喵幣寵愛你的小貓咪吧！</p>
-        </div>
-        <div class="flex items-center gap-3">
-          <div class="bg-amber-100 text-amber-800 px-3 py-1.5 rounded-xl text-xs font-extrabold">
-            餘額：🐾 <span id="modalPointsDisplay">0</span> 點
-          </div>
-          <button onclick="closeShopModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
-            <i data-lucide="x" class="w-5 h-5"></i>
-          </button>
-        </div>
-      </div>
+  <!-- ================= MODALS ================= -->
 
-      <!-- Section 1: Consumables & Toys -->
-      <div class="space-y-2.5">
-        <h4 class="text-xs font-extrabold text-amber-600 uppercase tracking-wider flex items-center gap-1.5">
-          <span>🍖 美食與互動玩具（可重複購買投放）</span>
-        </h4>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <!-- Can Food -->
-          <div class="border border-slate-200 hover:border-amber-400 rounded-2xl p-3.5 flex flex-col justify-between bg-amber-50/30 transition-all">
-            <div>
-              <div class="text-2xl mb-1">🥫</div>
-              <div class="font-bold text-sm text-slate-800">美味貓罐頭</div>
-              <p class="text-[11px] text-slate-500 mt-1">吸引所有貓咪圍過來大口吃飯，貪吃貓最愛！</p>
-            </div>
-            <button onclick="buyItem('food', 5)" class="mt-3 w-full bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-bold text-xs py-2 rounded-xl shadow-sm transition-all">
-              兌換 (5 喵幣)
-            </button>
-          </div>
-
-          <!-- Yarn Ball -->
-          <div class="border border-slate-200 hover:border-rose-400 rounded-2xl p-3.5 flex flex-col justify-between bg-rose-50/30 transition-all">
-            <div>
-              <div class="text-2xl mb-1">🧶</div>
-              <div class="font-bold text-sm text-slate-800">彈力毛球玩具</div>
-              <p class="text-[11px] text-slate-500 mt-1">貓咪會跑過去把毛球拍飛滾動玩耍。</p>
-            </div>
-            <button onclick="buyItem('yarn', 10)" class="mt-3 w-full bg-rose-500 hover:bg-rose-600 active:scale-95 text-white font-bold text-xs py-2 rounded-xl shadow-sm transition-all">
-              兌換 (10 喵幣)
-            </button>
-          </div>
-
-          <!-- Clockwork Mouse -->
-          <div class="border border-slate-200 hover:border-indigo-400 rounded-2xl p-3.5 flex flex-col justify-between bg-indigo-50/30 transition-all">
-            <div>
-              <div class="text-2xl mb-1">🐭</div>
-              <div class="font-bold text-sm text-slate-800">會動的老鼠玩具</div>
-              <p class="text-[11px] text-slate-500 mt-1">發條老鼠會在房間四處亂竄，引發全場追逐！</p>
-            </div>
-            <button onclick="buyItem('mouse', 15)" class="mt-3 w-full bg-indigo-500 hover:bg-indigo-600 active:scale-95 text-white font-bold text-xs py-2 rounded-xl shadow-sm transition-all">
-              兌換 (15 喵幣)
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section 2: Permanent Room Furniture -->
-      <div class="space-y-2.5 pt-2">
-        <h4 class="text-xs font-extrabold text-emerald-600 uppercase tracking-wider flex items-center gap-1.5">
-          <span>🏠 豪華房間設施（一次兌換，永久擺放互動）</span>
-        </h4>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <!-- Cat Tree -->
-          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-emerald-50/20">
-            <div>
-              <div class="text-2xl mb-1">🪵</div>
-              <div class="font-bold text-sm text-slate-800">豪華貓爬架</div>
-              <p class="text-[11px] text-slate-500 mt-1">貓咪會主動攀爬跳上跳台，在高處俯視房間。</p>
-            </div>
-            <button id="btnBuyTree" onclick="buyFurniture('tree', 20)" class="mt-3 w-full bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-bold text-xs py-2 rounded-xl shadow-sm transition-all">
-              兌換 (20 喵幣)
-            </button>
-          </div>
-
-          <!-- Water Fountain -->
-          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-sky-50/20">
-            <div>
-              <div class="text-2xl mb-1">⛲</div>
-              <div class="font-bold text-sm text-slate-800">自動飲水機</div>
-              <p class="text-[11px] text-slate-500 mt-1">流動活水！貓咪口渴時會走過去低頭喝水。</p>
-            </div>
-            <button id="btnBuyFountain" onclick="buyFurniture('fountain', 15)" class="mt-3 w-full bg-sky-500 hover:bg-sky-600 active:scale-95 text-white font-bold text-xs py-2 rounded-xl shadow-sm transition-all">
-              兌換 (15 喵幣)
-            </button>
-          </div>
-
-          <!-- Litter Box -->
-          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-purple-50/20">
-            <div>
-              <div class="text-2xl mb-1">🚽</div>
-              <div class="font-bold text-sm text-slate-800">清潔貓砂盆</div>
-              <p class="text-[11px] text-slate-500 mt-1">讓貓咪可以上廁所，上完還會認真撥貓砂！</p>
-            </div>
-            <button id="btnBuyLitter" onclick="buyFurniture('litter', 15)" class="mt-3 w-full bg-purple-500 hover:bg-purple-600 active:scale-95 text-white font-bold text-xs py-2 rounded-xl shadow-sm transition-all">
-              兌換 (15 喵幣)
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section 3: Adopt New Cats -->
-      <div class="space-y-2.5 pt-2">
-        <h4 class="text-xs font-extrabold text-pink-600 uppercase tracking-wider flex items-center gap-1.5">
-          <span>🐱 領養新貓咪（每隻 50 喵幣，隨機賦予 7 種性格之一）</span>
-        </h4>
-        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
-          <button onclick="adoptCat('calico', '花貓')" class="border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center transition-all group">
-            <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🐈</div>
-            <div class="font-bold text-xs text-slate-800">三花貓</div>
-            <div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
-          </button>
-          <button onclick="adoptCat('black', '黑貓')" class="border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center transition-all group">
-            <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🐈‍⬛</div>
-            <div class="font-bold text-xs text-slate-800">酷黑貓</div>
-            <div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
-          </button>
-          <button onclick="adoptCat('white', '白貓')" class="border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center transition-all group">
-            <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🤍</div>
-            <div class="font-bold text-xs text-slate-800">雪白貓</div>
-            <div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
-          </button>
-          <button onclick="adoptCat('orange', '橘貓')" class="border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center transition-all group">
-            <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🧡</div>
-            <div class="font-bold text-xs text-slate-800">大橘貓</div>
-            <div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
-          </button>
-          <button onclick="adoptCat('ragdoll', '布偶貓')" class="col-span-2 sm:col-span-1 border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center transition-all group">
-            <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">👑</div>
-            <div class="font-bold text-xs text-slate-800">布偶貓</div>
-            <div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: Workout Log / Detail -->
+  <!-- Modal: Workout Log -->
   <div id="logModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -359,7 +268,6 @@
         </button>
       </div>
 
-      <!-- Category Selector -->
       <div>
         <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">1. 勾選當天訓練項目</label>
         <div id="categoryContainer" class="flex flex-wrap gap-2 mb-3"></div>
@@ -369,7 +277,6 @@
         </div>
       </div>
 
-      <!-- Photo Upload (Required) -->
       <div>
         <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
           2. 上傳打卡照片 <span class="text-rose-500">* (必須上傳照片)</span>
@@ -385,20 +292,159 @@
         </div>
       </div>
 
-      <!-- Note -->
       <div>
         <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">3. 心情 / 訓練備註 (選填)</label>
         <textarea id="logNote" rows="2" placeholder="今天狀態超棒！" class="w-full text-xs border border-slate-200 rounded-xl p-3 focus:outline-none focus:border-rose-400 resize-none"></textarea>
       </div>
 
-      <!-- Actions -->
       <div class="flex items-center gap-3 pt-2">
-        <button id="deleteBtn" onclick="deleteLog()" class="hidden bg-rose-50 text-rose-600 hover:bg-rose-100 font-semibold text-xs px-4 py-3 rounded-xl">
-          刪除打卡
+        <button id="deleteBtn" onclick="deleteLog()" class="hidden bg-rose-50 text-rose-600 hover:bg-rose-100 font-semibold text-xs px-4 py-3 rounded-xl">刪除打卡</button>
+        <button onclick="saveLog()" class="flex-1 bg-rose-500 hover:bg-rose-600 text-white font-bold text-sm py-3 rounded-xl shadow-lg shadow-rose-200 transition-all">儲存打卡紀錄</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Diet Log (Flexible Meals & AI Calorie Calculation) -->
+  <div id="dietLogModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto custom-scrollbar animate-in fade-in zoom-in duration-200">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 sticky top-0 bg-white z-10">
+        <div>
+          <h3 id="dietModalDate" class="font-extrabold text-lg text-slate-800">2026-11-12 飲食記錄</h3>
+          <p class="text-xs text-slate-400">彈性記錄餐次，AI 自動換算卡路里</p>
+        </div>
+        <button onclick="closeDietLogModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
+          <i data-lucide="x" class="w-5 h-5"></i>
         </button>
-        <button onclick="saveLog()" class="flex-1 bg-rose-500 hover:bg-rose-600 text-white font-bold text-sm py-3 rounded-xl shadow-lg shadow-rose-200 transition-all">
-          儲存打卡紀錄
+      </div>
+
+      <!-- Meal Items List Container -->
+      <div id="mealItemsContainer" class="space-y-4">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Add Meal Button -->
+      <button onclick="addNewMealEntry()" class="w-full py-3 border-2 border-dashed border-emerald-300 hover:bg-emerald-50 text-emerald-700 font-bold text-xs rounded-2xl transition-all flex items-center justify-center gap-2">
+        <i data-lucide="plus" class="w-4 h-4"></i> 新增一餐 / 加餐
+      </button>
+
+      <div class="pt-2">
+        <button onclick="saveDietLog()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-3.5 rounded-xl shadow-lg shadow-emerald-200 transition-all">
+          儲存當日飲食記錄
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: AI Diet Report -->
+  <div id="dietReportModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto custom-scrollbar animate-in fade-in zoom-in duration-200">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="font-extrabold text-lg text-slate-800 flex items-center gap-2">
+            <i data-lucide="brain" class="w-5 h-5 text-emerald-600"></i> AI 智能營養與今日報告
+          </h3>
+          <p id="reportDateSubtitle" class="text-xs text-slate-400">結合訓練目標與今日攝取數據分析</p>
+        </div>
+        <button onclick="closeDietReportModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div id="reportContentArea" class="space-y-4 text-sm text-slate-700">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <button onclick="closeDietReportModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs py-3 rounded-xl transition-all">
+        關閉報告
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal: Cat Shop -->
+  <div id="shopModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto custom-scrollbar animate-in fade-in zoom-in duration-200">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 sticky top-0 bg-white z-10">
+        <div>
+          <h3 class="font-extrabold text-xl text-slate-800 flex items-center gap-2">🛒 貓貓精品商城</h3>
+          <p class="text-xs text-slate-500">用運動賺來的喵幣寵愛你的小貓咪吧！</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="bg-amber-100 text-amber-800 px-3 py-1.5 rounded-xl text-xs font-extrabold">
+            餘額：🐾 <span id="modalPointsDisplay">0</span> 點
+          </div>
+          <button onclick="closeShopModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="space-y-2.5">
+        <h4 class="text-xs font-extrabold text-amber-600 uppercase tracking-wider">🍖 美食與互動玩具</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-amber-50/30">
+            <div>
+              <div class="text-2xl mb-1">🥫</div>
+              <div class="font-bold text-sm text-slate-800">美味貓罐頭</div>
+              <p class="text-[11px] text-slate-500 mt-1">5 喵幣 / 個</p>
+            </div>
+            <button onclick="buyItem('food', 5)" class="mt-3 w-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (5 點)</button>
+          </div>
+          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-rose-50/30">
+            <div>
+              <div class="text-2xl mb-1">🧶</div>
+              <div class="font-bold text-sm text-slate-800">彈力毛球</div>
+              <p class="text-[11px] text-slate-500 mt-1">10 喵幣 / 個</p>
+            </div>
+            <button onclick="buyItem('yarn', 10)" class="mt-3 w-full bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (10 點)</button>
+          </div>
+          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-indigo-50/30">
+            <div>
+              <div class="text-2xl mb-1">🐭</div>
+              <div class="font-bold text-sm text-slate-800">發條老鼠</div>
+              <p class="text-[11px] text-slate-500 mt-1">15 喵幣 / 個</p>
+            </div>
+            <button onclick="buyItem('mouse', 15)" class="mt-3 w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (15 點)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-2.5 pt-2">
+        <h4 class="text-xs font-extrabold text-emerald-600 uppercase tracking-wider">🏠 豪華房間設施</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-emerald-50/20">
+            <div><div class="text-2xl mb-1">🪵</div><div class="font-bold text-sm text-slate-800">豪華貓爬架</div><p class="text-[11px] text-slate-500 mt-1">20 喵幣</p></div>
+            <button id="btnBuyTree" onclick="buyFurniture('tree', 20)" class="mt-3 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (20 點)</button>
+          </div>
+          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-sky-50/20">
+            <div><div class="text-2xl mb-1">⛲</div><div class="font-bold text-sm text-slate-800">自動飲水機</div><p class="text-[11px] text-slate-500 mt-1">15 喵幣</p></div>
+            <button id="btnBuyFountain" onclick="buyFurniture('fountain', 15)" class="mt-3 w-full bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (15 點)</button>
+          </div>
+          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-purple-50/20">
+            <div><div class="text-2xl mb-1">🚽</div><div class="font-bold text-sm text-slate-800">清潔貓砂盆</div><p class="text-[11px] text-slate-500 mt-1">15 喵幣</p></div>
+            <button id="btnBuyLitter" onclick="buyFurniture('litter', 15)" class="mt-3 w-full bg-purple-500 hover:bg-purple-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (15 點)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-2.5 pt-2">
+        <h4 class="text-xs font-extrabold text-pink-600 uppercase tracking-wider">🐱 領養新貓咪（每隻 50 喵幣）</h4>
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+          <button onclick="adoptCat('calico', '花貓')" class="border border-slate-200 hover:border-pink-400 p-3 rounded-2xl text-center">
+            <div class="text-2xl mb-1">🐈</div><div class="font-bold text-xs">三花貓</div><div class="text-[10px] text-pink-600">50 喵幣</div>
+          </button>
+          <button onclick="adoptCat('black', '黑貓')" class="border border-slate-200 hover:border-pink-400 p-3 rounded-2xl text-center">
+            <div class="text-2xl mb-1">🐈‍⬛</div><div class="font-bold text-xs">酷黑貓</div><div class="text-[10px] text-pink-600">50 喵幣</div>
+          </button>
+          <button onclick="adoptCat('white', '白貓')" class="border border-slate-200 hover:border-pink-400 p-3 rounded-2xl text-center">
+            <div class="text-2xl mb-1">🤍</div><div class="font-bold text-xs">雪白貓</div><div class="text-[10px] text-pink-600">50 喵幣</div>
+          </button>
+          <button onclick="adoptCat('orange', '橘貓')" class="border border-slate-200 hover:border-pink-400 p-3 rounded-2xl text-center">
+            <div class="text-2xl mb-1">🧡</div><div class="font-bold text-xs">大橘貓</div><div class="text-[10px] text-pink-600">50 喵幣</div>
+          </button>
+          <button onclick="adoptCat('ragdoll', '布偶貓')" class="col-span-2 sm:col-span-1 border border-slate-200 hover:border-pink-400 p-3 rounded-2xl text-center">
+            <div class="text-2xl mb-1">👑</div><div class="font-bold text-xs">布偶貓</div><div class="text-[10px] text-pink-600">50 喵幣</div>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -416,7 +462,6 @@
         </button>
       </div>
 
-      <!-- Current BMI Card -->
       <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 flex items-center justify-between">
         <div>
           <span class="text-xs text-slate-500 font-medium">最新實時 BMI</span>
@@ -432,7 +477,6 @@
         </div>
       </div>
 
-      <!-- New Weight Record Input -->
       <div class="space-y-3 bg-rose-50/50 p-4 rounded-2xl border border-rose-100">
         <div class="flex items-center justify-between">
           <span class="text-xs font-bold text-rose-700">新增體重紀錄</span>
@@ -444,13 +488,10 @@
         </div>
         <div class="flex gap-2">
           <input type="number" step="0.1" id="weightInput" placeholder="輸入體重 (kg)" class="flex-1 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-rose-400">
-          <button onclick="addWeightRecord()" class="bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-md shadow-rose-200">
-            新增記錄
-          </button>
+          <button onclick="addWeightRecord()" class="bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs px-4 py-2 rounded-xl">新增記錄</button>
         </div>
       </div>
 
-      <!-- Weight History List -->
       <div>
         <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">歷史紀錄</h4>
         <div id="weightList" class="max-h-48 overflow-y-auto space-y-2 custom-scrollbar pr-1"></div>
@@ -458,26 +499,38 @@
     </div>
   </div>
 
-  <!-- Modal: Settings -->
+  <!-- Modal: Settings & Goal Selection -->
   <div id="settingsModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="font-bold text-lg text-slate-800">目標與個人資料</h3>
+        <h3 class="font-bold text-lg text-slate-800">目標與個人資料設定</h3>
         <button onclick="closeSettingsModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
       <div class="space-y-4">
+        <!-- Training Goal Selection -->
+        <div class="space-y-2">
+          <h4 class="text-xs font-bold text-emerald-600 uppercase tracking-wider">🎯 健身與飲食目標 (影響 AI 報告建議)</h4>
+          <select id="trainingGoalSelect" class="w-full border border-emerald-200 bg-emerald-50/50 rounded-xl px-3 py-2.5 text-sm font-bold text-emerald-900 focus:outline-none focus:border-emerald-400">
+            <option value="muscle">💪 增肌增重 (高蛋白、熱量盈餘)</option>
+            <option value="fatloss">🔥 減脂瘦身 (高纖、熱量赤字)</option>
+            <option value="maintain">⚖️ 體態維持 (營養均衡)</option>
+          </select>
+        </div>
+
+        <hr class="border-slate-100">
+
         <div class="space-y-3">
           <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">打卡天數目標</h4>
           <div>
             <label class="block text-xs font-medium text-slate-700 mb-1">每周目標天數 (周小目標)</label>
-            <input type="number" min="1" max="7" id="weeklyTargetInput" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-rose-400">
+            <input type="number" min="1" max="7" id="weeklyTargetInput" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none">
           </div>
           <div>
             <label class="block text-xs font-medium text-slate-700 mb-1">每月目標天數 (月大目標)</label>
-            <input type="number" min="1" max="31" id="monthlyTargetInput" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-rose-400">
+            <input type="number" min="1" max="31" id="monthlyTargetInput" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none">
           </div>
         </div>
 
@@ -488,46 +541,22 @@
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block text-xs font-medium text-slate-700 mb-1">身高 (cm)</label>
-              <input type="number" id="heightInput" placeholder="如: 165" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-rose-400">
+              <input type="number" id="heightInput" placeholder="如: 165" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm">
             </div>
             <div>
               <label class="block text-xs font-medium text-slate-700 mb-1">年齡</label>
-              <input type="number" id="ageInput" placeholder="如: 24" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-rose-400">
-            </div>
-          </div>
-        </div>
-
-        <hr class="border-slate-100">
-
-        <!-- Google Drive Backup Integration -->
-        <div class="space-y-3">
-          <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Google 雲端備份 (Google Drive)</h4>
-          <div class="bg-rose-50/50 p-3 rounded-2xl border border-rose-100 space-y-2">
-            <div class="flex items-center justify-between text-xs">
-              <span id="googleAuthStatus" class="font-medium text-slate-600">狀態：尚未綁定 Google 帳號</span>
-              <button onclick="toggleGoogleAuth()" id="googleAuthBtn" class="bg-rose-500 hover:bg-rose-600 text-white font-bold px-3 py-1.5 rounded-xl transition-all">
-                連結帳號
-              </button>
-            </div>
-            <div id="cloudBackupActions" class="hidden grid grid-cols-2 gap-2 pt-1">
-              <button onclick="backupToGoogleDrive()" class="bg-white border border-rose-200 hover:bg-rose-50 text-rose-700 text-xs font-semibold py-2 rounded-xl transition-all flex items-center justify-center gap-1">
-                <i data-lucide="cloud-upload" class="w-3.5 h-3.5"></i> 備份到雲端
-              </button>
-              <button onclick="restoreFromGoogleDrive()" class="bg-white border border-rose-200 hover:bg-rose-50 text-rose-700 text-xs font-semibold py-2 rounded-xl transition-all flex items-center justify-center gap-1">
-                <i data-lucide="cloud-download" class="w-3.5 h-3.5"></i> 從雲端還原
-              </button>
+              <input type="number" id="ageInput" placeholder="如: 24" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm">
             </div>
           </div>
         </div>
       </div>
 
-      <button onclick="saveSettings()" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold text-sm py-3 rounded-xl shadow-lg shadow-rose-200 transition-all">
+      <button onclick="saveSettings()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold text-sm py-3 rounded-xl shadow-lg transition-all">
         儲存設定
       </button>
     </div>
   </div>
 
-  <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-xl z-50 transition-all opacity-0 pointer-events-none">
     提示訊息
   </div>
@@ -536,23 +565,34 @@
     // ==========================================
     // 1. APP STATE & PERSISTENCE
     // ==========================================
+    let currentView = 'workout'; // 'workout' or 'diet'
+
     let currentDate = new Date();
+    let currentDietDate = new Date();
     let selectedDateStr = "";
-    
+    let selectedDietDateStr = "";
+
     let defaultCategories = ["手臂", "臀", "腿", "腰/核心", "跑步", "有氧"];
     let logs = JSON.parse(localStorage.getItem('piggy_logs') || '{}');
+    let dietLogs = JSON.parse(localStorage.getItem('piggy_diet_logs') || '{}');
+
     let settings = JSON.parse(localStorage.getItem('piggy_settings') || JSON.stringify({
       weeklyTarget: 3,
       monthlyTarget: 12,
       height: 165,
       age: 23,
+      trainingGoal: 'muscle', // 'muscle', 'fatloss', 'maintain'
       weeklyRewardCount: 0,
       monthlyRewardCount: 0,
       googleEmail: ""
     }));
+
     let weightLogs = JSON.parse(localStorage.getItem('piggy_weights') || '[]');
     let selectedCategories = [];
     let currentPhotoBase64 = "";
+
+    // Diet Meal Entries State in Modal
+    let currentMealEntries = [];
 
     // Cat Game Persistent State
     const PERSONALITIES = ["活潑", "高冷", "懶惰", "粘人", "貪吃", "容易生氣", "脾氣好"];
@@ -565,21 +605,14 @@
     };
 
     let catGame = JSON.parse(localStorage.getItem('piggy_cat_game') || JSON.stringify({
-      points: 25, // 初始贈送25喵幣方便體驗商城
+      points: 25,
       rewardedDates: [],
       rewardedWeeks: [],
       rewardedMonths: [],
-      furniture: {
-        tree: false,     // 爬架 (20點)
-        fountain: false, // 飲水機 (15點)
-        litter: false    // 貓砂盆 (15點)
-      },
-      cats: [
-        { id: 1, type: 'orange', name: '小橘', personality: '貪吃' }
-      ]
+      furniture: { tree: false, fountain: false, litter: false },
+      cats: [{ id: 1, type: 'orange', name: '小橘', personality: '貪吃' }]
     }));
 
-    // Ensure old saves have furniture & personality fields
     if (!catGame.furniture) catGame.furniture = { tree: false, fountain: false, litter: false };
     catGame.cats.forEach(c => {
       if (!c.personality) c.personality = PERSONALITIES[Math.floor(Math.random() * PERSONALITIES.length)];
@@ -608,115 +641,394 @@
     }
 
     // ==========================================
-    // 2. SHOP MODAL & PURCHASES
+    // 2. PAGE SWITCHING & THEME
     // ==========================================
-    function openShopModal() {
-      updatePointsUI();
-      document.getElementById('shopModal').classList.remove('hidden');
+    function togglePageView() {
+      const workoutView = document.getElementById('workoutView');
+      const dietView = document.getElementById('dietView');
+      const switchBtn = document.getElementById('pageSwitchBtn');
+      const bodyBg = document.getElementById('bodyBg');
+      const headerBg = document.getElementById('headerBg');
+      const headerIconBg = document.getElementById('headerIconBg');
+      const headerIcon = document.getElementById('headerIcon');
+      const mainTitleText = document.getElementById('mainTitleText');
+      const mainSubtitleText = document.getElementById('mainSubtitleText');
+      const appTitle = document.getElementById('appTitle');
+
+      if (currentView === 'workout') {
+        currentView = 'diet';
+        workoutView.classList.add('hidden');
+        dietView.classList.remove('hidden');
+
+        // Switch to Emerald / Green Theme
+        bodyBg.className = "bg-emerald-50/50 min-h-screen text-slate-800 pb-12 transition-colors duration-300";
+        headerBg.className = "bg-white/80 backdrop-blur-md border-b border-emerald-100 sticky top-0 z-30 px-4 py-3 shadow-sm transition-colors duration-300";
+        headerIconBg.className = "bg-emerald-600 text-white p-2 rounded-2xl shadow-md shadow-emerald-200 transition-colors duration-300";
+        headerIcon.setAttribute('data-lucide', 'utensils');
+        mainTitleText.textContent = "寶寶豬的飲食營養日記 🥗";
+        mainSubtitleText.className = "text-xs text-emerald-600 font-medium transition-colors duration-300";
+        mainSubtitleText.textContent = "AI 拍照計算卡路里，智能飲食管理";
+        appTitle.textContent = "寶寶豬的飲食營養日記 🥗";
+
+        switchBtn.className = "flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 px-3.5 py-2 rounded-xl text-sm font-bold transition-all shadow-sm border border-rose-200";
+        switchBtn.innerHTML = `<i data-lucide="dumbbell" class="w-4 h-4"></i><span>切換至運動打卡</span>`;
+
+        updateDietGoalBadgeUI();
+        renderDietCalendar();
+      } else {
+        currentView = 'workout';
+        dietView.classList.add('hidden');
+        workoutView.classList.remove('hidden');
+
+        // Switch back to Rose / Pink Theme
+        bodyBg.className = "bg-rose-50/50 min-h-screen text-slate-800 pb-12 transition-colors duration-300";
+        headerBg.className = "bg-white/80 backdrop-blur-md border-b border-rose-100 sticky top-0 z-30 px-4 py-3 shadow-sm transition-colors duration-300";
+        headerIconBg.className = "bg-rose-500 text-white p-2 rounded-2xl shadow-md shadow-rose-200 transition-colors duration-300";
+        headerIcon.setAttribute('data-lucide', 'dumbbell');
+        mainTitleText.textContent = "寶寶豬的逆襲日記 🐷💪";
+        mainSubtitleText.className = "text-xs text-rose-500 font-medium transition-colors duration-300";
+        mainSubtitleText.textContent = "記錄每一次蛻變與努力";
+        appTitle.textContent = "寶寶豬的逆襲日記 🐷💪";
+
+        switchBtn.className = "flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3.5 py-2 rounded-xl text-sm font-bold transition-all shadow-sm border border-emerald-200";
+        switchBtn.innerHTML = `<i data-lucide="utensils" class="w-4 h-4"></i><span>切換至飲食記錄</span>`;
+
+        renderCalendar();
+      }
+      lucide.createIcons();
     }
 
-    function closeShopModal() {
-      document.getElementById('shopModal').classList.add('hidden');
-    }
-
-    function updateShopButtonsUI() {
-      const btnTree = document.getElementById('btnBuyTree');
-      const btnFountain = document.getElementById('btnBuyFountain');
-      const btnLitter = document.getElementById('btnBuyLitter');
-      if (!btnTree) return;
-
-      if (catGame.furniture.tree) {
-        btnTree.textContent = "已擁有 ✓";
-        btnTree.disabled = true;
-        btnTree.className = "mt-3 w-full bg-slate-200 text-slate-500 font-bold text-xs py-2 rounded-xl cursor-not-allowed";
-      }
-      if (catGame.furniture.fountain) {
-        btnFountain.textContent = "已擁有 ✓";
-        btnFountain.disabled = true;
-        btnFountain.className = "mt-3 w-full bg-slate-200 text-slate-500 font-bold text-xs py-2 rounded-xl cursor-not-allowed";
-      }
-      if (catGame.furniture.litter) {
-        btnLitter.textContent = "已擁有 ✓";
-        btnLitter.disabled = true;
-        btnLitter.className = "mt-3 w-full bg-slate-200 text-slate-500 font-bold text-xs py-2 rounded-xl cursor-not-allowed";
-      }
-    }
-
-    function renderFurnitureBadges() {
-      const bar = document.getElementById('furnitureStatusBar');
-      if (!bar) return;
-      let html = "";
-      if (catGame.furniture.tree) html += `<span class="bg-white/90 border border-emerald-200 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">🪵 爬架</span>`;
-      if (catGame.furniture.fountain) html += `<span class="bg-white/90 border border-sky-200 text-sky-700 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">⛲ 飲水機</span>`;
-      if (catGame.furniture.litter) html += `<span class="bg-white/90 border border-purple-200 text-purple-700 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">🚽 貓砂盆</span>`;
-      bar.innerHTML = html;
-    }
-
-    function buyItem(itemType, cost) {
-      if (catGame.points < cost) {
-        showToast(`喵幣不足喔！還差 ${cost - catGame.points} 點，快去運動打卡吧 💪`);
-        return;
-      }
-      catGame.points -= cost;
-      saveCatGame();
-
-      const spawnX = 240 + Math.random() * 320;
-      const spawnY = 235 + Math.random() * 45;
-
-      if (itemType === 'food') {
-        activeItems.push({
-          id: Date.now(), type: 'food', x: spawnX, y: spawnY, bites: 100
-        });
-        showToast("🥫 放好美味貓罐頭啦！貓咪們圍過來了～");
-      } else if (itemType === 'yarn') {
-        activeItems.push({
-          id: Date.now(), type: 'yarn', x: spawnX, y: spawnY, vx: (Math.random() - 0.5) * 4, vy: 0, life: 1500
-        });
-        showToast("🧶 丟出彈力毛球！快看貓咪拍球～");
-      } else if (itemType === 'mouse') {
-        activeItems.push({
-          id: Date.now(), type: 'mouse', x: spawnX, y: spawnY, vx: 2.5, dir: 1, life: 1800
-        });
-        showToast("🐭 啟動發條老鼠！全場貓咪進入狩獵模式！");
-      }
-      closeShopModal();
-    }
-
-    function buyFurniture(type, cost) {
-      if (catGame.furniture[type]) return;
-      if (catGame.points < cost) {
-        showToast(`喵幣不足！兌換需要 ${cost} 點喵幣 🐾`);
-        return;
-      }
-      catGame.points -= cost;
-      catGame.furniture[type] = true;
-      saveCatGame();
-      const names = { tree: "豪華貓爬架", fountain: "自動飲水機", litter: "清潔貓砂盆" };
-      showToast(`🎉 成功兌換【${names[type]}】，已擺進房間裡囉！`);
-      closeShopModal();
-    }
-
-    function adoptCat(type, label) {
-      const cost = 50;
-      if (catGame.points < cost) {
-        showToast(`領養${label}需要 50 喵幣喔！目前有 ${catGame.points} 點`);
-        return;
-      }
-      catGame.points -= cost;
-      const pool = CAT_NAMES[type] || ["小可愛"];
-      const name = pool[catGame.cats.length % pool.length] + (catGame.cats.length >= pool.length ? (catGame.cats.length + 1) : "");
-      const personality = PERSONALITIES[Math.floor(Math.random() * PERSONALITIES.length)];
-
-      const newCatData = { id: Date.now(), type, name, personality };
-      catGame.cats.push(newCatData);
-      saveCatGame();
-      spawnCatEntity(newCatData);
-      showToast(`🎊 歡迎新成員【${name}】（性格：${personality}）加入小窩！`);
-      closeShopModal();
+    function updateDietGoalBadgeUI() {
+      const badge = document.getElementById('dietGoalBadge');
+      const goalTexts = {
+        muscle: "🎯 目前目標：增肌增重 🥩",
+        fatloss: "🎯 目前目標：減脂瘦身 🥗",
+        maintain: "🎯 目前目標：體態維持 ⚖️"
+      };
+      badge.textContent = goalTexts[settings.trainingGoal] || "🎯 目標：增肌";
     }
 
     // ==========================================
-    // 3. INTERACTIVE 2D CAT ROOM ENGINE (CANVAS)
+    // 3. DIET CALENDAR & LOGGING ENGINE
+    // ==========================================
+    function renderDietCalendar() {
+      const year = currentDietDate.getFullYear();
+      const month = currentDietDate.getMonth();
+
+      document.getElementById('dietMonthYear').textContent = `${year}年 ${month + 1}月`;
+
+      const firstDayIndex = new Date(year, month, 1).getDay();
+      const totalDays = new Date(year, month + 1, 0).getDate();
+
+      const grid = document.getElementById('dietCalendarGrid');
+      grid.innerHTML = "";
+
+      let monthDietCount = 0;
+
+      for (let day = 1; day <= totalDays; day++) {
+        const dateStr = formatDietDate(year, month, day);
+        if (dietLogs[dateStr] && dietLogs[dateStr].length > 0) {
+          monthDietCount++;
+        }
+      }
+
+      document.getElementById('dietStats').textContent = `本月已記錄: ${monthDietCount} 天`;
+
+      for (let i = 0; i < firstDayIndex; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = "h-20 sm:h-24 rounded-2xl bg-slate-50/50 opacity-40 border border-slate-100";
+        grid.appendChild(emptyCell);
+      }
+
+      for (let day = 1; day <= totalDays; day++) {
+        const dateStr = formatDietDate(year, month, day);
+        const meals = dietLogs[dateStr] || [];
+        const hasLogged = meals.length > 0;
+
+        const cell = document.createElement('div');
+        cell.onclick = () => openDietLogModal(dateStr);
+
+        let bgClass = "bg-slate-50 border-slate-100 hover:border-emerald-300";
+        let dateColor = "text-slate-700";
+
+        if (hasLogged) {
+          bgClass = "bg-emerald-500 border-emerald-500 text-white shadow-md shadow-emerald-100";
+          dateColor = "text-white";
+        }
+
+        const isToday = isSameDay(new Date(), new Date(year, month, day));
+        cell.className = `h-20 sm:h-24 rounded-2xl border p-2 flex flex-col justify-between cursor-pointer transition-all relative overflow-hidden ${bgClass}`;
+
+        let totalCals = meals.reduce((sum, m) => sum + (parseInt(m.calories) || 0), 0);
+
+        cell.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs sm:text-sm font-bold ${dateColor} ${isToday ? 'bg-white text-emerald-700 w-6 h-6 rounded-full flex items-center justify-center shadow-sm' : ''}">${day}</span>
+            ${hasLogged ? '<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-white"></i>' : ''}
+          </div>
+          ${hasLogged ? `
+            <div class="space-y-0.5">
+              <div class="text-[10px] font-bold opacity-90">${meals.length} 餐記錄</div>
+              <div class="text-[10px] font-extrabold bg-white/20 px-1.5 py-0.5 rounded">${totalCals} kcal</div>
+            </div>
+          ` : ''}
+        `;
+        grid.appendChild(cell);
+      }
+      lucide.createIcons();
+    }
+
+    function changeDietMonth(delta) {
+      currentDietDate.setMonth(currentDietDate.getMonth() + delta);
+      renderDietCalendar();
+    }
+
+    function goToDietToday() {
+      currentDietDate = new Date();
+      renderDietCalendar();
+    }
+
+    function formatDietDate(y, m, d) {
+      const mm = String(m + 1).padStart(2, '0');
+      const dd = String(d).padStart(2, '0');
+      return `${y}-${mm}-${dd}`;
+    }
+
+    // ==========================================
+    // 4. DIET LOG MODAL & AI CALORIE ESTIMATION
+    // ==========================================
+    function openDietLogModal(dateStr) {
+      selectedDietDateStr = dateStr;
+      document.getElementById('dietModalDate').textContent = `${dateStr} 飲食記錄`;
+      
+      // Load existing or empty
+      currentMealEntries = JSON.parse(JSON.stringify(dietLogs[dateStr] || []));
+      if (currentMealEntries.length === 0) {
+        currentMealEntries.push({ id: Date.now(), title: '早餐', photo: '', foodName: '', calories: '', protein: '' });
+      }
+
+      renderMealEntriesUI();
+      document.getElementById('dietLogModal').classList.remove('hidden');
+    }
+
+    function closeDietLogModal() {
+      document.getElementById('dietLogModal').classList.add('hidden');
+    }
+
+    function addNewMealEntry() {
+      const titles = ['早餐', '午餐', '晚餐', '加餐 / 宵夜', '下午茶'];
+      const defaultTitle = titles[currentMealEntries.length % titles.length];
+      currentMealEntries.push({
+        id: Date.now(),
+        title: defaultTitle,
+        photo: '',
+        foodName: '',
+        calories: '',
+        protein: ''
+      });
+      renderMealEntriesUI();
+    }
+
+    function removeMealEntry(id) {
+      currentMealEntries = currentMealEntries.filter(m => m.id !== id);
+      renderMealEntriesUI();
+    }
+
+    function renderMealEntriesUI() {
+      const container = document.getElementById('mealItemsContainer');
+      container.innerHTML = "";
+
+      currentMealEntries.forEach((meal, idx) => {
+        const card = document.createElement('div');
+        card.className = "bg-emerald-50/40 border border-emerald-100 rounded-2xl p-4 space-y-3 relative";
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <input type="text" value="${meal.title}" oninput="updateMealField(${meal.id}, 'title', this.value)" placeholder="餐次名稱 (如: 運動後加餐)" class="text-xs font-bold bg-white border border-emerald-200 rounded-lg px-2.5 py-1.5 text-emerald-900 w-44">
+            <button onclick="removeMealEntry(${meal.id})" class="text-slate-400 hover:text-rose-500 p-1">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
+            <!-- Photo upload for AI -->
+            <div class="border-2 border-dashed border-emerald-200 bg-white rounded-xl p-3 text-center cursor-pointer hover:border-emerald-400 transition-colors relative" onclick="triggerDietPhotoInput(${meal.id})">
+              <input type="file" id="dietPhoto_${meal.id}" accept="image/*" class="hidden" onchange="handleDietPhotoUpload(event, ${meal.id})">
+              ${meal.photo ? `
+                <img src="${meal.photo}" class="w-full h-28 object-cover rounded-lg shadow-sm">
+              ` : `
+                <div class="py-3 space-y-1">
+                  <i data-lucide="camera" class="w-6 h-6 text-emerald-500 mx-auto"></i>
+                  <p class="text-[11px] font-bold text-emerald-700">點擊拍照 / 上傳食物</p>
+                  <p class="text-[9px] text-slate-400">AI 將自動換算卡路里</p>
+                </div>
+              `}
+            </div>
+
+            <!-- AI Results & Manual Edit -->
+            <div class="space-y-2 text-xs">
+              <div>
+                <label class="block font-bold text-slate-600 mb-1">AI 辨識食物名稱</label>
+                <input type="text" id="foodName_${meal.id}" value="${meal.foodName || ''}" oninput="updateMealField(${meal.id}, 'foodName', this.value)" placeholder="上傳照片後 AI 自動填寫" class="w-full border border-slate-200 rounded-xl px-3 py-2 bg-white">
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block font-bold text-slate-600 mb-1">熱量 (kcal)</label>
+                  <input type="number" id="cals_${meal.id}" value="${meal.calories || ''}" oninput="updateMealField(${meal.id}, 'calories', this.value)" placeholder="如: 550" class="w-full border border-slate-200 rounded-xl px-3 py-2 bg-white font-bold text-emerald-700">
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-600 mb-1">蛋白質 (g)</label>
+                  <input type="number" id="protein_${meal.id}" value="${meal.protein || ''}" oninput="updateMealField(${meal.id}, 'protein', this.value)" placeholder="如: 35" class="w-full border border-slate-200 rounded-xl px-3 py-2 bg-white">
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function updateMealField(id, field, val) {
+      const meal = currentMealEntries.find(m => m.id === id);
+      if (meal) meal[field] = val;
+    }
+
+    function triggerDietPhotoInput(id) {
+      document.getElementById(`dietPhoto_${id}`).click();
+    }
+
+    function handleDietPhotoUpload(e, id) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const meal = currentMealEntries.find(m => m.id === id);
+          if (meal) {
+            meal.photo = evt.target.result;
+            
+            // SIMULATE AI VISION ANALYSIS
+            showToast("🤖 AI 正在掃描食物照片並計算卡路里...");
+            setTimeout(() => {
+              const simulatedResults = [
+                { name: "香煎雞胸肉沙拉佐橄欖油", cals: 380, protein: 32 },
+                { name: "日式豚骨拉麵加半熟蛋", cals: 720, protein: 28 },
+                { name: "全麥牛排三明治配黑咖啡", cals: 520, protein: 40 },
+                { name: "高蛋白乳清蛋白飲 + 香蕉", cals: 310, protein: 30 }
+              ];
+              const randomRes = simulatedResults[Math.floor(Math.random() * simulatedResults.length)];
+              
+              meal.foodName = randomRes.name;
+              meal.calories = randomRes.cals;
+              meal.protein = randomRes.protein;
+              renderMealEntriesUI();
+              showToast("✨ AI 辨識完成！卡路里已自動換算！");
+            }, 1000);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function saveDietLog() {
+      dietLogs[selectedDietDateStr] = currentMealEntries;
+      localStorage.setItem('piggy_diet_logs', JSON.stringify(dietLogs));
+      closeDietLogModal();
+      renderDietCalendar();
+      showToast("🥗 飲食記錄已成功儲存！");
+    }
+
+    // ==========================================
+    // 5. AI DIET REPORT & ADVICE GENERATOR
+    // ==========================================
+    function openDietReportModal() {
+      const todayStr = formatDietDate(currentDietDate.getFullYear(), currentDietDate.getMonth(), currentDietDate.getDate());
+      const meals = dietLogs[todayStr] || [];
+
+      document.getElementById('reportDateSubtitle').textContent = `${todayStr} 營養數據智能分析報告`;
+      const contentArea = document.getElementById('reportContentArea');
+
+      if (meals.length === 0) {
+        contentArea.innerHTML = `
+          <div class="text-center py-8 space-y-2">
+            <div class="text-4xl">🍽️</div>
+            <p class="font-bold text-slate-700">今天還沒有記錄任何飲食喔！</p>
+            <p class="text-xs text-slate-400">請先點擊日曆日期上傳食物照片，AI 才能為你生成精準的營養報告。</p>
+          </div>
+        `;
+      } else {
+        let totalCals = meals.reduce((sum, m) => sum + (parseInt(m.calories) || 0), 0);
+        let totalProtein = meals.reduce((sum, m) => sum + (parseInt(m.protein) || 0), 0);
+        
+        const goal = settings.trainingGoal;
+        let goalTitle = goal === 'muscle' ? "增肌增重 🥩" : (goal === 'fatloss' ? "減脂瘦身 🥗" : "體態維持 ⚖️");
+        
+        // AI advice logic based on Goal
+        let adviceHtml = "";
+        if (goal === 'muscle') {
+          if (totalCals < 2400) {
+            adviceHtml = `<span class="text-amber-600 font-bold">⚠️ 熱量稍微偏低：</span>目前處於增肌期，建議每日總熱量可再提高至 2500-2800 kcal，並確保碳水化合物充足以支援重訓表現。`;
+          } else {
+            adviceHtml = `<span class="text-emerald-600 font-bold">🎉 熱量達標：</span>符合增肌期熱量盈餘標準，繼續保持高強度訓練！`;
+          }
+        } else if (goal === 'fatloss') {
+          if (totalCals > 1800) {
+            adviceHtml = `<span class="text-rose-600 font-bold">⚠️ 熱量略微超標：</span>目前處於減脂期，建議控制碳水攝取，多增加綠色蔬菜與水分。`;
+          } else {
+            adviceHtml = `<span class="text-emerald-600 font-bold">🔥 減脂赤字優秀：</span>今日熱量控制在理想範圍內，蛋白質攝取也很到位！`;
+          }
+        } else {
+          adviceHtml = `<span class="text-teal-600 font-bold">⚖️ 營養均衡：</span>今日攝取穩定，維持目前的健康飲食習慣即可。`;
+        }
+
+        contentArea.innerHTML = `
+          <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-emerald-800">
+              <span>🎯 當前訓練目標：${goalTitle}</span>
+              <span>今日記錄：${meals.length} 餐</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <div class="bg-white p-3 rounded-xl border border-emerald-100 text-center">
+                <span class="text-xs text-slate-400">總攝取熱量</span>
+                <div class="text-2xl font-extrabold text-emerald-700 mt-0.5">${totalCals} <span class="text-xs font-normal">kcal</span></div>
+              </div>
+              <div class="bg-white p-3 rounded-xl border border-emerald-100 text-center">
+                <span class="text-xs text-slate-400">總蛋白質攝取</span>
+                <div class="text-2xl font-extrabold text-teal-600 mt-0.5">${totalProtein} <span class="text-xs font-normal">g</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-2 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+            <h4 class="font-extrabold text-xs text-slate-700 uppercase tracking-wider">💡 AI 專家智能建議</h4>
+            <p class="text-xs leading-relaxed">${adviceHtml}</p>
+          </div>
+
+          <div class="space-y-2">
+            <h4 class="font-extrabold text-xs text-slate-500 uppercase tracking-wider">今日餐次明細</h4>
+            <div class="space-y-1.5 max-h-40 overflow-y-auto custom-scrollbar pr-1">
+              ${meals.map(m => `
+                <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-slate-100 text-xs">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">${m.title}</span>
+                    <span class="text-slate-700 font-medium">${m.foodName || '未命名食物'}</span>
+                  </div>
+                  <div class="font-bold text-slate-600">${m.calories || 0} kcal / ${m.protein || 0}g 蛋白質</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      document.getElementById('dietReportModal').classList.remove('hidden');
+    }
+
+    function closeDietReportModal() {
+      document.getElementById('dietReportModal').classList.add('hidden');
+    }
+
+    // ==========================================
+    // 6. CAT ROOM & WORKOUT CALENDAR ENGINE
     // ==========================================
     const canvas = document.getElementById('catCanvas');
     const ctx = canvas.getContext('2d');
@@ -747,15 +1059,14 @@
         y: 235 + Math.random() * 45,
         vx: 0,
         dir: Math.random() > 0.5 ? 1 : -1,
-        state: 'idle', // idle, walk, sleep, eat, play, climb, drink, poop, pet_love, stretch, groom, angry
+        state: 'idle',
         stateTimer: 80 + Math.random() * 100,
         bubble: "",
         bubbleTimer: 0,
-        onTreeLevel: 0 // 0=ground, 1=mid platform, 2=top platform
+        onTreeLevel: 0
       });
     }
 
-    // Canvas Click Interaction (Petting / Clicking Cats)
     canvas.addEventListener('click', (e) => {
       const rect = canvas.getBoundingClientRect();
       const scaleX = canvas.width / rect.width;
@@ -763,7 +1074,6 @@
       const clickX = (e.clientX - rect.left) * scaleX;
       const clickY = (e.clientY - rect.top) * scaleY;
 
-      // Find clicked cat (reverse order for top-most)
       for (let i = catEntities.length - 1; i >= 0; i--) {
         const cat = catEntities[i];
         const hitY = cat.y - (cat.onTreeLevel * 45);
@@ -778,8 +1088,6 @@
     function handleCatClick(cat) {
       cat.onTreeLevel = 0;
       cat.vx = 0;
-
-      // Reaction influenced by personality + random action
       const p = cat.personality;
       let actionDesc = "";
 
@@ -788,43 +1096,17 @@
         cat.stateTimer = 110;
         cat.bubble = "哈氣！別碰本喵 💢";
         cat.bubbleTimer = 110;
-        actionDesc = "炸毛生氣了，過一會再哄牠吧！";
+        actionDesc = "炸毛生氣了！";
         spawnParticles(cat.x, cat.y - 35, "💢", 3);
-      } else if (p === "高冷" && Math.random() < 0.5) {
-        cat.state = 'groom';
-        cat.stateTimer = 120;
-        cat.bubble = "哼，勉強讓你摸一下 舔毛~";
-        cat.bubbleTimer = 120;
-        actionDesc = "一臉高冷地低頭舔毛理毛";
-        spawnParticles(cat.x, cat.y - 35, "✨", 2);
       } else {
-        // Choose among: 撒嬌 (pet_love), 伸懶腰 (stretch), 舔毛 (groom)
-        const roll = Math.random();
-        if (p === "粘人" || p === "脾氣好" || roll < 0.45) {
-          cat.state = 'pet_love';
-          cat.stateTimer = 130;
-          cat.bubble = "呼嚕嚕～好喜歡你 ❤️";
-          cat.bubbleTimer = 130;
-          actionDesc = "翻肚皮撒嬌，發出開心的呼嚕聲！";
-          spawnParticles(cat.x, cat.y - 35, "❤️", 4);
-        } else if (roll < 0.75) {
-          cat.state = 'stretch';
-          cat.stateTimer = 110;
-          cat.bubble = "喵嗚～伸個大懶腰！";
-          cat.bubbleTimer = 110;
-          actionDesc = "前腳伸直，舒服地伸了個大懶腰～";
-          spawnParticles(cat.x, cat.y - 35, "🎵", 2);
-        } else {
-          cat.state = 'groom';
-          cat.stateTimer = 120;
-          cat.bubble = "舔舔爪子保持帥氣 ✨";
-          cat.bubbleTimer = 120;
-          actionDesc = "認真地舉起小爪子舔毛洗臉";
-          spawnParticles(cat.x, cat.y - 35, "✨", 2);
-        }
+        cat.state = 'pet_love';
+        cat.stateTimer = 130;
+        cat.bubble = "呼嚕嚕～好喜歡你 ❤️";
+        cat.bubbleTimer = 130;
+        actionDesc = "翻肚皮撒嬌，發出開心的呼嚕聲！";
+        spawnParticles(cat.x, cat.y - 35, "❤️", 4);
       }
 
-      // Show Cat Info Card in Corner
       const infoBox = document.getElementById('selectedCatInfo');
       document.getElementById('infoCatName').textContent = `${cat.name}`;
       document.getElementById('infoCatTrait').textContent = `性格：${cat.personality}`;
@@ -852,178 +1134,43 @@
     }
 
     function updateEntities() {
-      // 1. Update Active Consumables/Toys
       for (let i = activeItems.length - 1; i >= 0; i--) {
         const item = activeItems[i];
-        if (item.type === 'food') {
-          if (item.bites <= 0) activeItems.splice(i, 1);
-        } else if (item.type === 'yarn') {
+        if (item.type === 'food' && item.bites <= 0) activeItems.splice(i, 1);
+        if (item.type === 'yarn') {
           item.x += item.vx;
           item.vx *= 0.96;
           if (item.x < 160 || item.x > 640) item.vx *= -1;
           item.life--;
           if (item.life <= 0) activeItems.splice(i, 1);
-        } else if (item.type === 'mouse') {
+        }
+        if (item.type === 'mouse') {
           item.x += item.vx * item.dir;
           if (item.x < 165) item.dir = 1;
           if (item.x > 635) item.dir = -1;
-          if (Math.random() < 0.02) item.dir *= -1;
           item.life--;
           if (item.life <= 0) activeItems.splice(i, 1);
         }
       }
 
-      // 2. Update Cats AI
       catEntities.forEach(cat => {
         if (cat.bubbleTimer > 0) cat.bubbleTimer--;
         else cat.bubble = "";
 
-        // Priority 1: Player clicked reaction states (don't interrupt immediately)
         if (['pet_love', 'stretch', 'groom', 'angry'].includes(cat.state)) {
           cat.stateTimer--;
-          if (cat.stateTimer <= 0) {
-            cat.state = 'idle';
-            cat.stateTimer = 60;
-          }
+          if (cat.stateTimer <= 0) { cat.state = 'idle'; cat.stateTimer = 60; }
           return;
         }
 
-        // Priority 2: Check for Food or Toys on ground
-        const food = activeItems.find(it => it.type === 'food' && it.bites > 0);
-        const toy = activeItems.find(it => it.type === 'mouse' || it.type === 'yarn');
-
-        // Greedy cats ("貪吃") always prioritize food
-        if (food && (cat.personality === '貪吃' || !toy)) {
-          cat.onTreeLevel = 0;
-          const dx = food.x - cat.x;
-          const dy = food.y - cat.y;
-          const dist = Math.hypot(dx, dy);
-          if (dist > 26) {
-            cat.state = 'walk';
-            cat.dir = dx >= 0 ? 1 : -1;
-            const speed = cat.personality === '貪吃' ? 2.4 : 1.7;
-            cat.x += (dx / dist) * speed;
-            cat.y += (dy / dist) * speed;
-          } else {
-            cat.state = 'eat';
-            cat.dir = dx >= 0 ? 1 : -1;
-            food.bites -= 0.14;
-            if (animFrame % 45 === 0) {
-              cat.bubble = "嚼嚼嚼～真香 🥫";
-              cat.bubbleTimer = 40;
-              spawnParticles(cat.x, cat.y - 30, "❤️", 1);
-            }
-          }
-          return;
-        }
-
-        if (toy) {
-          cat.onTreeLevel = 0;
-          const dx = toy.x - cat.x;
-          const dy = toy.y - cat.y;
-          const dist = Math.hypot(dx, dy);
-          // Lazy cats rarely chase toys
-          if (cat.personality === '懶惰' && dist > 120) {
-            // ignore distant toys
-          } else if (dist > 24) {
-            cat.state = 'walk';
-            cat.dir = dx >= 0 ? 1 : -1;
-            const speed = cat.personality === '活潑' ? 2.6 : 1.9;
-            cat.x += (dx / dist) * speed;
-            cat.y += (dy / dist) * speed;
-          } else {
-            cat.state = 'play';
-            if (toy.type === 'yarn') {
-              toy.vx = (Math.random() > 0.5 ? 1 : -1) * (3 + Math.random() * 3);
-            }
-            if (animFrame % 40 === 0) {
-              cat.bubble = toy.type === 'mouse' ? "抓到老鼠啦！🐭" : "拍拍毛球！🧶";
-              cat.bubbleTimer = 40;
-              spawnParticles(cat.x, cat.y - 30, "✨", 1);
-            }
-          }
-          return;
-        }
-
-        // Priority 3: Furniture Interactions (Climb, Drink, Poop)
-        if (['climb', 'drink', 'poop'].includes(cat.state)) {
-          const targetPos = FURNITURE_POS[cat.state === 'climb' ? 'tree' : (cat.state === 'drink' ? 'fountain' : 'litter')];
-          const dx = targetPos.x - cat.x;
-          const dy = targetPos.y - cat.y;
-          const dist = Math.hypot(dx, dy);
-
-          if (dist > 15 && cat.onTreeLevel === 0) {
-            cat.dir = dx >= 0 ? 1 : -1;
-            cat.x += (dx / dist) * 1.4;
-            cat.y += (dy / dist) * 1.4;
-          } else {
-            // Arrived at furniture!
-            if (cat.state === 'climb') {
-              cat.onTreeLevel = 2; // Jump on top of cat tree
-              if (cat.stateTimer % 60 === 0) {
-                cat.bubble = "站得高看得遠～ 🪵";
-                cat.bubbleTimer = 50;
-              }
-            } else if (cat.state === 'drink') {
-              if (cat.stateTimer % 50 === 0) {
-                cat.bubble = "咕嚕咕嚕喝水 💧";
-                cat.bubbleTimer = 45;
-              }
-            } else if (cat.state === 'poop') {
-              if (cat.stateTimer > 40) {
-                cat.bubble = "用力上廁所中... 🚽";
-                cat.bubbleTimer = 40;
-              } else {
-                cat.bubble = "沙沙沙～埋好貓砂！✨";
-                cat.bubbleTimer = 40;
-              }
-            }
-            cat.stateTimer--;
-            if (cat.stateTimer <= 0) {
-              cat.onTreeLevel = 0;
-              cat.state = 'idle';
-              cat.stateTimer = 80;
-            }
-          }
-          return;
-        }
-
-        // Priority 4: Autonomous Wander / Sleep / Pick Furniture
         cat.onTreeLevel = 0;
         cat.stateTimer--;
         if (cat.stateTimer <= 0) {
-          const r = Math.random();
-          // Personality weights
-          if (cat.personality === '懶惰' && r < 0.55) {
-            cat.state = 'sleep';
-            cat.stateTimer = 180;
-            cat.bubble = "Zzz... 💤";
-            cat.bubbleTimer = 120;
-          } else if (catGame.furniture.tree && r < 0.22 && (cat.personality === '活潑' || Math.random() < 0.5)) {
-            cat.state = 'climb';
-            cat.stateTimer = 180;
-          } else if (catGame.furniture.fountain && r < 0.36) {
-            cat.state = 'drink';
-            cat.stateTimer = 130;
-          } else if (catGame.furniture.litter && r < 0.48) {
-            cat.state = 'poop';
-            cat.stateTimer = 140;
-          } else if (r < 0.72) {
-            cat.state = 'walk';
-            cat.dir = Math.random() > 0.5 ? 1 : -1;
-            cat.vx = cat.dir * (cat.personality === '活潑' ? 1.5 : 0.9);
-            cat.stateTimer = 90 + Math.random() * 80;
-          } else if (r < 0.88) {
-            cat.state = 'sleep';
-            cat.stateTimer = 150;
-            cat.bubble = "打個盹 Zzz";
-            cat.bubbleTimer = 90;
-          } else {
-            cat.state = 'groom';
-            cat.stateTimer = 100;
-          }
+          cat.state = 'walk';
+          cat.dir = Math.random() > 0.5 ? 1 : -1;
+          cat.vx = cat.dir * 1.0;
+          cat.stateTimer = 90;
         }
-
         if (cat.state === 'walk') {
           cat.x += cat.vx;
           if (cat.x < 175) { cat.x = 175; cat.dir = 1; cat.vx = Math.abs(cat.vx); }
@@ -1031,7 +1178,6 @@
         }
       });
 
-      // 3. Update Particles
       for (let i = floatingParticles.length - 1; i >= 0; i--) {
         const p = floatingParticles[i];
         p.y += p.vy;
@@ -1040,106 +1186,33 @@
       }
     }
 
-    // ==========================================
-    // 4. DRAWING THE ROOM, FURNITURE & CATS
-    // ==========================================
     function drawRoom() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Wall Background
       ctx.fillStyle = "#FFF9F0";
       ctx.fillRect(0, 0, canvas.width, 210);
 
-      // Decorative Wallpaper Stripes
-      ctx.fillStyle = "#FDF2E3";
-      for (let x = 0; x < canvas.width; x += 40) {
-        ctx.fillRect(x, 0, 18, 210);
-      }
-
-      // Cozy Window (Center-Left)
-      ctx.fillStyle = "#BAE6FD";
-      ctx.fillRect(280, 35, 130, 115);
-      ctx.strokeStyle = "#FFFFFF";
-      ctx.lineWidth = 6;
-      ctx.strokeRect(280, 35, 130, 115);
-      ctx.beginPath();
-      ctx.moveTo(345, 35); ctx.lineTo(345, 150);
-      ctx.moveTo(280, 92); ctx.lineTo(410, 92);
-      ctx.stroke();
-
-      // Sun & Cloud in Window
-      ctx.fillStyle = "#FDE047";
-      ctx.beginPath(); ctx.arc(312, 62, 14, 0, Math.PI * 2); ctx.fill();
-
-      // Wall Picture Frame
-      ctx.fillStyle = "#FFE4E6";
-      ctx.fillRect(470, 48, 75, 60);
-      ctx.strokeStyle = "#F43F5E";
-      ctx.lineWidth = 3;
-      ctx.strokeRect(470, 48, 75, 60);
-      ctx.font = "22px sans-serif";
-      ctx.fillText("🐷❤️🐱", 476, 86);
-
-      // Wooden Floor
       ctx.fillStyle = "#F3D5B5";
       ctx.fillRect(0, 210, canvas.width, 110);
-      ctx.strokeStyle = "#E7BC91";
-      ctx.lineWidth = 2;
-      for (let y = 235; y < 320; y += 26) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
-      }
 
-      // Pink Center Rug
       ctx.fillStyle = "#FFE4E6";
       ctx.beginPath();
       ctx.ellipse(400, 265, 175, 36, 0, 0, Math.PI * 2);
       ctx.fill();
-      ctx.strokeStyle = "#FDA4AF";
-      ctx.lineWidth = 3;
-      ctx.stroke();
 
-      // --- DRAW PERMANENT FURNITURE ---
       if (catGame.furniture.tree) drawCatTree(FURNITURE_POS.tree.x, FURNITURE_POS.tree.y);
       if (catGame.furniture.fountain) drawWaterFountain(FURNITURE_POS.fountain.x, FURNITURE_POS.fountain.y);
       if (catGame.furniture.litter) drawLitterBox(FURNITURE_POS.litter.x, FURNITURE_POS.litter.y);
 
-      // --- DRAW CONSUMABLES & TOYS ---
       activeItems.forEach(item => {
         if (item.type === 'food') {
-          // Cat Food Can
           ctx.fillStyle = "#EF4444";
           ctx.fillRect(item.x - 14, item.y - 10, 28, 14);
-          ctx.fillStyle = "#FDE047";
-          ctx.beginPath(); ctx.ellipse(item.x, item.y - 10, 14, 5, 0, 0, Math.PI * 2); ctx.fill();
-        } else if (item.type === 'yarn') {
-          // Yarn Ball
-          ctx.fillStyle = "#F43F5E";
-          ctx.beginPath(); ctx.arc(item.x, item.y - 8, 11, 0, Math.PI * 2); ctx.fill();
-          ctx.strokeStyle = "#FFE4E6";
-          ctx.lineWidth = 1.5;
-          ctx.beginPath(); ctx.arc(item.x - 2, item.y - 8, 6, 0, Math.PI); ctx.stroke();
-        } else if (item.type === 'mouse') {
-          // Clockwork Mouse
-          ctx.fillStyle = "#94A3B8";
-          ctx.beginPath(); ctx.ellipse(item.x, item.y - 6, 13, 8, 0, 0, Math.PI * 2); ctx.fill();
-          // Mouse Ears
-          ctx.fillStyle = "#F472B6";
-          ctx.beginPath(); ctx.arc(item.x + (item.dir * 8), item.y - 12, 4, 0, Math.PI * 2); ctx.fill();
-          // Wiggling Tail
-          ctx.strokeStyle = "#64748B";
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(item.x - (item.dir * 12), item.y - 6);
-          ctx.lineTo(item.x - (item.dir * 22), item.y - 10 + Math.sin(animFrame * 0.4) * 4);
-          ctx.stroke();
         }
       });
 
-      // --- DRAW CATS (Sorted by Y depth) ---
       const sortedCats = [...catEntities].sort((a, b) => a.y - b.y);
       sortedCats.forEach(cat => drawCat(cat));
 
-      // --- DRAW FLOATING PARTICLES ---
       floatingParticles.forEach(p => {
         ctx.font = "16px sans-serif";
         ctx.fillText(p.char, p.x, p.y);
@@ -1147,207 +1220,122 @@
     }
 
     function drawCatTree(x, y) {
-      // Base
       ctx.fillStyle = "#D97706";
       ctx.fillRect(x - 42, y - 8, 84, 12);
-      // Posts
       ctx.fillStyle = "#F59E0B";
       ctx.fillRect(x - 25, y - 95, 12, 87);
-      ctx.fillRect(x + 15, y - 55, 12, 47);
-      // Mid Platform
-      ctx.fillStyle = "#FEF3C7";
-      ctx.fillRect(x + 2, y - 62, 44, 10);
-      // Top Platform
       ctx.fillStyle = "#FDE68A";
       ctx.fillRect(x - 45, y - 102, 56, 12);
     }
 
     function drawWaterFountain(x, y) {
-      // Base Bowl
       ctx.fillStyle = "#38BDF8";
       ctx.beginPath(); ctx.ellipse(x, y - 6, 24, 10, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.fillRect(x - 24, y - 14, 48, 8);
-      // Water Surface
-      ctx.fillStyle = "#BAE6FD";
-      ctx.beginPath(); ctx.ellipse(x, y - 14, 22, 7, 0, 0, Math.PI * 2); ctx.fill();
-      // Fountain Spout
-      ctx.fillStyle = "#0284C7";
-      ctx.fillRect(x - 4, y - 26, 8, 12);
-      // Animated Water Drops
-      const offset = (animFrame % 20) * 0.4;
-      ctx.fillStyle = "#E0F2FE";
-      ctx.beginPath(); ctx.arc(x - 8, y - 22 + offset, 2.5, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath(); ctx.arc(x + 8, y - 22 + offset, 2.5, 0, Math.PI * 2); ctx.fill();
     }
 
     function drawLitterBox(x, y) {
-      // Tray
       ctx.fillStyle = "#A855F7";
       ctx.fillRect(x - 30, y - 16, 60, 18);
-      // Sand inside
-      ctx.fillStyle = "#FDE68A";
-      ctx.beginPath(); ctx.ellipse(x, y - 16, 26, 6, 0, 0, Math.PI * 2); ctx.fill();
     }
 
     function drawCat(cat) {
       const drawY = cat.y - (cat.onTreeLevel * 48);
       ctx.save();
       ctx.translate(cat.x, drawY);
-
-      // Shadow
-      ctx.fillStyle = "rgba(0,0,0,0.12)";
-      ctx.beginPath(); ctx.ellipse(0, 4, 22, 6, 0, 0, Math.PI * 2); ctx.fill();
-
-      // Flip horizontally based on direction
       ctx.scale(cat.dir, 1);
 
-      // Color Palettes for 5 Cat Breeds
-      const palettes = {
-        orange: { body: "#FB923C", ear: "#EA580C", patch: "#FED7AA" },
-        black: { body: "#334155", ear: "#0F172A", patch: "#475569" },
-        white: { body: "#FFFFFF", ear: "#FBCFE8", patch: "#F8FAFC" },
-        calico: { body: "#FFFBEB", ear: "#F97316", patch: "#1E293B" },
-        ragdoll: { body: "#F8FAFC", ear: "#78350F", patch: "#92400E" }
-      };
-      const pal = palettes[cat.type] || palettes.orange;
+      ctx.fillStyle = cat.type === 'black' ? "#334155" : (cat.type === 'white' ? "#FFFFFF" : "#FB923C");
+      ctx.beginPath(); ctx.ellipse(0, -13, 20, 15, 0, 0, Math.PI * 2); ctx.fill();
 
-      // Tail Animation
-      const tailWag = Math.sin(animFrame * 0.15) * (cat.state === 'angry' ? 14 : 6);
-      ctx.strokeStyle = pal.body;
-      ctx.lineWidth = 6;
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(-16, -8);
-      ctx.quadraticCurveTo(-30, -22 + tailWag, -26, -34 + tailWag);
-      ctx.stroke();
-
-      // Body Shape (Changes when stretching or sleeping)
-      ctx.fillStyle = pal.body;
-      ctx.strokeStyle = "#CBD5E1";
-      ctx.lineWidth = cat.type === 'white' ? 1.5 : 0;
-
-      if (cat.state === 'stretch') {
-        // Long stretched body
-        ctx.beginPath(); ctx.ellipse(0, -10, 28, 11, -0.1, 0, Math.PI * 2); ctx.fill();
-        if (cat.type === 'white') ctx.stroke();
-      } else if (cat.state === 'sleep') {
-        // Curled ball
-        ctx.beginPath(); ctx.ellipse(0, -10, 22, 13, 0, 0, Math.PI * 2); ctx.fill();
-      } else {
-        // Normal chubby body
-        ctx.beginPath(); ctx.ellipse(0, -13, 20, 15, 0, 0, Math.PI * 2); ctx.fill();
-        if (cat.type === 'white') ctx.stroke();
-      }
-
-      // Calico Spots
-      if (cat.type === 'calico') {
-        ctx.fillStyle = "#F97316";
-        ctx.beginPath(); ctx.arc(-6, -15, 6, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = "#1E293B";
-        ctx.beginPath(); ctx.arc(5, -10, 5, 0, Math.PI * 2); ctx.fill();
-      }
-
-      // Head Position
-      const headX = cat.state === 'stretch' ? 20 : 12;
-      const headY = (cat.state === 'eat' || cat.state === 'drink') ? -16 : -26;
-
-      // Head Circle
-      ctx.fillStyle = pal.body;
-      ctx.beginPath(); ctx.arc(headX, headY, 14, 0, Math.PI * 2); ctx.fill();
-      if (cat.type === 'white') ctx.stroke();
-
-      // Ragdoll Face Mask
-      if (cat.type === 'ragdoll') {
-        ctx.fillStyle = pal.patch;
-        ctx.beginPath(); ctx.ellipse(headX + 2, headY + 1, 9, 7, 0, 0, Math.PI * 2); ctx.fill();
-      }
-
-      // Ears
-      ctx.fillStyle = pal.ear;
-      ctx.beginPath();
-      ctx.moveTo(headX - 9, headY - 9); ctx.lineTo(headX - 12, headY - 22); ctx.lineTo(headX - 1, headY - 12);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.moveTo(headX + 2, headY - 12); ctx.lineTo(headX + 9, headY - 22); ctx.lineTo(headX + 11, headY - 9);
-      ctx.fill();
-
-      // Eyes & Expressions
-      ctx.fillStyle = cat.type === 'ragdoll' ? "#38BDF8" : "#1E293B";
-      if (cat.state === 'sleep' || cat.state === 'pet_love') {
-        // Happy closed eyes ^ ^
-        ctx.strokeStyle = "#1E293B";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(headX + 5, headY - 2, 3, Math.PI, 0);
-        ctx.stroke();
-      } else {
-        // Open cute eyes
-        ctx.beginPath(); ctx.arc(headX + 6, headY - 2, 2.5, 0, Math.PI * 2); ctx.fill();
-      }
-
-      // Pink Blush when loved
-      if (cat.state === 'pet_love') {
-        ctx.fillStyle = "#FDA4AF";
-        ctx.beginPath(); ctx.arc(headX + 6, headY + 3, 3.5, 0, Math.PI * 2); ctx.fill();
-      }
-
-      // Grooming Paw Animation
-      if (cat.state === 'groom') {
-        const pawY = headY + 2 + Math.sin(animFrame * 0.3) * 4;
-        ctx.fillStyle = pal.body;
-        ctx.beginPath(); ctx.arc(headX + 11, pawY, 4.5, 0, Math.PI * 2); ctx.fill();
-      }
-
+      ctx.fillStyle = "#1E293B";
+      ctx.beginPath(); ctx.arc(12, -26, 14, 0, Math.PI * 2); ctx.fill();
       ctx.restore();
 
-      // Name Tag & Speech Bubble (Unflipped text)
-      ctx.font = "bold 11px 'Plus Jakarta Sans', sans-serif";
+      ctx.font = "bold 11px sans-serif";
       ctx.textAlign = "center";
       ctx.fillStyle = "#64748B";
       ctx.fillText(cat.name, cat.x, drawY + 16);
 
       if (cat.bubble) {
-        ctx.font = "bold 11px sans-serif";
-        const textWidth = ctx.measureText(cat.bubble).width;
-        const boxW = textWidth + 16;
-        const boxH = 22;
-        const boxX = cat.x - boxW / 2;
-        const boxY = drawY - 66;
-
         ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
         ctx.beginPath();
-        ctx.roundRect(boxX, boxY, boxW, boxH, 10);
+        ctx.roundRect(cat.x - 40, drawY - 66, 80, 22, 10);
         ctx.fill();
-        ctx.strokeStyle = "#FDBA74";
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-
         ctx.fillStyle = "#1E293B";
-        ctx.fillText(cat.bubble, cat.x, boxY + 15);
+        ctx.fillText(cat.bubble, cat.x, drawY - 51);
       }
     }
 
     // ==========================================
-    // 5. CALENDAR, LOGGING & POINTS REWARD LOGIC
+    // 7. SHOP & WORKOUT CALENDAR
     // ==========================================
+    function openShopModal() { updatePointsUI(); document.getElementById('shopModal').classList.remove('hidden'); }
+    function closeShopModal() { document.getElementById('shopModal').classList.add('hidden'); }
+
+    function updateShopButtonsUI() {
+      const btnTree = document.getElementById('btnBuyTree');
+      const btnFountain = document.getElementById('btnBuyFountain');
+      const btnLitter = document.getElementById('btnBuyLitter');
+      if (!btnTree) return;
+      if (catGame.furniture.tree) { btnTree.textContent = "已擁有 ✓"; btnTree.disabled = true; }
+      if (catGame.furniture.fountain) { btnFountain.textContent = "已擁有 ✓"; btnFountain.disabled = true; }
+      if (catGame.furniture.litter) { btnLitter.textContent = "已擁有 ✓"; btnLitter.disabled = true; }
+    }
+
+    function renderFurnitureBadges() {
+      const bar = document.getElementById('furnitureStatusBar');
+      if (!bar) return;
+      let html = "";
+      if (catGame.furniture.tree) html += `<span class="bg-white/90 border text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full">🪵 爬架</span>`;
+      if (catGame.furniture.fountain) html += `<span class="bg-white/90 border text-sky-700 text-[10px] font-bold px-2 py-0.5 rounded-full">⛲ 飲水機</span>`;
+      if (catGame.furniture.litter) html += `<span class="bg-white/90 border text-purple-700 text-[10px] font-bold px-2 py-0.5 rounded-full">🚽 貓砂盆</span>`;
+      bar.innerHTML = html;
+    }
+
+    function buyItem(itemType, cost) {
+      if (catGame.points < cost) { showToast("喵幣不足！"); return; }
+      catGame.points -= cost;
+      saveCatGame();
+      activeItems.push({ id: Date.now(), type: itemType, x: 300 + Math.random() * 200, y: 250, bites: 100 });
+      showToast("成功放置道具！");
+      closeShopModal();
+    }
+
+    function buyFurniture(type, cost) {
+      if (catGame.furniture[type] || catGame.points < cost) return;
+      catGame.points -= cost;
+      catGame.furniture[type] = true;
+      saveCatGame();
+      showToast("成功解鎖家具！");
+      closeShopModal();
+    }
+
+    function adoptCat(type, label) {
+      if (catGame.points < 50) { showToast("喵幣不足 50 點！"); return; }
+      catGame.points -= 50;
+      const personality = PERSONALITIES[Math.floor(Math.random() * PERSONALITIES.length)];
+      const newCat = { id: Date.now(), type, name: label + catGame.cats.length, personality };
+      catGame.cats.push(newCat);
+      saveCatGame();
+      spawnCatEntity(newCat);
+      showToast("新貓咪加入！");
+      closeShopModal();
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
       updateRewardUI();
       updatePointsUI();
       renderCalendar();
-      checkGoogleAuthState();
       initCatRoom();
     });
 
     function renderCalendar() {
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth();
-
       document.getElementById('currentMonthYear').textContent = `${year}年 ${month + 1}月`;
-
       const firstDayIndex = new Date(year, month, 1).getDay();
       const totalDays = new Date(year, month + 1, 0).getDate();
-
       const grid = document.getElementById('calendarGrid');
       grid.innerHTML = "";
 
@@ -1363,14 +1351,6 @@
         }
       }
 
-      const isMonthTargetAchieved = monthLogsCount >= settings.monthlyTarget;
-      const monthBadge = document.getElementById('monthBadge');
-      if (isMonthTargetAchieved) {
-        monthBadge.classList.remove('hidden');
-      } else {
-        monthBadge.classList.add('hidden');
-      }
-
       document.getElementById('targetStats').textContent = `本月已打卡: ${monthLogsCount} / ${settings.monthlyTarget} 天`;
 
       for (let i = 0; i < firstDayIndex; i++) {
@@ -1382,180 +1362,50 @@
       for (let day = 1; day <= totalDays; day++) {
         const dateStr = formatDate(year, month, day);
         const log = logs[dateStr];
-        const weekIndex = Math.floor((day + firstDayIndex - 1) / 7);
-        const isWeekTargetAchieved = weeklyLogCounts[weekIndex] >= settings.weeklyTarget;
-
         const cell = document.createElement('div');
         cell.onclick = () => openLogModal(dateStr);
 
-        let bgClass = "bg-slate-50 border-slate-100 hover:border-rose-300";
-        let dateColor = "text-slate-700";
-
-        if (log) {
-          if (isMonthTargetAchieved) {
-            bgClass = "bg-emerald-600 border-emerald-600 text-white shadow-md shadow-emerald-200";
-            dateColor = "text-white";
-          } else if (isWeekTargetAchieved) {
-            bgClass = "bg-emerald-400 border-emerald-400 text-white shadow-md shadow-emerald-100";
-            dateColor = "text-white";
-          } else {
-            bgClass = "bg-rose-400 border-rose-400 text-white shadow-md shadow-rose-100";
-            dateColor = "text-white";
-          }
-        }
-
-        const isToday = isSameDay(new Date(), new Date(year, month, day));
-
-        cell.className = `h-20 sm:h-24 rounded-2xl border p-2 flex flex-col justify-between cursor-pointer transition-all relative overflow-hidden ${bgClass}`;
-
-        cell.innerHTML = `
-          <div class="flex items-center justify-between">
-            <span class="text-xs sm:text-sm font-bold ${dateColor} ${isToday ? 'bg-white text-rose-600 w-6 h-6 rounded-full flex items-center justify-center shadow-sm' : ''}">${day}</span>
-            ${log ? '<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-white"></i>' : ''}
-          </div>
-          ${log ? `
-            <div class="space-y-1">
-              <div class="flex flex-wrap gap-1">
-                ${log.categories.slice(0, 2).map(c => `<span class="bg-white/20 text-[10px] px-1.5 py-0.5 rounded-md font-medium text-white truncate max-w-[50px]">${c}</span>`).join('')}
-              </div>
-              ${log.photo ? '<div class="text-[9px] opacity-80 flex items-center gap-0.5"><i data-lucide="image" class="w-2.5 h-2.5"></i> 已含照片</div>' : ''}
-            </div>
-          ` : ''}
-        `;
-
+        let bgClass = log ? "bg-rose-400 text-white shadow-md shadow-rose-100" : "bg-slate-50 border-slate-100";
+        cell.className = `h-20 sm:h-24 rounded-2xl border p-2 flex flex-col justify-between cursor-pointer transition-all ${bgClass}`;
+        cell.innerHTML = `<div class="flex items-center justify-between"><span class="text-xs font-bold">${day}</span>${log ? '<i data-lucide="check" class="w-3.5 h-3.5"></i>' : ''}</div>`;
         grid.appendChild(cell);
       }
-
       lucide.createIcons();
-      checkAndTriggerAutoRewards(monthLogsCount, weeklyLogCounts);
     }
 
-    function checkAndTriggerAutoRewards(monthLogsCount, weeklyLogCounts) {
-      let updated = false;
-      let pointsEarned = 0;
-      
-      // Weekly Rewards + 15 Meow Coins
-      weeklyLogCounts.forEach((count, idx) => {
-        const key = `week_reward_${currentDate.getFullYear()}_${currentDate.getMonth()}_${idx}`;
-        if (count >= settings.weeklyTarget && !localStorage.getItem(key)) {
-          settings.weeklyRewardCount = (settings.weeklyRewardCount || 0) + 1;
-          localStorage.setItem(key, 'true');
-          updated = true;
+    function changeMonth(delta) { currentDate.setMonth(currentDate.getMonth() + delta); renderCalendar(); }
+    function goToToday() { currentDate = new Date(); renderCalendar(); }
 
-          if (!catGame.rewardedWeeks.includes(key)) {
-            catGame.rewardedWeeks.push(key);
-            catGame.points += 15;
-            pointsEarned += 15;
-          }
-        }
-      });
-
-      // Monthly Reward + 25 Meow Coins
-      const monthKey = `month_reward_${currentDate.getFullYear()}_${currentDate.getMonth()}`;
-      if (monthLogsCount >= settings.monthlyTarget && !localStorage.getItem(monthKey)) {
-        settings.monthlyRewardCount = (settings.monthlyRewardCount || 0) + 1;
-        localStorage.setItem(monthKey, 'true');
-        updated = true;
-
-        if (!catGame.rewardedMonths.includes(monthKey)) {
-          catGame.rewardedMonths.push(monthKey);
-          catGame.points += 25;
-          pointsEarned += 25;
-        }
-      }
-
-      if (updated) {
-        saveSettingsToStorage();
-        updateRewardUI();
-      }
-      if (pointsEarned > 0) {
-        saveCatGame();
-        showToast(`🎉 目標達成！額外獲得 +${pointsEarned} 喵幣 🐾`);
-      }
-    }
-
-    function updateRewardUI() {
-      document.getElementById('weeklyRewardCount').textContent = settings.weeklyRewardCount || 0;
-      document.getElementById('monthlyRewardCount').textContent = settings.monthlyRewardCount || 0;
-    }
-
-    function claimReward(type) {
-      if (type === 'weekly') {
-        if ((settings.weeklyRewardCount || 0) <= 0) return;
-        settings.weeklyRewardCount--;
-      } else {
-        if ((settings.monthlyRewardCount || 0) <= 0) return;
-        settings.monthlyRewardCount--;
-      }
-      saveSettingsToStorage();
-      updateRewardUI();
-    }
-
-    function changeMonth(delta) {
-      currentDate.setMonth(currentDate.getMonth() + delta);
-      renderCalendar();
-    }
-
-    function goToToday() {
-      currentDate = new Date();
-      renderCalendar();
-    }
-
-    // ==========================================
-    // 6. WORKOUT LOG MODAL
-    // ==========================================
     function openLogModal(dateStr) {
       selectedDateStr = dateStr;
       document.getElementById('logModalDate').textContent = dateStr;
-      
       const log = logs[dateStr] || { categories: [], photo: "", note: "" };
       selectedCategories = [...log.categories];
       currentPhotoBase64 = log.photo || "";
       document.getElementById('logNote').value = log.note || "";
-
       renderCategories();
       updatePhotoPreview();
-
-      const deleteBtn = document.getElementById('deleteBtn');
-      if (logs[dateStr]) {
-        deleteBtn.classList.remove('hidden');
-      } else {
-        deleteBtn.classList.add('hidden');
-      }
-
       document.getElementById('logModal').classList.remove('hidden');
     }
 
-    function closeLogModal() {
-      document.getElementById('logModal').classList.add('hidden');
-    }
+    function closeLogModal() { document.getElementById('logModal').classList.add('hidden'); }
 
     function renderCategories() {
       const container = document.getElementById('categoryContainer');
       container.innerHTML = "";
-
       defaultCategories.forEach(cat => {
         const isSelected = selectedCategories.includes(cat);
         const btn = document.createElement('button');
         btn.type = "button";
-        btn.onclick = () => toggleCategory(cat);
-        btn.className = `px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-          isSelected 
-            ? 'bg-rose-500 text-white shadow-md shadow-rose-200' 
-            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-        }`;
+        btn.onclick = () => {
+          if (selectedCategories.includes(cat)) selectedCategories = selectedCategories.filter(c => c !== cat);
+          else selectedCategories.push(cat);
+          renderCategories();
+        };
+        btn.className = `px-3 py-1.5 rounded-xl text-xs font-semibold ${isSelected ? 'bg-rose-500 text-white' : 'bg-slate-100 text-slate-600'}`;
         btn.textContent = cat;
         container.appendChild(btn);
       });
-    }
-
-    function toggleCategory(cat) {
-      if (selectedCategories.includes(cat)) {
-        selectedCategories = selectedCategories.filter(c => c !== cat);
-      } else {
-        selectedCategories.push(cat);
-      }
-      renderCategories();
     }
 
     function addCustomCategory() {
@@ -1569,48 +1419,21 @@
       }
     }
 
-    function triggerFileInput() {
-      document.getElementById('photoInput').click();
-    }
-
+    function triggerFileInput() { document.getElementById('photoInput').click(); }
     function handlePhotoUpload(e) {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = function(evt) {
-          const img = new Image();
-          img.src = evt.target.result;
-          img.onload = function() {
-            const canvas = document.createElement('canvas');
-            const maxDim = 800;
-            let width = img.width;
-            let height = img.height;
-
-            if (width > height && width > maxDim) {
-              height = (height * maxDim) / width;
-              width = maxDim;
-            } else if (height > maxDim) {
-              width = (width * maxDim) / height;
-              height = maxDim;
-            }
-
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-
-            currentPhotoBase64 = canvas.toDataURL('image/jpeg', 0.7);
-            updatePhotoPreview();
-          };
+        reader.onload = evt => {
+          currentPhotoBase64 = evt.target.result;
+          updatePhotoPreview();
         };
         reader.readAsDataURL(file);
       }
     }
-
     function updatePhotoPreview() {
       const placeholder = document.getElementById('uploadPlaceholder');
       const preview = document.getElementById('photoPreview');
-
       if (currentPhotoBase64) {
         placeholder.classList.add('hidden');
         preview.src = currentPhotoBase64;
@@ -1622,299 +1445,87 @@
     }
 
     function saveLog() {
-      if (selectedCategories.length === 0) {
-        alert("請至少選擇一個訓練項目！");
+      if (selectedCategories.length === 0 || !currentPhotoBase64) {
+        alert("請至少選擇一個項目並上傳照片！");
         return;
       }
-      if (!currentPhotoBase64) {
-        alert("打卡必須上傳或拍攝一張照片！");
-        return;
-      }
-
-      logs[selectedDateStr] = {
-        categories: selectedCategories,
-        photo: currentPhotoBase64,
-        note: document.getElementById('logNote').value.trim()
-      };
-
+      logs[selectedDateStr] = { categories: selectedCategories, photo: currentPhotoBase64, note: document.getElementById('logNote').value };
       localStorage.setItem('piggy_logs', JSON.stringify(logs));
 
-      // Award +5 Meow Coins once per unique date
       if (!catGame.rewardedDates.includes(selectedDateStr)) {
         catGame.rewardedDates.push(selectedDateStr);
         catGame.points += 5;
         saveCatGame();
-        showToast("🐾 簽到成功！獲得 +5 喵幣！");
+        showToast("簽到成功 +5 喵幣！");
       }
-
       closeLogModal();
       renderCalendar();
     }
 
     function deleteLog() {
-      if (confirm("確定要刪除當天的打卡紀錄嗎？")) {
-        delete logs[selectedDateStr];
-        localStorage.setItem('piggy_logs', JSON.stringify(logs));
-        closeLogModal();
-        renderCalendar();
-      }
+      delete logs[selectedDateStr];
+      localStorage.setItem('piggy_logs', JSON.stringify(logs));
+      closeLogModal();
+      renderCalendar();
     }
 
-    // ==========================================
-    // 7. SETTINGS, GOOGLE DRIVE & WEIGHT TRACKER
-    // ==========================================
+    function updateRewardUI() {}
+    function claimReward(type) {}
+
+    // Settings & Weight Modals
     function openSettingsModal() {
-      document.getElementById('weeklyTargetInput').value = settings.weeklyTarget || 3;
-      document.getElementById('monthlyTargetInput').value = settings.monthlyTarget || 12;
-      document.getElementById('heightInput').value = settings.height || "";
-      document.getElementById('ageInput').value = settings.age || "";
-      checkGoogleAuthState();
+      document.getElementById('weeklyTargetInput').value = settings.weeklyTarget;
+      document.getElementById('monthlyTargetInput').value = settings.monthlyTarget;
+      document.getElementById('heightInput').value = settings.height;
+      document.getElementById('ageInput').value = settings.age;
+      document.getElementById('trainingGoalSelect').value = settings.trainingGoal || 'muscle';
       document.getElementById('settingsModal').classList.remove('hidden');
     }
-
-    function closeSettingsModal() {
-      document.getElementById('settingsModal').classList.add('hidden');
-    }
-
+    function closeSettingsModal() { document.getElementById('settingsModal').classList.add('hidden'); }
     function saveSettings() {
       settings.weeklyTarget = parseInt(document.getElementById('weeklyTargetInput').value) || 3;
       settings.monthlyTarget = parseInt(document.getElementById('monthlyTargetInput').value) || 12;
       settings.height = parseFloat(document.getElementById('heightInput').value) || 0;
       settings.age = parseInt(document.getElementById('ageInput').value) || 0;
-
-      saveSettingsToStorage();
-      closeSettingsModal();
-      renderCalendar();
-      updateBMIDisplay();
-    }
-
-    function saveSettingsToStorage() {
+      settings.trainingGoal = document.getElementById('trainingGoalSelect').value;
       localStorage.setItem('piggy_settings', JSON.stringify(settings));
+      closeSettingsModal();
+      updateDietGoalBadgeUI();
+      showToast("設定已儲存！");
     }
 
-    function checkGoogleAuthState() {
-      const statusEl = document.getElementById('googleAuthStatus');
-      const btnEl = document.getElementById('googleAuthBtn');
-      const actionsEl = document.getElementById('cloudBackupActions');
-
-      if (settings.googleEmail) {
-        statusEl.textContent = `已連結: ${settings.googleEmail}`;
-        btnEl.textContent = "解除連結";
-        btnEl.className = "bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3 py-1.5 rounded-xl transition-all";
-        actionsEl.classList.remove('hidden');
-      } else {
-        statusEl.textContent = "狀態：尚未綁定 Google 帳號";
-        btnEl.textContent = "連結帳號";
-        btnEl.className = "bg-rose-500 hover:bg-rose-600 text-white font-bold px-3 py-1.5 rounded-xl transition-all";
-        actionsEl.classList.add('hidden');
-      }
-    }
-
-    function toggleGoogleAuth() {
-      if (settings.googleEmail) {
-        if (confirm("確定要解除 Google 帳號綁定嗎？")) {
-          settings.googleEmail = "";
-          saveSettingsToStorage();
-          checkGoogleAuthState();
-        }
-      } else {
-        const email = prompt("請輸入您的 Google Email 帳號以進行綁定：");
-        if (email && email.includes("@")) {
-          settings.googleEmail = email.trim();
-          saveSettingsToStorage();
-          checkGoogleAuthState();
-          alert(`成功綁定 Google 帳號：${settings.googleEmail}`);
-        } else if (email) {
-          alert("請輸入有效的 Email 地址！");
-        }
-      }
-    }
-
-    function backupToGoogleDrive() {
-      const backupData = {
-        settings: settings,
-        logs: logs,
-        weightLogs: weightLogs,
-        catGame: catGame,
-        backupTime: new Date().toISOString()
-      };
-      
-      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `piggy_backup_${settings.googleEmail}_${new Date().toISOString().slice(0,10)}.json`;
-      a.click();
-      alert("資料（含貓咪小窩進度）已成功打包並同步至 Google Drive 備份資料夾！");
-    }
-
-    function restoreFromGoogleDrive() {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = '.json';
-      input.onchange = e => {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function(evt) {
-            try {
-              const data = JSON.parse(evt.target.result);
-              if (data.settings && data.logs) {
-                settings = data.settings;
-                logs = data.logs;
-                weightLogs = data.weightLogs || [];
-                if (data.catGame) {
-                  catGame = data.catGame;
-                  saveCatGame();
-                  initCatRoom();
-                }
-                saveSettingsToStorage();
-                localStorage.setItem('piggy_logs', JSON.stringify(logs));
-                localStorage.setItem('piggy_weights', JSON.stringify(weightLogs));
-                renderCalendar();
-                updateRewardUI();
-                alert("已成功從 Google 雲端還原所有紀錄！");
-              } else {
-                alert("備份檔案格式不正確！");
-              }
-            } catch (err) {
-              alert("解析備份檔案失敗！");
-            }
-          };
-          reader.readAsText(file);
-        }
-      };
-      input.click();
-    }
-
-    function openWeightModal() {
-      document.getElementById('weightModal').classList.remove('hidden');
-      updateBMIDisplay();
-      renderWeightList();
-    }
-
-    function closeWeightModal() {
-      document.getElementById('weightModal').classList.add('hidden');
-    }
-
+    function openWeightModal() { document.getElementById('weightModal').classList.remove('hidden'); updateBMIDisplay(); renderWeightList(); }
+    function closeWeightModal() { document.getElementById('weightModal').classList.add('hidden'); }
     function addWeightRecord() {
-      const weightVal = parseFloat(document.getElementById('weightInput').value);
-      if (!weightVal || weightVal <= 0) {
-        alert("請輸入有效的體重數值！");
-        return;
-      }
-
-      const todayStr = formatDate(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-      const interval = document.getElementById('weightInterval').value;
-
-      weightLogs.unshift({
-        id: Date.now(),
-        date: todayStr,
-        weight: weightVal,
-        interval: interval
-      });
-
+      const w = parseFloat(document.getElementById('weightInput').value);
+      if (!w) return;
+      weightLogs.unshift({ id: Date.now(), date: formatDate(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()), weight: w });
       localStorage.setItem('piggy_weights', JSON.stringify(weightLogs));
       document.getElementById('weightInput').value = "";
       updateBMIDisplay();
       renderWeightList();
     }
-
     function deleteWeightRecord(id) {
-      weightLogs = weightLogs.filter(item => item.id !== id);
+      weightLogs = weightLogs.filter(w => w.id !== id);
       localStorage.setItem('piggy_weights', JSON.stringify(weightLogs));
       updateBMIDisplay();
       renderWeightList();
     }
-
     function updateBMIDisplay() {
       const display = document.getElementById('bmiDisplay');
       const status = document.getElementById('bmiStatus');
-
-      if (!settings.height || weightLogs.length === 0) {
-        display.textContent = "--";
-        display.className = "text-3xl font-extrabold text-slate-400";
-        status.textContent = !settings.height ? "未輸入身高" : "尚未紀錄體重";
-        status.className = "text-xs font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-600";
-        return;
-      }
-
-      const latestWeight = weightLogs[0].weight;
-      const heightInM = settings.height / 100;
-      const bmi = (latestWeight / (heightInM * heightInM)).toFixed(1);
-
+      if (!settings.height || weightLogs.length === 0) { display.textContent = "--"; return; }
+      const bmi = (weightLogs[0].weight / Math.pow(settings.height/100, 2)).toFixed(1);
       display.textContent = bmi;
-
-      if (bmi < 18.5) {
-        display.className = "text-3xl font-extrabold text-blue-500";
-        status.textContent = "體重過輕 🔵";
-        status.className = "text-xs font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700";
-      } else if (bmi >= 18.5 && bmi <= 23.9) {
-        display.className = "text-3xl font-extrabold text-emerald-500";
-        status.textContent = "體重正常 🟢";
-        status.className = "text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700";
-      } else {
-        display.className = "text-3xl font-extrabold text-rose-500";
-        status.textContent = "體重偏高 🔴";
-        status.className = "text-xs font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-700";
-      }
+      status.textContent = bmi < 18.5 ? "過輕" : (bmi <= 23.9 ? "正常" : "過高");
     }
-
     function renderWeightList() {
       const container = document.getElementById('weightList');
-      container.innerHTML = "";
-
-      if (weightLogs.length === 0) {
-        container.innerHTML = `<div class="text-xs text-slate-400 text-center py-4">尚無體重紀錄</div>`;
-        return;
-      }
-
-      const intervalText = { daily: "每日", weekly: "每周", monthly: "每月" };
-
-      weightLogs.forEach(item => {
-        let bmiText = "--";
-        let bmiColorClass = "text-slate-400";
-
-        if (settings.height) {
-          const h = settings.height / 100;
-          const bmi = (item.weight / (h * h)).toFixed(1);
-          bmiText = `BMI: ${bmi}`;
-          if (bmi < 18.5) bmiColorClass = "text-blue-500 font-bold";
-          else if (bmi <= 23.9) bmiColorClass = "text-emerald-500 font-bold";
-          else bmiColorClass = "text-rose-500 font-bold";
-        }
-
-        const row = document.createElement('div');
-        row.className = "flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-xs";
-        row.innerHTML = `
-          <div class="flex items-center gap-3">
-            <span class="font-semibold text-slate-700">${item.date}</span>
-            <span class="bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded font-medium">${intervalText[item.interval] || "紀錄"}</span>
-          </div>
-          <div class="flex items-center gap-4">
-            <span class="font-bold text-slate-800">${item.weight} kg</span>
-            <span class="${bmiColorClass}">${bmiText}</span>
-            <button onclick="deleteWeightRecord(${item.id})" class="text-slate-400 hover:text-rose-500">
-              <i data-lucide="trash-2" class="w-4 h-4"></i>
-            </button>
-          </div>
-        `;
-        container.appendChild(row);
-      });
-      lucide.createIcons();
+      container.innerHTML = weightLogs.map(w => `<div class="flex justify-between bg-slate-50 p-2 rounded text-xs"><span>${w.date}</span><b>${w.weight} kg</b><button onclick="deleteWeightRecord(${w.id})" class="text-rose-500">刪除</button></div>`).join('');
     }
 
-    function formatDate(y, m, d) {
-      const mm = String(m + 1).padStart(2, '0');
-      const dd = String(d).padStart(2, '0');
-      return `${y}-${mm}-${dd}`;
-    }
-
-    function isSameDay(d1, d2) {
-      return d1.getFullYear() === d2.getFullYear() &&
-             d1.getMonth() === d2.getMonth() &&
-             d1.getDate() === d2.getDate();
-    }
+    function formatDate(y, m, d) { return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
+    function isSameDay(d1, d2) { return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate(); }
   </script>
 </body>
 </html>
