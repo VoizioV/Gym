@@ -22,6 +22,9 @@
       background: #cbd5e1;
       border-radius: 9999px;
     }
+    canvas {
+      touch-action: manipulation;
+    }
   </style>
 </head>
 <body class="bg-rose-50/50 min-h-screen text-slate-800 pb-12">
@@ -35,18 +38,25 @@
         </div>
         <div>
           <h1 class="font-extrabold text-xl text-slate-800 tracking-tight">寶寶豬的逆襲日記 🐷💪</h1>
-          <p class="text-xs text-rose-500 font-medium">記錄每一次蛻變與努力</p>
+          <p class="text-xs text-rose-500 font-medium">自律變美，一起養胖小貓咪</p>
         </div>
       </div>
       
       <div class="flex items-center gap-2">
-        <button onclick="openWeightModal()" class="flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 px-3.5 py-2 rounded-xl text-sm font-semibold transition-all shadow-sm">
+        <!-- Meow Coin Badge -->
+        <div class="flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-700 px-3 py-1.5 rounded-xl text-sm font-extrabold shadow-sm">
+          <span>🐾</span>
+          <span id="headerPoints">0</span>
+          <span class="text-xs font-semibold hidden sm:inline">喵幣</span>
+        </div>
+
+        <button onclick="openWeightModal()" class="flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 px-3 py-2 rounded-xl text-sm font-semibold transition-all shadow-sm">
           <i data-lucide="scale" class="w-4 h-4"></i>
-          <span>體重紀錄</span>
+          <span class="hidden sm:inline">體重</span>
         </button>
-        <button onclick="openSettingsModal()" class="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-sm font-semibold transition-all">
+        <button onclick="openSettingsModal()" class="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-sm font-semibold transition-all">
           <i data-lucide="settings" class="w-4 h-4"></i>
-          <span class="hidden sm:inline">目標與資料</span>
+          <span class="hidden sm:inline">設定</span>
         </button>
       </div>
     </div>
@@ -54,6 +64,48 @@
 
   <!-- Main Content -->
   <main class="max-w-4xl mx-auto px-4 pt-6 space-y-6">
+
+    <!-- Cat Room Mini-Game Section -->
+    <section class="bg-white rounded-3xl p-5 sm:p-6 shadow-xl shadow-amber-100/60 border border-amber-200/70 space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div class="inline-flex items-center gap-1.5 bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-bold mb-1">
+            <span>🐱 寶寶豬的貓咪小窩</span>
+          </div>
+          <h2 class="text-lg sm:text-xl font-extrabold text-slate-800 flex items-center gap-2">
+            點擊貓咪互動，看看牠們的個性！
+            <span id="catCountBadge" class="text-xs bg-rose-100 text-rose-600 px-2.5 py-0.5 rounded-full font-bold">目前 1 隻貓</span>
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">打卡 +5 喵幣 ｜ 週達標 +15 喵幣 ｜ 月達標 +25 喵幣</p>
+        </div>
+
+        <!-- Shop Trigger Button (Anti-misclick) -->
+        <button onclick="openShopModal()" class="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 active:scale-95 text-white px-5 py-3 rounded-2xl text-sm font-extrabold shadow-lg shadow-amber-200 transition-all">
+          <i data-lucide="store" class="w-5 h-5"></i>
+          <span>貓貓商城</span>
+          <span class="bg-white/25 px-2 py-0.5 rounded-lg text-xs">🐾 <span id="shopBtnPoints">0</span></span>
+        </button>
+      </div>
+
+      <!-- Interactive Canvas Room -->
+      <div class="relative rounded-2xl overflow-hidden border-2 border-amber-200 bg-[#FFF8EE] shadow-inner">
+        <canvas id="catCanvas" width="800" height="320" class="w-full h-[250px] sm:h-[310px] block cursor-pointer"></canvas>
+        
+        <!-- Selected Cat Status Pill -->
+        <div id="selectedCatInfo" class="hidden absolute top-3 left-3 bg-white/95 backdrop-blur-md border border-amber-200 px-3.5 py-2 rounded-2xl shadow-md text-xs space-y-0.5 pointer-events-none animate-in fade-in duration-200">
+          <div class="flex items-center gap-2">
+            <span id="infoCatName" class="font-extrabold text-slate-800 text-sm">小橘</span>
+            <span id="infoCatTrait" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">貪吃</span>
+          </div>
+          <div id="infoCatAction" class="text-slate-500 font-medium">正在開心地撒嬌～</div>
+        </div>
+
+        <!-- Active Furniture Badges -->
+        <div id="furnitureStatusBar" class="absolute bottom-2.5 right-3 flex items-center gap-1.5 pointer-events-none">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
 
     <!-- Reward Status Card -->
     <section class="bg-gradient-to-r from-rose-500 to-pink-500 rounded-3xl p-6 text-white shadow-xl shadow-rose-200 relative overflow-hidden">
@@ -63,7 +115,7 @@
       <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
           <div class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold mb-2">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 獎勵兌換中心
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 生育獎勵兌換中心
           </div>
           <h2 class="text-2xl font-bold">累積努力，兌換獎勵 ✨</h2>
           <p class="text-rose-100 text-sm mt-1">週/月達標自動採計獎勵次數，點擊綠色勾號即可完成一次兌換！</p>
@@ -150,13 +202,157 @@
 
   </main>
 
+  <!-- Modal: Cat Shop (防誤觸獨立彈窗) -->
+  <div id="shopModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto custom-scrollbar animate-in fade-in zoom-in duration-200">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 sticky top-0 bg-white z-10">
+        <div>
+          <h3 class="font-extrabold text-xl text-slate-800 flex items-center gap-2">
+            🛒 貓貓精品商城
+          </h3>
+          <p class="text-xs text-slate-500">用運動賺來的喵幣寵愛你的小貓咪吧！</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="bg-amber-100 text-amber-800 px-3 py-1.5 rounded-xl text-xs font-extrabold">
+            餘額：🐾 <span id="modalPointsDisplay">0</span> 點
+          </div>
+          <button onclick="closeShopModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Section 1: Consumables & Toys -->
+      <div class="space-y-2.5">
+        <h4 class="text-xs font-extrabold text-amber-600 uppercase tracking-wider flex items-center gap-1.5">
+          <span>🍖 美食與互動玩具（可重複購買投放）</span>
+        </h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <!-- Can Food -->
+          <div class="border border-slate-200 hover:border-amber-400 rounded-2xl p-3.5 flex flex-col justify-between bg-amber-50/30 transition-all">
+            <div>
+              <div class="text-2xl mb-1">🥫</div>
+              <div class="font-bold text-sm text-slate-800">美味貓罐頭</div>
+              <p class="text-[11px] text-slate-500 mt-1">吸引所有貓咪圍過來大口吃飯，貪吃貓最愛！</p>
+            </div>
+            <button onclick="buyItem('food', 5)" class="mt-3 w-full bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-bold text-xs py-2 rounded-xl shadow-sm transition-all">
+              兌換 (5 喵幣)
+            </button>
+          </div>
+
+          <!-- Yarn Ball -->
+          <div class="border border-slate-200 hover:border-rose-400 rounded-2xl p-3.5 flex flex-col justify-between bg-rose-50/30 transition-all">
+            <div>
+              <div class="text-2xl mb-1">🧶</div>
+              <div class="font-bold text-sm text-slate-800">彈力毛球玩具</div>
+              <p class="text-[11px] text-slate-500 mt-1">貓咪會跑過去把毛球拍飛滾動玩耍。</p>
+            </div>
+            <button onclick="buyItem('yarn', 10)" class="mt-3 w-full bg-rose-500 hover:bg-rose-600 active:scale-95 text-white font-bold text-xs py-2 rounded-xl shadow-sm transition-all">
+              兌換 (10 喵幣)
+            </button>
+          </div>
+
+          <!-- Clockwork Mouse -->
+          <div class="border border-slate-200 hover:border-indigo-400 rounded-2xl p-3.5 flex flex-col justify-between bg-indigo-50/30 transition-all">
+            <div>
+              <div class="text-2xl mb-1">🐭</div>
+              <div class="font-bold text-sm text-slate-800">會動的老鼠玩具</div>
+              <p class="text-[11px] text-slate-500 mt-1">發條老鼠會在房間四處亂竄，引發全場追逐！</p>
+            </div>
+            <button onclick="buyItem('mouse', 15)" class="mt-3 w-full bg-indigo-500 hover:bg-indigo-600 active:scale-95 text-white font-bold text-xs py-2 rounded-xl shadow-sm transition-all">
+              兌換 (15 喵幣)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Permanent Room Furniture -->
+      <div class="space-y-2.5 pt-2">
+        <h4 class="text-xs font-extrabold text-emerald-600 uppercase tracking-wider flex items-center gap-1.5">
+          <span>🏠 豪華房間設施（一次兌換，永久擺放互動）</span>
+        </h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <!-- Cat Tree -->
+          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-emerald-50/20">
+            <div>
+              <div class="text-2xl mb-1">🪵</div>
+              <div class="font-bold text-sm text-slate-800">豪華貓爬架</div>
+              <p class="text-[11px] text-slate-500 mt-1">貓咪會主動攀爬跳上跳台，在高處俯視房間。</p>
+            </div>
+            <button id="btnBuyTree" onclick="buyFurniture('tree', 20)" class="mt-3 w-full bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-bold text-xs py-2 rounded-xl shadow-sm transition-all">
+              兌換 (20 喵幣)
+            </button>
+          </div>
+
+          <!-- Water Fountain -->
+          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-sky-50/20">
+            <div>
+              <div class="text-2xl mb-1">⛲</div>
+              <div class="font-bold text-sm text-slate-800">自動飲水機</div>
+              <p class="text-[11px] text-slate-500 mt-1">流動活水！貓咪口渴時會走過去低頭喝水。</p>
+            </div>
+            <button id="btnBuyFountain" onclick="buyFurniture('fountain', 15)" class="mt-3 w-full bg-sky-500 hover:bg-sky-600 active:scale-95 text-white font-bold text-xs py-2 rounded-xl shadow-sm transition-all">
+              兌換 (15 喵幣)
+            </button>
+          </div>
+
+          <!-- Litter Box -->
+          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-purple-50/20">
+            <div>
+              <div class="text-2xl mb-1">🚽</div>
+              <div class="font-bold text-sm text-slate-800">清潔貓砂盆</div>
+              <p class="text-[11px] text-slate-500 mt-1">讓貓咪可以上廁所，上完還會認真撥貓砂！</p>
+            </div>
+            <button id="btnBuyLitter" onclick="buyFurniture('litter', 15)" class="mt-3 w-full bg-purple-500 hover:bg-purple-600 active:scale-95 text-white font-bold text-xs py-2 rounded-xl shadow-sm transition-all">
+              兌換 (15 喵幣)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Adopt New Cats -->
+      <div class="space-y-2.5 pt-2">
+        <h4 class="text-xs font-extrabold text-pink-600 uppercase tracking-wider flex items-center gap-1.5">
+          <span>🐱 領養新貓咪（每隻 50 喵幣，隨機賦予 7 種性格之一）</span>
+        </h4>
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+          <button onclick="adoptCat('calico', '花貓')" class="border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center transition-all group">
+            <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🐈</div>
+            <div class="font-bold text-xs text-slate-800">三花貓</div>
+            <div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
+          </button>
+          <button onclick="adoptCat('black', '黑貓')" class="border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center transition-all group">
+            <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🐈‍⬛</div>
+            <div class="font-bold text-xs text-slate-800">酷黑貓</div>
+            <div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
+          </button>
+          <button onclick="adoptCat('white', '白貓')" class="border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center transition-all group">
+            <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🤍</div>
+            <div class="font-bold text-xs text-slate-800">雪白貓</div>
+            <div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
+          </button>
+          <button onclick="adoptCat('orange', '橘貓')" class="border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center transition-all group">
+            <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🧡</div>
+            <div class="font-bold text-xs text-slate-800">大橘貓</div>
+            <div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
+          </button>
+          <button onclick="adoptCat('ragdoll', '布偶貓')" class="col-span-2 sm:col-span-1 border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center transition-all group">
+            <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">👑</div>
+            <div class="font-bold text-xs text-slate-800">布偶貓</div>
+            <div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal: Workout Log / Detail -->
   <div id="logModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <div>
           <h3 id="logModalDate" class="font-bold text-lg text-slate-800">2026-11-12</h3>
-          <p class="text-xs text-slate-400">紀錄今日訓練項目與成果圖片</p>
+          <p class="text-xs text-slate-400">完成簽到可獲得 +5 喵幣 🐾</p>
         </div>
         <button onclick="closeLogModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
           <i data-lucide="x" class="w-5 h-5"></i>
@@ -166,10 +362,7 @@
       <!-- Category Selector -->
       <div>
         <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">1. 勾選當天訓練項目</label>
-        <div id="categoryContainer" class="flex flex-wrap gap-2 mb-3">
-          <!-- Rendered dynamically -->
-        </div>
-        <!-- Add Custom Tag -->
+        <div id="categoryContainer" class="flex flex-wrap gap-2 mb-3"></div>
         <div class="flex items-center gap-2">
           <input type="text" id="customCategoryInput" placeholder="自訂項目 (如: 瑜伽)" class="flex-1 text-xs border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-rose-400">
           <button onclick="addCustomCategory()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs font-semibold">新增</button>
@@ -243,7 +436,6 @@
       <div class="space-y-3 bg-rose-50/50 p-4 rounded-2xl border border-rose-100">
         <div class="flex items-center justify-between">
           <span class="text-xs font-bold text-rose-700">新增體重紀錄</span>
-          <!-- Interval selector -->
           <select id="weightInterval" class="text-xs bg-white border border-rose-200 rounded-lg px-2 py-1 text-slate-700">
             <option value="daily">每日紀錄</option>
             <option value="weekly">每周紀錄</option>
@@ -261,9 +453,7 @@
       <!-- Weight History List -->
       <div>
         <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">歷史紀錄</h4>
-        <div id="weightList" class="max-h-48 overflow-y-auto space-y-2 custom-scrollbar pr-1">
-          <!-- Rendered dynamically -->
-        </div>
+        <div id="weightList" class="max-h-48 overflow-y-auto space-y-2 custom-scrollbar pr-1"></div>
       </div>
     </div>
   </div>
@@ -279,7 +469,6 @@
       </div>
 
       <div class="space-y-4">
-        <!-- Target Settings -->
         <div class="space-y-3">
           <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">打卡天數目標</h4>
           <div>
@@ -294,7 +483,6 @@
 
         <hr class="border-slate-100">
 
-        <!-- Personal Body Profile -->
         <div class="space-y-3">
           <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">個人基本資料 (計算 BMI 必填)</h4>
           <div class="grid grid-cols-2 gap-3">
@@ -339,8 +527,15 @@
     </div>
   </div>
 
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-xl z-50 transition-all opacity-0 pointer-events-none">
+    提示訊息
+  </div>
+
   <script>
-    // App State
+    // ==========================================
+    // 1. APP STATE & PERSISTENCE
+    // ==========================================
     let currentDate = new Date();
     let selectedDateStr = "";
     
@@ -359,15 +554,791 @@
     let selectedCategories = [];
     let currentPhotoBase64 = "";
 
-    // Initialize
+    // Cat Game Persistent State
+    const PERSONALITIES = ["活潑", "高冷", "懶惰", "粘人", "貪吃", "容易生氣", "脾氣好"];
+    const CAT_NAMES = {
+      orange: ["小橘", "橘子醬", "胖虎", "蛋黃"],
+      calico: ["花花", "奶蓋", "三花妹", "布丁"],
+      black: ["煤球", "黑糖", "夜煞", "芝麻"],
+      white: ["雪球", "棉花糖", "小白", "湯圓"],
+      ragdoll: ["仙女", "王子", "藍寶", "泡芙"]
+    };
+
+    let catGame = JSON.parse(localStorage.getItem('piggy_cat_game') || JSON.stringify({
+      points: 25, // 初始贈送25喵幣方便體驗商城
+      rewardedDates: [],
+      rewardedWeeks: [],
+      rewardedMonths: [],
+      furniture: {
+        tree: false,     // 爬架 (20點)
+        fountain: false, // 飲水機 (15點)
+        litter: false    // 貓砂盆 (15點)
+      },
+      cats: [
+        { id: 1, type: 'orange', name: '小橘', personality: '貪吃' }
+      ]
+    }));
+
+    // Ensure old saves have furniture & personality fields
+    if (!catGame.furniture) catGame.furniture = { tree: false, fountain: false, litter: false };
+    catGame.cats.forEach(c => {
+      if (!c.personality) c.personality = PERSONALITIES[Math.floor(Math.random() * PERSONALITIES.length)];
+    });
+
+    function saveCatGame() {
+      localStorage.setItem('piggy_cat_game', JSON.stringify(catGame));
+      updatePointsUI();
+    }
+
+    function updatePointsUI() {
+      document.getElementById('headerPoints').textContent = catGame.points;
+      document.getElementById('shopBtnPoints').textContent = catGame.points;
+      const modalPts = document.getElementById('modalPointsDisplay');
+      if (modalPts) modalPts.textContent = catGame.points;
+      document.getElementById('catCountBadge').textContent = `目前 ${catGame.cats.length} 隻貓`;
+      updateShopButtonsUI();
+      renderFurnitureBadges();
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.remove('opacity-0');
+      setTimeout(() => toast.classList.add('opacity-0'), 2600);
+    }
+
+    // ==========================================
+    // 2. SHOP MODAL & PURCHASES
+    // ==========================================
+    function openShopModal() {
+      updatePointsUI();
+      document.getElementById('shopModal').classList.remove('hidden');
+    }
+
+    function closeShopModal() {
+      document.getElementById('shopModal').classList.add('hidden');
+    }
+
+    function updateShopButtonsUI() {
+      const btnTree = document.getElementById('btnBuyTree');
+      const btnFountain = document.getElementById('btnBuyFountain');
+      const btnLitter = document.getElementById('btnBuyLitter');
+      if (!btnTree) return;
+
+      if (catGame.furniture.tree) {
+        btnTree.textContent = "已擁有 ✓";
+        btnTree.disabled = true;
+        btnTree.className = "mt-3 w-full bg-slate-200 text-slate-500 font-bold text-xs py-2 rounded-xl cursor-not-allowed";
+      }
+      if (catGame.furniture.fountain) {
+        btnFountain.textContent = "已擁有 ✓";
+        btnFountain.disabled = true;
+        btnFountain.className = "mt-3 w-full bg-slate-200 text-slate-500 font-bold text-xs py-2 rounded-xl cursor-not-allowed";
+      }
+      if (catGame.furniture.litter) {
+        btnLitter.textContent = "已擁有 ✓";
+        btnLitter.disabled = true;
+        btnLitter.className = "mt-3 w-full bg-slate-200 text-slate-500 font-bold text-xs py-2 rounded-xl cursor-not-allowed";
+      }
+    }
+
+    function renderFurnitureBadges() {
+      const bar = document.getElementById('furnitureStatusBar');
+      if (!bar) return;
+      let html = "";
+      if (catGame.furniture.tree) html += `<span class="bg-white/90 border border-emerald-200 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">🪵 爬架</span>`;
+      if (catGame.furniture.fountain) html += `<span class="bg-white/90 border border-sky-200 text-sky-700 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">⛲ 飲水機</span>`;
+      if (catGame.furniture.litter) html += `<span class="bg-white/90 border border-purple-200 text-purple-700 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">🚽 貓砂盆</span>`;
+      bar.innerHTML = html;
+    }
+
+    function buyItem(itemType, cost) {
+      if (catGame.points < cost) {
+        showToast(`喵幣不足喔！還差 ${cost - catGame.points} 點，快去運動打卡吧 💪`);
+        return;
+      }
+      catGame.points -= cost;
+      saveCatGame();
+
+      const spawnX = 240 + Math.random() * 320;
+      const spawnY = 235 + Math.random() * 45;
+
+      if (itemType === 'food') {
+        activeItems.push({
+          id: Date.now(), type: 'food', x: spawnX, y: spawnY, bites: 100
+        });
+        showToast("🥫 放好美味貓罐頭啦！貓咪們圍過來了～");
+      } else if (itemType === 'yarn') {
+        activeItems.push({
+          id: Date.now(), type: 'yarn', x: spawnX, y: spawnY, vx: (Math.random() - 0.5) * 4, vy: 0, life: 1500
+        });
+        showToast("🧶 丟出彈力毛球！快看貓咪拍球～");
+      } else if (itemType === 'mouse') {
+        activeItems.push({
+          id: Date.now(), type: 'mouse', x: spawnX, y: spawnY, vx: 2.5, dir: 1, life: 1800
+        });
+        showToast("🐭 啟動發條老鼠！全場貓咪進入狩獵模式！");
+      }
+      closeShopModal();
+    }
+
+    function buyFurniture(type, cost) {
+      if (catGame.furniture[type]) return;
+      if (catGame.points < cost) {
+        showToast(`喵幣不足！兌換需要 ${cost} 點喵幣 🐾`);
+        return;
+      }
+      catGame.points -= cost;
+      catGame.furniture[type] = true;
+      saveCatGame();
+      const names = { tree: "豪華貓爬架", fountain: "自動飲水機", litter: "清潔貓砂盆" };
+      showToast(`🎉 成功兌換【${names[type]}】，已擺進房間裡囉！`);
+      closeShopModal();
+    }
+
+    function adoptCat(type, label) {
+      const cost = 50;
+      if (catGame.points < cost) {
+        showToast(`領養${label}需要 50 喵幣喔！目前有 ${catGame.points} 點`);
+        return;
+      }
+      catGame.points -= cost;
+      const pool = CAT_NAMES[type] || ["小可愛"];
+      const name = pool[catGame.cats.length % pool.length] + (catGame.cats.length >= pool.length ? (catGame.cats.length + 1) : "");
+      const personality = PERSONALITIES[Math.floor(Math.random() * PERSONALITIES.length)];
+
+      const newCatData = { id: Date.now(), type, name, personality };
+      catGame.cats.push(newCatData);
+      saveCatGame();
+      spawnCatEntity(newCatData);
+      showToast(`🎊 歡迎新成員【${name}】（性格：${personality}）加入小窩！`);
+      closeShopModal();
+    }
+
+    // ==========================================
+    // 3. INTERACTIVE 2D CAT ROOM ENGINE (CANVAS)
+    // ==========================================
+    const canvas = document.getElementById('catCanvas');
+    const ctx = canvas.getContext('2d');
+    let catEntities = [];
+    let activeItems = [];
+    let floatingParticles = [];
+    let animFrame = 0;
+
+    const FURNITURE_POS = {
+      tree: { x: 105, y: 235 },
+      fountain: { x: 695, y: 235 },
+      litter: { x: 685, y: 288 }
+    };
+
+    function initCatRoom() {
+      catEntities = [];
+      catGame.cats.forEach(c => spawnCatEntity(c));
+      requestAnimationFrame(gameLoop);
+    }
+
+    function spawnCatEntity(catData) {
+      catEntities.push({
+        id: catData.id,
+        type: catData.type,
+        name: catData.name,
+        personality: catData.personality,
+        x: 200 + Math.random() * 400,
+        y: 235 + Math.random() * 45,
+        vx: 0,
+        dir: Math.random() > 0.5 ? 1 : -1,
+        state: 'idle', // idle, walk, sleep, eat, play, climb, drink, poop, pet_love, stretch, groom, angry
+        stateTimer: 80 + Math.random() * 100,
+        bubble: "",
+        bubbleTimer: 0,
+        onTreeLevel: 0 // 0=ground, 1=mid platform, 2=top platform
+      });
+    }
+
+    // Canvas Click Interaction (Petting / Clicking Cats)
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const clickX = (e.clientX - rect.left) * scaleX;
+      const clickY = (e.clientY - rect.top) * scaleY;
+
+      // Find clicked cat (reverse order for top-most)
+      for (let i = catEntities.length - 1; i >= 0; i--) {
+        const cat = catEntities[i];
+        const hitY = cat.y - (cat.onTreeLevel * 45);
+        const dist = Math.hypot(clickX - cat.x, clickY - (hitY - 18));
+        if (dist < 42) {
+          handleCatClick(cat);
+          return;
+        }
+      }
+    });
+
+    function handleCatClick(cat) {
+      cat.onTreeLevel = 0;
+      cat.vx = 0;
+
+      // Reaction influenced by personality + random action
+      const p = cat.personality;
+      let actionDesc = "";
+
+      if (p === "容易生氣" && Math.random() < 0.55) {
+        cat.state = 'angry';
+        cat.stateTimer = 110;
+        cat.bubble = "哈氣！別碰本喵 💢";
+        cat.bubbleTimer = 110;
+        actionDesc = "炸毛生氣了，過一會再哄牠吧！";
+        spawnParticles(cat.x, cat.y - 35, "💢", 3);
+      } else if (p === "高冷" && Math.random() < 0.5) {
+        cat.state = 'groom';
+        cat.stateTimer = 120;
+        cat.bubble = "哼，勉強讓你摸一下 舔毛~";
+        cat.bubbleTimer = 120;
+        actionDesc = "一臉高冷地低頭舔毛理毛";
+        spawnParticles(cat.x, cat.y - 35, "✨", 2);
+      } else {
+        // Choose among: 撒嬌 (pet_love), 伸懶腰 (stretch), 舔毛 (groom)
+        const roll = Math.random();
+        if (p === "粘人" || p === "脾氣好" || roll < 0.45) {
+          cat.state = 'pet_love';
+          cat.stateTimer = 130;
+          cat.bubble = "呼嚕嚕～好喜歡你 ❤️";
+          cat.bubbleTimer = 130;
+          actionDesc = "翻肚皮撒嬌，發出開心的呼嚕聲！";
+          spawnParticles(cat.x, cat.y - 35, "❤️", 4);
+        } else if (roll < 0.75) {
+          cat.state = 'stretch';
+          cat.stateTimer = 110;
+          cat.bubble = "喵嗚～伸個大懶腰！";
+          cat.bubbleTimer = 110;
+          actionDesc = "前腳伸直，舒服地伸了個大懶腰～";
+          spawnParticles(cat.x, cat.y - 35, "🎵", 2);
+        } else {
+          cat.state = 'groom';
+          cat.stateTimer = 120;
+          cat.bubble = "舔舔爪子保持帥氣 ✨";
+          cat.bubbleTimer = 120;
+          actionDesc = "認真地舉起小爪子舔毛洗臉";
+          spawnParticles(cat.x, cat.y - 35, "✨", 2);
+        }
+      }
+
+      // Show Cat Info Card in Corner
+      const infoBox = document.getElementById('selectedCatInfo');
+      document.getElementById('infoCatName').textContent = `${cat.name}`;
+      document.getElementById('infoCatTrait').textContent = `性格：${cat.personality}`;
+      document.getElementById('infoCatAction').textContent = actionDesc;
+      infoBox.classList.remove('hidden');
+    }
+
+    function spawnParticles(x, y, char, count) {
+      for (let i = 0; i < count; i++) {
+        floatingParticles.push({
+          x: x + (Math.random() - 0.5) * 36,
+          y: y + (Math.random() - 0.5) * 15,
+          vy: -0.7 - Math.random() * 0.6,
+          char: char,
+          life: 70
+        });
+      }
+    }
+
+    function gameLoop() {
+      animFrame++;
+      updateEntities();
+      drawRoom();
+      requestAnimationFrame(gameLoop);
+    }
+
+    function updateEntities() {
+      // 1. Update Active Consumables/Toys
+      for (let i = activeItems.length - 1; i >= 0; i--) {
+        const item = activeItems[i];
+        if (item.type === 'food') {
+          if (item.bites <= 0) activeItems.splice(i, 1);
+        } else if (item.type === 'yarn') {
+          item.x += item.vx;
+          item.vx *= 0.96;
+          if (item.x < 160 || item.x > 640) item.vx *= -1;
+          item.life--;
+          if (item.life <= 0) activeItems.splice(i, 1);
+        } else if (item.type === 'mouse') {
+          item.x += item.vx * item.dir;
+          if (item.x < 165) item.dir = 1;
+          if (item.x > 635) item.dir = -1;
+          if (Math.random() < 0.02) item.dir *= -1;
+          item.life--;
+          if (item.life <= 0) activeItems.splice(i, 1);
+        }
+      }
+
+      // 2. Update Cats AI
+      catEntities.forEach(cat => {
+        if (cat.bubbleTimer > 0) cat.bubbleTimer--;
+        else cat.bubble = "";
+
+        // Priority 1: Player clicked reaction states (don't interrupt immediately)
+        if (['pet_love', 'stretch', 'groom', 'angry'].includes(cat.state)) {
+          cat.stateTimer--;
+          if (cat.stateTimer <= 0) {
+            cat.state = 'idle';
+            cat.stateTimer = 60;
+          }
+          return;
+        }
+
+        // Priority 2: Check for Food or Toys on ground
+        const food = activeItems.find(it => it.type === 'food' && it.bites > 0);
+        const toy = activeItems.find(it => it.type === 'mouse' || it.type === 'yarn');
+
+        // Greedy cats ("貪吃") always prioritize food
+        if (food && (cat.personality === '貪吃' || !toy)) {
+          cat.onTreeLevel = 0;
+          const dx = food.x - cat.x;
+          const dy = food.y - cat.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist > 26) {
+            cat.state = 'walk';
+            cat.dir = dx >= 0 ? 1 : -1;
+            const speed = cat.personality === '貪吃' ? 2.4 : 1.7;
+            cat.x += (dx / dist) * speed;
+            cat.y += (dy / dist) * speed;
+          } else {
+            cat.state = 'eat';
+            cat.dir = dx >= 0 ? 1 : -1;
+            food.bites -= 0.14;
+            if (animFrame % 45 === 0) {
+              cat.bubble = "嚼嚼嚼～真香 🥫";
+              cat.bubbleTimer = 40;
+              spawnParticles(cat.x, cat.y - 30, "❤️", 1);
+            }
+          }
+          return;
+        }
+
+        if (toy) {
+          cat.onTreeLevel = 0;
+          const dx = toy.x - cat.x;
+          const dy = toy.y - cat.y;
+          const dist = Math.hypot(dx, dy);
+          // Lazy cats rarely chase toys
+          if (cat.personality === '懶惰' && dist > 120) {
+            // ignore distant toys
+          } else if (dist > 24) {
+            cat.state = 'walk';
+            cat.dir = dx >= 0 ? 1 : -1;
+            const speed = cat.personality === '活潑' ? 2.6 : 1.9;
+            cat.x += (dx / dist) * speed;
+            cat.y += (dy / dist) * speed;
+          } else {
+            cat.state = 'play';
+            if (toy.type === 'yarn') {
+              toy.vx = (Math.random() > 0.5 ? 1 : -1) * (3 + Math.random() * 3);
+            }
+            if (animFrame % 40 === 0) {
+              cat.bubble = toy.type === 'mouse' ? "抓到老鼠啦！🐭" : "拍拍毛球！🧶";
+              cat.bubbleTimer = 40;
+              spawnParticles(cat.x, cat.y - 30, "✨", 1);
+            }
+          }
+          return;
+        }
+
+        // Priority 3: Furniture Interactions (Climb, Drink, Poop)
+        if (['climb', 'drink', 'poop'].includes(cat.state)) {
+          const targetPos = FURNITURE_POS[cat.state === 'climb' ? 'tree' : (cat.state === 'drink' ? 'fountain' : 'litter')];
+          const dx = targetPos.x - cat.x;
+          const dy = targetPos.y - cat.y;
+          const dist = Math.hypot(dx, dy);
+
+          if (dist > 15 && cat.onTreeLevel === 0) {
+            cat.dir = dx >= 0 ? 1 : -1;
+            cat.x += (dx / dist) * 1.4;
+            cat.y += (dy / dist) * 1.4;
+          } else {
+            // Arrived at furniture!
+            if (cat.state === 'climb') {
+              cat.onTreeLevel = 2; // Jump on top of cat tree
+              if (cat.stateTimer % 60 === 0) {
+                cat.bubble = "站得高看得遠～ 🪵";
+                cat.bubbleTimer = 50;
+              }
+            } else if (cat.state === 'drink') {
+              if (cat.stateTimer % 50 === 0) {
+                cat.bubble = "咕嚕咕嚕喝水 💧";
+                cat.bubbleTimer = 45;
+              }
+            } else if (cat.state === 'poop') {
+              if (cat.stateTimer > 40) {
+                cat.bubble = "用力上廁所中... 🚽";
+                cat.bubbleTimer = 40;
+              } else {
+                cat.bubble = "沙沙沙～埋好貓砂！✨";
+                cat.bubbleTimer = 40;
+              }
+            }
+            cat.stateTimer--;
+            if (cat.stateTimer <= 0) {
+              cat.onTreeLevel = 0;
+              cat.state = 'idle';
+              cat.stateTimer = 80;
+            }
+          }
+          return;
+        }
+
+        // Priority 4: Autonomous Wander / Sleep / Pick Furniture
+        cat.onTreeLevel = 0;
+        cat.stateTimer--;
+        if (cat.stateTimer <= 0) {
+          const r = Math.random();
+          // Personality weights
+          if (cat.personality === '懶惰' && r < 0.55) {
+            cat.state = 'sleep';
+            cat.stateTimer = 180;
+            cat.bubble = "Zzz... 💤";
+            cat.bubbleTimer = 120;
+          } else if (catGame.furniture.tree && r < 0.22 && (cat.personality === '活潑' || Math.random() < 0.5)) {
+            cat.state = 'climb';
+            cat.stateTimer = 180;
+          } else if (catGame.furniture.fountain && r < 0.36) {
+            cat.state = 'drink';
+            cat.stateTimer = 130;
+          } else if (catGame.furniture.litter && r < 0.48) {
+            cat.state = 'poop';
+            cat.stateTimer = 140;
+          } else if (r < 0.72) {
+            cat.state = 'walk';
+            cat.dir = Math.random() > 0.5 ? 1 : -1;
+            cat.vx = cat.dir * (cat.personality === '活潑' ? 1.5 : 0.9);
+            cat.stateTimer = 90 + Math.random() * 80;
+          } else if (r < 0.88) {
+            cat.state = 'sleep';
+            cat.stateTimer = 150;
+            cat.bubble = "打個盹 Zzz";
+            cat.bubbleTimer = 90;
+          } else {
+            cat.state = 'groom';
+            cat.stateTimer = 100;
+          }
+        }
+
+        if (cat.state === 'walk') {
+          cat.x += cat.vx;
+          if (cat.x < 175) { cat.x = 175; cat.dir = 1; cat.vx = Math.abs(cat.vx); }
+          if (cat.x > 625) { cat.x = 625; cat.dir = -1; cat.vx = -Math.abs(cat.vx); }
+        }
+      });
+
+      // 3. Update Particles
+      for (let i = floatingParticles.length - 1; i >= 0; i--) {
+        const p = floatingParticles[i];
+        p.y += p.vy;
+        p.life--;
+        if (p.life <= 0) floatingParticles.splice(i, 1);
+      }
+    }
+
+    // ==========================================
+    // 4. DRAWING THE ROOM, FURNITURE & CATS
+    // ==========================================
+    function drawRoom() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Wall Background
+      ctx.fillStyle = "#FFF9F0";
+      ctx.fillRect(0, 0, canvas.width, 210);
+
+      // Decorative Wallpaper Stripes
+      ctx.fillStyle = "#FDF2E3";
+      for (let x = 0; x < canvas.width; x += 40) {
+        ctx.fillRect(x, 0, 18, 210);
+      }
+
+      // Cozy Window (Center-Left)
+      ctx.fillStyle = "#BAE6FD";
+      ctx.fillRect(280, 35, 130, 115);
+      ctx.strokeStyle = "#FFFFFF";
+      ctx.lineWidth = 6;
+      ctx.strokeRect(280, 35, 130, 115);
+      ctx.beginPath();
+      ctx.moveTo(345, 35); ctx.lineTo(345, 150);
+      ctx.moveTo(280, 92); ctx.lineTo(410, 92);
+      ctx.stroke();
+
+      // Sun & Cloud in Window
+      ctx.fillStyle = "#FDE047";
+      ctx.beginPath(); ctx.arc(312, 62, 14, 0, Math.PI * 2); ctx.fill();
+
+      // Wall Picture Frame
+      ctx.fillStyle = "#FFE4E6";
+      ctx.fillRect(470, 48, 75, 60);
+      ctx.strokeStyle = "#F43F5E";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(470, 48, 75, 60);
+      ctx.font = "22px sans-serif";
+      ctx.fillText("🐷❤️🐱", 476, 86);
+
+      // Wooden Floor
+      ctx.fillStyle = "#F3D5B5";
+      ctx.fillRect(0, 210, canvas.width, 110);
+      ctx.strokeStyle = "#E7BC91";
+      ctx.lineWidth = 2;
+      for (let y = 235; y < 320; y += 26) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+
+      // Pink Center Rug
+      ctx.fillStyle = "#FFE4E6";
+      ctx.beginPath();
+      ctx.ellipse(400, 265, 175, 36, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#FDA4AF";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // --- DRAW PERMANENT FURNITURE ---
+      if (catGame.furniture.tree) drawCatTree(FURNITURE_POS.tree.x, FURNITURE_POS.tree.y);
+      if (catGame.furniture.fountain) drawWaterFountain(FURNITURE_POS.fountain.x, FURNITURE_POS.fountain.y);
+      if (catGame.furniture.litter) drawLitterBox(FURNITURE_POS.litter.x, FURNITURE_POS.litter.y);
+
+      // --- DRAW CONSUMABLES & TOYS ---
+      activeItems.forEach(item => {
+        if (item.type === 'food') {
+          // Cat Food Can
+          ctx.fillStyle = "#EF4444";
+          ctx.fillRect(item.x - 14, item.y - 10, 28, 14);
+          ctx.fillStyle = "#FDE047";
+          ctx.beginPath(); ctx.ellipse(item.x, item.y - 10, 14, 5, 0, 0, Math.PI * 2); ctx.fill();
+        } else if (item.type === 'yarn') {
+          // Yarn Ball
+          ctx.fillStyle = "#F43F5E";
+          ctx.beginPath(); ctx.arc(item.x, item.y - 8, 11, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = "#FFE4E6";
+          ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.arc(item.x - 2, item.y - 8, 6, 0, Math.PI); ctx.stroke();
+        } else if (item.type === 'mouse') {
+          // Clockwork Mouse
+          ctx.fillStyle = "#94A3B8";
+          ctx.beginPath(); ctx.ellipse(item.x, item.y - 6, 13, 8, 0, 0, Math.PI * 2); ctx.fill();
+          // Mouse Ears
+          ctx.fillStyle = "#F472B6";
+          ctx.beginPath(); ctx.arc(item.x + (item.dir * 8), item.y - 12, 4, 0, Math.PI * 2); ctx.fill();
+          // Wiggling Tail
+          ctx.strokeStyle = "#64748B";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(item.x - (item.dir * 12), item.y - 6);
+          ctx.lineTo(item.x - (item.dir * 22), item.y - 10 + Math.sin(animFrame * 0.4) * 4);
+          ctx.stroke();
+        }
+      });
+
+      // --- DRAW CATS (Sorted by Y depth) ---
+      const sortedCats = [...catEntities].sort((a, b) => a.y - b.y);
+      sortedCats.forEach(cat => drawCat(cat));
+
+      // --- DRAW FLOATING PARTICLES ---
+      floatingParticles.forEach(p => {
+        ctx.font = "16px sans-serif";
+        ctx.fillText(p.char, p.x, p.y);
+      });
+    }
+
+    function drawCatTree(x, y) {
+      // Base
+      ctx.fillStyle = "#D97706";
+      ctx.fillRect(x - 42, y - 8, 84, 12);
+      // Posts
+      ctx.fillStyle = "#F59E0B";
+      ctx.fillRect(x - 25, y - 95, 12, 87);
+      ctx.fillRect(x + 15, y - 55, 12, 47);
+      // Mid Platform
+      ctx.fillStyle = "#FEF3C7";
+      ctx.fillRect(x + 2, y - 62, 44, 10);
+      // Top Platform
+      ctx.fillStyle = "#FDE68A";
+      ctx.fillRect(x - 45, y - 102, 56, 12);
+    }
+
+    function drawWaterFountain(x, y) {
+      // Base Bowl
+      ctx.fillStyle = "#38BDF8";
+      ctx.beginPath(); ctx.ellipse(x, y - 6, 24, 10, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillRect(x - 24, y - 14, 48, 8);
+      // Water Surface
+      ctx.fillStyle = "#BAE6FD";
+      ctx.beginPath(); ctx.ellipse(x, y - 14, 22, 7, 0, 0, Math.PI * 2); ctx.fill();
+      // Fountain Spout
+      ctx.fillStyle = "#0284C7";
+      ctx.fillRect(x - 4, y - 26, 8, 12);
+      // Animated Water Drops
+      const offset = (animFrame % 20) * 0.4;
+      ctx.fillStyle = "#E0F2FE";
+      ctx.beginPath(); ctx.arc(x - 8, y - 22 + offset, 2.5, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(x + 8, y - 22 + offset, 2.5, 0, Math.PI * 2); ctx.fill();
+    }
+
+    function drawLitterBox(x, y) {
+      // Tray
+      ctx.fillStyle = "#A855F7";
+      ctx.fillRect(x - 30, y - 16, 60, 18);
+      // Sand inside
+      ctx.fillStyle = "#FDE68A";
+      ctx.beginPath(); ctx.ellipse(x, y - 16, 26, 6, 0, 0, Math.PI * 2); ctx.fill();
+    }
+
+    function drawCat(cat) {
+      const drawY = cat.y - (cat.onTreeLevel * 48);
+      ctx.save();
+      ctx.translate(cat.x, drawY);
+
+      // Shadow
+      ctx.fillStyle = "rgba(0,0,0,0.12)";
+      ctx.beginPath(); ctx.ellipse(0, 4, 22, 6, 0, 0, Math.PI * 2); ctx.fill();
+
+      // Flip horizontally based on direction
+      ctx.scale(cat.dir, 1);
+
+      // Color Palettes for 5 Cat Breeds
+      const palettes = {
+        orange: { body: "#FB923C", ear: "#EA580C", patch: "#FED7AA" },
+        black: { body: "#334155", ear: "#0F172A", patch: "#475569" },
+        white: { body: "#FFFFFF", ear: "#FBCFE8", patch: "#F8FAFC" },
+        calico: { body: "#FFFBEB", ear: "#F97316", patch: "#1E293B" },
+        ragdoll: { body: "#F8FAFC", ear: "#78350F", patch: "#92400E" }
+      };
+      const pal = palettes[cat.type] || palettes.orange;
+
+      // Tail Animation
+      const tailWag = Math.sin(animFrame * 0.15) * (cat.state === 'angry' ? 14 : 6);
+      ctx.strokeStyle = pal.body;
+      ctx.lineWidth = 6;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(-16, -8);
+      ctx.quadraticCurveTo(-30, -22 + tailWag, -26, -34 + tailWag);
+      ctx.stroke();
+
+      // Body Shape (Changes when stretching or sleeping)
+      ctx.fillStyle = pal.body;
+      ctx.strokeStyle = "#CBD5E1";
+      ctx.lineWidth = cat.type === 'white' ? 1.5 : 0;
+
+      if (cat.state === 'stretch') {
+        // Long stretched body
+        ctx.beginPath(); ctx.ellipse(0, -10, 28, 11, -0.1, 0, Math.PI * 2); ctx.fill();
+        if (cat.type === 'white') ctx.stroke();
+      } else if (cat.state === 'sleep') {
+        // Curled ball
+        ctx.beginPath(); ctx.ellipse(0, -10, 22, 13, 0, 0, Math.PI * 2); ctx.fill();
+      } else {
+        // Normal chubby body
+        ctx.beginPath(); ctx.ellipse(0, -13, 20, 15, 0, 0, Math.PI * 2); ctx.fill();
+        if (cat.type === 'white') ctx.stroke();
+      }
+
+      // Calico Spots
+      if (cat.type === 'calico') {
+        ctx.fillStyle = "#F97316";
+        ctx.beginPath(); ctx.arc(-6, -15, 6, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#1E293B";
+        ctx.beginPath(); ctx.arc(5, -10, 5, 0, Math.PI * 2); ctx.fill();
+      }
+
+      // Head Position
+      const headX = cat.state === 'stretch' ? 20 : 12;
+      const headY = (cat.state === 'eat' || cat.state === 'drink') ? -16 : -26;
+
+      // Head Circle
+      ctx.fillStyle = pal.body;
+      ctx.beginPath(); ctx.arc(headX, headY, 14, 0, Math.PI * 2); ctx.fill();
+      if (cat.type === 'white') ctx.stroke();
+
+      // Ragdoll Face Mask
+      if (cat.type === 'ragdoll') {
+        ctx.fillStyle = pal.patch;
+        ctx.beginPath(); ctx.ellipse(headX + 2, headY + 1, 9, 7, 0, 0, Math.PI * 2); ctx.fill();
+      }
+
+      // Ears
+      ctx.fillStyle = pal.ear;
+      ctx.beginPath();
+      ctx.moveTo(headX - 9, headY - 9); ctx.lineTo(headX - 12, headY - 22); ctx.lineTo(headX - 1, headY - 12);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(headX + 2, headY - 12); ctx.lineTo(headX + 9, headY - 22); ctx.lineTo(headX + 11, headY - 9);
+      ctx.fill();
+
+      // Eyes & Expressions
+      ctx.fillStyle = cat.type === 'ragdoll' ? "#38BDF8" : "#1E293B";
+      if (cat.state === 'sleep' || cat.state === 'pet_love') {
+        // Happy closed eyes ^ ^
+        ctx.strokeStyle = "#1E293B";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(headX + 5, headY - 2, 3, Math.PI, 0);
+        ctx.stroke();
+      } else {
+        // Open cute eyes
+        ctx.beginPath(); ctx.arc(headX + 6, headY - 2, 2.5, 0, Math.PI * 2); ctx.fill();
+      }
+
+      // Pink Blush when loved
+      if (cat.state === 'pet_love') {
+        ctx.fillStyle = "#FDA4AF";
+        ctx.beginPath(); ctx.arc(headX + 6, headY + 3, 3.5, 0, Math.PI * 2); ctx.fill();
+      }
+
+      // Grooming Paw Animation
+      if (cat.state === 'groom') {
+        const pawY = headY + 2 + Math.sin(animFrame * 0.3) * 4;
+        ctx.fillStyle = pal.body;
+        ctx.beginPath(); ctx.arc(headX + 11, pawY, 4.5, 0, Math.PI * 2); ctx.fill();
+      }
+
+      ctx.restore();
+
+      // Name Tag & Speech Bubble (Unflipped text)
+      ctx.font = "bold 11px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#64748B";
+      ctx.fillText(cat.name, cat.x, drawY + 16);
+
+      if (cat.bubble) {
+        ctx.font = "bold 11px sans-serif";
+        const textWidth = ctx.measureText(cat.bubble).width;
+        const boxW = textWidth + 16;
+        const boxH = 22;
+        const boxX = cat.x - boxW / 2;
+        const boxY = drawY - 66;
+
+        ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
+        ctx.beginPath();
+        ctx.roundRect(boxX, boxY, boxW, boxH, 10);
+        ctx.fill();
+        ctx.strokeStyle = "#FDBA74";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = "#1E293B";
+        ctx.fillText(cat.bubble, cat.x, boxY + 15);
+      }
+    }
+
+    // ==========================================
+    // 5. CALENDAR, LOGGING & POINTS REWARD LOGIC
+    // ==========================================
     document.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
       updateRewardUI();
+      updatePointsUI();
       renderCalendar();
       checkGoogleAuthState();
+      initCatRoom();
     });
 
-    // Calendar Render
     function renderCalendar() {
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth();
@@ -459,29 +1430,47 @@
       checkAndTriggerAutoRewards(monthLogsCount, weeklyLogCounts);
     }
 
-    // Auto Rewards Counter Logic
     function checkAndTriggerAutoRewards(monthLogsCount, weeklyLogCounts) {
       let updated = false;
+      let pointsEarned = 0;
       
+      // Weekly Rewards + 15 Meow Coins
       weeklyLogCounts.forEach((count, idx) => {
         const key = `week_reward_${currentDate.getFullYear()}_${currentDate.getMonth()}_${idx}`;
         if (count >= settings.weeklyTarget && !localStorage.getItem(key)) {
           settings.weeklyRewardCount = (settings.weeklyRewardCount || 0) + 1;
           localStorage.setItem(key, 'true');
           updated = true;
+
+          if (!catGame.rewardedWeeks.includes(key)) {
+            catGame.rewardedWeeks.push(key);
+            catGame.points += 15;
+            pointsEarned += 15;
+          }
         }
       });
 
+      // Monthly Reward + 25 Meow Coins
       const monthKey = `month_reward_${currentDate.getFullYear()}_${currentDate.getMonth()}`;
       if (monthLogsCount >= settings.monthlyTarget && !localStorage.getItem(monthKey)) {
         settings.monthlyRewardCount = (settings.monthlyRewardCount || 0) + 1;
         localStorage.setItem(monthKey, 'true');
         updated = true;
+
+        if (!catGame.rewardedMonths.includes(monthKey)) {
+          catGame.rewardedMonths.push(monthKey);
+          catGame.points += 25;
+          pointsEarned += 25;
+        }
       }
 
       if (updated) {
         saveSettingsToStorage();
         updateRewardUI();
+      }
+      if (pointsEarned > 0) {
+        saveCatGame();
+        showToast(`🎉 目標達成！額外獲得 +${pointsEarned} 喵幣 🐾`);
       }
     }
 
@@ -502,7 +1491,6 @@
       updateRewardUI();
     }
 
-    // Navigation
     function changeMonth(delta) {
       currentDate.setMonth(currentDate.getMonth() + delta);
       renderCalendar();
@@ -513,7 +1501,9 @@
       renderCalendar();
     }
 
-    // Modal Operations
+    // ==========================================
+    // 6. WORKOUT LOG MODAL
+    // ==========================================
     function openLogModal(dateStr) {
       selectedDateStr = dateStr;
       document.getElementById('logModalDate').textContent = dateStr;
@@ -540,7 +1530,6 @@
       document.getElementById('logModal').classList.add('hidden');
     }
 
-    // Categories Logic
     function renderCategories() {
       const container = document.getElementById('categoryContainer');
       container.innerHTML = "";
@@ -580,7 +1569,6 @@
       }
     }
 
-    // Photo Handling
     function triggerFileInput() {
       document.getElementById('photoInput').click();
     }
@@ -633,7 +1621,6 @@
       }
     }
 
-    // Save/Delete Log
     function saveLog() {
       if (selectedCategories.length === 0) {
         alert("請至少選擇一個訓練項目！");
@@ -651,6 +1638,15 @@
       };
 
       localStorage.setItem('piggy_logs', JSON.stringify(logs));
+
+      // Award +5 Meow Coins once per unique date
+      if (!catGame.rewardedDates.includes(selectedDateStr)) {
+        catGame.rewardedDates.push(selectedDateStr);
+        catGame.points += 5;
+        saveCatGame();
+        showToast("🐾 簽到成功！獲得 +5 喵幣！");
+      }
+
       closeLogModal();
       renderCalendar();
     }
@@ -664,7 +1660,9 @@
       }
     }
 
-    // Settings Modal
+    // ==========================================
+    // 7. SETTINGS, GOOGLE DRIVE & WEIGHT TRACKER
+    // ==========================================
     function openSettingsModal() {
       document.getElementById('weeklyTargetInput').value = settings.weeklyTarget || 3;
       document.getElementById('monthlyTargetInput').value = settings.monthlyTarget || 12;
@@ -694,7 +1692,6 @@
       localStorage.setItem('piggy_settings', JSON.stringify(settings));
     }
 
-    // Google Drive Auth & Backup Simulation
     function checkGoogleAuthState() {
       const statusEl = document.getElementById('googleAuthStatus');
       const btnEl = document.getElementById('googleAuthBtn');
@@ -738,17 +1735,17 @@
         settings: settings,
         logs: logs,
         weightLogs: weightLogs,
+        catGame: catGame,
         backupTime: new Date().toISOString()
       };
       
-      // Simulate file download as Google Drive backup package
       const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = `piggy_backup_${settings.googleEmail}_${new Date().toISOString().slice(0,10)}.json`;
       a.click();
-      alert("資料已成功打包並同步至 Google Drive 備份資料夾！");
+      alert("資料（含貓咪小窩進度）已成功打包並同步至 Google Drive 備份資料夾！");
     }
 
     function restoreFromGoogleDrive() {
@@ -766,6 +1763,11 @@
                 settings = data.settings;
                 logs = data.logs;
                 weightLogs = data.weightLogs || [];
+                if (data.catGame) {
+                  catGame = data.catGame;
+                  saveCatGame();
+                  initCatRoom();
+                }
                 saveSettingsToStorage();
                 localStorage.setItem('piggy_logs', JSON.stringify(logs));
                 localStorage.setItem('piggy_weights', JSON.stringify(weightLogs));
@@ -785,7 +1787,6 @@
       input.click();
     }
 
-    // Weight & BMI Modal
     function openWeightModal() {
       document.getElementById('weightModal').classList.remove('hidden');
       updateBMIDisplay();
@@ -903,7 +1904,6 @@
       lucide.createIcons();
     }
 
-    // Helpers
     function formatDate(y, m, d) {
       const mm = String(m + 1).padStart(2, '0');
       const dd = String(d).padStart(2, '0');
