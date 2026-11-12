@@ -200,17 +200,13 @@
         <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div>
             <div class="inline-flex items-center gap-1.5 bg-white/25 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold mb-2">
-              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 🥗 Gemini 視覺 AI 營養師（支援中轉站）
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 🥗 全本地飲食記錄與營養分析
             </div>
-            <h2 class="text-2xl font-bold">拍照即識熱量，精準控卡 ✨</h2>
-            <p class="text-emerald-100 text-sm mt-1">點擊日期記錄三餐或加餐，AI 自動辨識食物並換算卡路里！</p>
+            <h2 class="text-2xl font-bold">手動精準控卡，健康飲食 ✨</h2>
+            <p class="text-emerald-100 text-sm mt-1">點擊日期記錄三餐，自由填寫熱量與蛋白質，全本地運算零負擔！</p>
           </div>
 
           <div class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
-            <button onclick="openSettingsModal()" class="bg-emerald-700/50 hover:bg-emerald-700/70 text-white font-bold px-4 py-3 rounded-2xl border border-white/20 transition-all flex items-center justify-center gap-1.5 text-xs">
-              <i data-lucide="key" class="w-4 h-4"></i>
-              <span id="apiKeyStatusBadge">設定 API 與中轉網址</span>
-            </button>
             <button onclick="openDietReportModal()" class="bg-white hover:bg-emerald-50 text-emerald-700 font-extrabold px-5 py-3 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm">
               <i data-lucide="brain" class="w-5 h-5 text-emerald-600"></i>
               <span>獲取今日營養報告</span>
@@ -311,13 +307,13 @@
     </div>
   </div>
 
-  <!-- Modal: Diet Log (Flexible Meals & Gemini AI Calorie Calculation with Custom Base URL) -->
+  <!-- Modal: Diet Log (Flexible Meals & Manual Calorie Calculation) -->
   <div id="dietLogModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto custom-scrollbar animate-in fade-in zoom-in duration-200">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3 sticky top-0 bg-white z-10">
         <div>
           <h3 id="dietModalDate" class="font-extrabold text-lg text-slate-800">2026-11-12 飲食記錄</h3>
-          <p class="text-xs text-slate-400">拍照後由 Gemini AI（或中轉站）精確計算熱量</p>
+          <p class="text-xs text-slate-400">手動輸入三餐與營養素，精準控卡</p>
         </div>
         <button onclick="closeDietLogModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
           <i data-lucide="x" class="w-5 h-5"></i>
@@ -338,13 +334,13 @@
     </div>
   </div>
 
-  <!-- Modal: AI Diet Report -->
+  <!-- Modal: Local AI Diet Report -->
   <div id="dietReportModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto custom-scrollbar animate-in fade-in zoom-in duration-200">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <div>
           <h3 class="font-extrabold text-lg text-slate-800 flex items-center gap-2">
-            <i data-lucide="brain" class="w-5 h-5 text-emerald-600"></i> AI 智能營養與今日報告
+            <i data-lucide="brain" class="w-5 h-5 text-emerald-600"></i> 本地智能營養分析報告
           </h3>
           <p id="reportDateSubtitle" class="text-xs text-slate-400">結合訓練目標、身高體重與今日攝取分析</p>
         </div>
@@ -500,38 +496,20 @@
     </div>
   </div>
 
-  <!-- Modal: Settings, Gemini API Key & Custom Base URL -->
+  <!-- Modal: Settings & Goals -->
   <div id="settingsModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto custom-scrollbar animate-in fade-in zoom-in duration-200">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="font-bold text-lg text-slate-800">目標、AI 與資料設定</h3>
+        <h3 class="font-bold text-lg text-slate-800">目標與個人資料設定</h3>
         <button onclick="closeSettingsModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
       <div class="space-y-4">
-        <!-- Gemini API Key & Custom Base URL Configuration -->
-        <div class="space-y-2.5 bg-emerald-50/70 p-3.5 rounded-2xl border border-emerald-200">
-          <h4 class="text-xs font-extrabold text-emerald-800 uppercase tracking-wider flex items-center gap-1">
-            <span>🤖 Gemini 視覺 AI 設定（免 VPN 支援中轉站）</span>
-          </h4>
-          
-          <div>
-            <label class="block text-[11px] font-bold text-slate-700 mb-1">API Key (金鑰)</label>
-            <input type="password" id="geminiApiKeyInput" placeholder="貼上您的 AIzaSy... 金鑰" class="w-full border border-emerald-300 bg-white rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-500">
-          </div>
-
-          <div>
-            <label class="block text-[11px] font-bold text-slate-700 mb-1">API 中轉網址 (Base URL，選填)</label>
-            <input type="text" id="geminiBaseUrlInput" placeholder="留空則使用官方 https://generativelanguage.googleapis.com" class="w-full border border-emerald-300 bg-white rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-500">
-            <p class="text-[10px] text-slate-500 mt-1">若本地無法連線官方網址，可填入中轉代理站點的網址。</p>
-          </div>
-        </div>
-
         <!-- Training Goal Selection -->
         <div class="space-y-2">
-          <h4 class="text-xs font-bold text-teal-700 uppercase tracking-wider">🎯 健身與飲食目標 (影響 AI 報告建議)</h4>
+          <h4 class="text-xs font-bold text-teal-700 uppercase tracking-wider">🎯 健身與飲食目標 (影響本地報告建議)</h4>
           <select id="trainingGoalSelect" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2.5 text-sm font-bold text-slate-800 focus:outline-none focus:border-emerald-400">
             <option value="muscle">💪 增肌增重 (高蛋白、熱量盈餘)</option>
             <option value="fatloss">🔥 減脂瘦身 (高纖、熱量赤字)</option>
@@ -616,11 +594,8 @@
       height: 165,
       age: 23,
       trainingGoal: 'muscle',
-      geminiApiKey: '',
-      geminiBaseUrl: '',
       weeklyRewardCount: 0,
-      monthlyRewardCount: 0,
-      googleEmail: ""
+      monthlyRewardCount: 0
     }));
 
     let weightLogs = JSON.parse(localStorage.getItem('piggy_weights') || '[]');
@@ -667,16 +642,6 @@
       renderFurnitureBadges();
     }
 
-    function updateApiKeyBadge() {
-      const badge = document.getElementById('apiKeyStatusBadge');
-      if (!badge) return;
-      if (settings.geminiApiKey && settings.geminiApiKey.trim().length > 10) {
-        badge.textContent = "Gemini AI 已連線 ✓";
-      } else {
-        badge.textContent = "設定 API 與中轉網址";
-      }
-    }
-
     function showToast(msg) {
       const toast = document.getElementById('toast');
       toast.textContent = msg;
@@ -710,14 +675,13 @@
         headerIcon.setAttribute('data-lucide', 'utensils');
         mainTitleText.textContent = "寶寶豬的飲食營養日記 🥗";
         mainSubtitleText.className = "text-[11px] sm:text-xs text-emerald-600 font-medium transition-colors duration-300";
-        mainSubtitleText.textContent = "Gemini 視覺 AI 辨識熱量與營養";
+        mainSubtitleText.textContent = "全本地精準熱量管理與營養分析";
         appTitle.textContent = "寶寶豬的飲食營養日記 🥗";
 
         switchBtn.className = "flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm border border-rose-200";
         switchBtn.innerHTML = `<i data-lucide="dumbbell" class="w-4 h-4"></i><span>運動打卡</span>`;
 
         updateDietGoalBadgeUI();
-        updateApiKeyBadge();
         renderDietCalendar();
       } else {
         currentView = 'workout';
@@ -753,7 +717,7 @@
     }
 
     // ==========================================
-    // 3. DIET CALENDAR & GEMINI VISION AI WITH CUSTOM BASE URL
+    // 3. DIET CALENDAR & MANUAL NUTRITION
     // ==========================================
     function renderDietCalendar() {
       const year = currentDietDate.getFullYear();
@@ -838,7 +802,7 @@
       
       currentMealEntries = JSON.parse(JSON.stringify(dietLogs[dateStr] || []));
       if (currentMealEntries.length === 0) {
-        currentMealEntries.push({ id: Date.now(), title: '早餐', time: '08:30', photo: '', foodName: '', calories: '', protein: '', carbs: '', fat: '', aiAnalyzing: false });
+        currentMealEntries.push({ id: Date.now(), title: '早餐', time: '08:30', photo: '', foodName: '', calories: '', protein: '', carbs: '', fat: '' });
       }
 
       renderMealEntriesUI();
@@ -863,8 +827,7 @@
         calories: '',
         protein: '',
         carbs: '',
-        fat: '',
-        aiAnalyzing: false
+        fat: ''
       });
       renderMealEntriesUI();
     }
@@ -896,27 +859,20 @@
             <div class="border-2 border-dashed border-emerald-200 bg-white rounded-xl p-3 text-center cursor-pointer hover:border-emerald-400 transition-colors relative" onclick="triggerDietPhotoInput(${meal.id})">
               <input type="file" id="dietPhoto_${meal.id}" accept="image/*" class="hidden" onchange="handleDietPhotoUpload(event, ${meal.id})">
               ${meal.photo ? `
-                <div class="relative">
-                  <img src="${meal.photo}" class="w-full h-32 object-cover rounded-lg shadow-sm ${meal.aiAnalyzing ? 'opacity-40' : ''}">
-                  ${meal.aiAnalyzing ? `
-                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-white/70 rounded-lg">
-                      <span class="text-xs font-extrabold text-emerald-700 animate-pulse">🤖 AI 辨識中...</span>
-                    </div>
-                  ` : ''}
-                </div>
+                <img src="${meal.photo}" class="w-full h-32 object-cover rounded-lg shadow-sm">
               ` : `
                 <div class="py-4 space-y-1">
                   <i data-lucide="camera" class="w-6 h-6 text-emerald-500 mx-auto"></i>
-                  <p class="text-[11px] font-bold text-emerald-700">點擊拍照 / 上傳食物</p>
-                  <p class="text-[9px] text-slate-400">必須拍照，AI 將自動計算熱量</p>
+                  <p class="text-[11px] font-bold text-emerald-700">點擊上傳食物照片</p>
+                  <p class="text-[9px] text-slate-400">記錄美好飲食</p>
                 </div>
               `}
             </div>
 
             <div class="space-y-2 text-xs">
               <div>
-                <label class="block font-bold text-slate-600 mb-1">食物名稱 (AI 自動辨識 / 可微調)</label>
-                <input type="text" value="${meal.foodName || ''}" oninput="updateMealField(${meal.id}, 'foodName', this.value)" placeholder="拍照後自動辨識食物..." class="w-full border border-slate-200 rounded-xl px-3 py-2 bg-white">
+                <label class="block font-bold text-slate-600 mb-1">食物名稱</label>
+                <input type="text" value="${meal.foodName || ''}" oninput="updateMealField(${meal.id}, 'foodName', this.value)" placeholder="例如: 雞胸肉沙拉..." class="w-full border border-slate-200 rounded-xl px-3 py-2 bg-white">
               </div>
               <div class="grid grid-cols-2 gap-2">
                 <div>
@@ -963,7 +919,7 @@
       reader.onload = function(evt) {
         const img = new Image();
         img.src = evt.target.result;
-        img.onload = async function() {
+        img.onload = function() {
           const canvas = document.createElement('canvas');
           const maxDim = 768;
           let width = img.width;
@@ -982,89 +938,16 @@
           const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
 
           const meal = currentMealEntries.find(m => m.id === id);
-          if (!meal) return;
-
-          meal.photo = compressedBase64;
-          meal.aiAnalyzing = true;
-          renderMealEntriesUI();
-
-          await analyzeImageWithGemini(meal, compressedBase64);
+          if (meal) {
+            meal.photo = compressedBase64;
+            renderMealEntriesUI();
+          }
         };
       };
       reader.readAsDataURL(file);
     }
 
-    async function analyzeImageWithGemini(meal, dataUrl) {
-      const apiKey = (settings.geminiApiKey || "").trim();
-      if (!apiKey) {
-        meal.aiAnalyzing = false;
-        renderMealEntriesUI();
-        showToast("⚠️ 尚未設定 Gemini API Key！請先點擊設定貼上金鑰。");
-        return;
-      }
-
-      // Handle Custom Base URL or Default Official URL
-      let baseUrl = (settings.geminiBaseUrl || "").trim();
-      if (!baseUrl) {
-        baseUrl = "https://generativelanguage.googleapis.com";
-      }
-      baseUrl = baseUrl.replace(/\/+$/, ''); // remove trailing slashes
-
-      try {
-        const base64Data = dataUrl.split(',')[1];
-        const endpoint = `${baseUrl}/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{
-              parts: [
-                {
-                  text: "請仔細觀察這張食物照片，辨識裡面的所有食物與估算份量，計算總熱量(kcal)、蛋白質(g)、碳水化合物(g)與脂肪(g)。請務必只回傳純 JSON 格式，不要包含 markdown 標記或任何其他文字，格式如下：{\"foodName\": \"食物名稱與份量\", \"calories\": 500, \"protein\": 30, \"carbs\": 50, \"fat\": 15}"
-                },
-                {
-                  inline_data: {
-                    mime_type: "image/jpeg",
-                    data: base64Data
-                  }
-                }
-              ]
-            }]
-          })
-        });
-
-        const data = await response.json();
-        if (data.error) {
-          throw new Error(data.error.message || "API 呼叫失敗");
-        }
-
-        const rawText = data.candidates[0].content.parts[0].text;
-        const cleanJson = rawText.replace(/```json|```/g, '').trim();
-        const parsed = JSON.parse(cleanJson);
-
-        meal.foodName = parsed.foodName || "已辨識餐點";
-        meal.calories = Math.round(parsed.calories || 0);
-        meal.protein = Math.round(parsed.protein || 0);
-        meal.carbs = Math.round(parsed.carbs || 0);
-        meal.fat = Math.round(parsed.fat || 0);
-        showToast(`✨ AI 辨識成功：${meal.foodName} (${meal.calories} kcal)`);
-      } catch (err) {
-        console.error(err);
-        showToast("❌ AI 辨識失敗，請檢查 API Key 或中轉網址是否正確。");
-      } finally {
-        meal.aiAnalyzing = false;
-        renderMealEntriesUI();
-      }
-    }
-
     function saveDietLog() {
-      for (const m of currentMealEntries) {
-        if (!m.photo) {
-          alert(`請為「${m.title}」上傳食物照片！`);
-          return;
-        }
-      }
       dietLogs[selectedDietDateStr] = currentMealEntries;
       localStorage.setItem('piggy_diet_logs', JSON.stringify(dietLogs));
       closeDietLogModal();
@@ -1073,13 +956,13 @@
     }
 
     // ==========================================
-    // 4. AI DIET REPORT & ADVICE GENERATOR
+    // 4. LOCAL AI DIET REPORT & ADVICE GENERATOR
     // ==========================================
     function openDietReportModal() {
       const todayStr = formatDate(currentDietDate.getFullYear(), currentDietDate.getMonth(), currentDietDate.getDate());
       const meals = dietLogs[todayStr] || [];
 
-      document.getElementById('reportDateSubtitle').textContent = `${todayStr} 營養數據智能分析報告`;
+      document.getElementById('reportDateSubtitle').textContent = `${todayStr} 本地智能營養數據分析報告`;
       const contentArea = document.getElementById('reportContentArea');
 
       if (meals.length === 0) {
@@ -1087,7 +970,7 @@
           <div class="text-center py-8 space-y-2">
             <div class="text-4xl">🍽️</div>
             <p class="font-bold text-slate-700">今天還沒有記錄任何飲食喔！</p>
-            <p class="text-xs text-slate-400">請先點擊日曆日期上傳食物照片，AI 才能為你生成精準的營養報告。</p>
+            <p class="text-xs text-slate-400">請先點擊日曆日期新增三餐與營養素，系統將立即為你生成分析報告。</p>
           </div>
         `;
       } else {
@@ -1110,7 +993,7 @@
         let adviceList = [];
         if (goal === 'muscle') {
           if (totalCals < targetCals - 200) {
-            adviceList.push(`🔥 <b>熱量盈餘不足：</b>你的增肌建議攝取量約為 <b>${targetCals} kcal</b>，目前還差 ${targetCals - totalCals} kcal，建議訓練後補充優質碳水與蛋白質。`);
+            adviceList.push(`🔥 <b>熱量盈餘不足：</b>你的增肌建議攝取量約為 <b>${targetCals} kcal</b>，目前還差 ${targetCals - totalCals} kcal，建議適度補充優質碳水與蛋白質。`);
           } else {
             adviceList.push(`🎉 <b>熱量達標：</b>今日總熱量已達到增肌期標準（目標 ${targetCals} kcal），非常有助於肌肉合成！`);
           }
@@ -1161,7 +1044,7 @@
           </div>
 
           <div class="space-y-2 bg-slate-50 p-4 rounded-2xl border border-slate-100">
-            <h4 class="font-extrabold text-xs text-slate-700 uppercase tracking-wider">💡 個人化 AI 營養師建議</h4>
+            <h4 class="font-extrabold text-xs text-slate-700 uppercase tracking-wider">💡 本地智能營養師建議</h4>
             <ul class="space-y-2 text-xs leading-relaxed list-disc pl-4">
               ${adviceList.map(item => `<li>${item}</li>`).join('')}
             </ul>
@@ -1838,7 +1721,6 @@
       lucide.createIcons();
       updateRewardUI();
       updatePointsUI();
-      updateApiKeyBadge();
       renderCalendar();
       initCatRoom();
     });
@@ -2103,8 +1985,6 @@
 
     // Settings, Backup & Weight Modals
     function openSettingsModal() {
-      document.getElementById('geminiApiKeyInput').value = settings.geminiApiKey || "";
-      document.getElementById('geminiBaseUrlInput').value = settings.geminiBaseUrl || "";
       document.getElementById('weeklyTargetInput').value = settings.weeklyTarget || 3;
       document.getElementById('monthlyTargetInput').value = settings.monthlyTarget || 12;
       document.getElementById('heightInput').value = settings.height || "";
@@ -2115,8 +1995,6 @@
     function closeSettingsModal() { document.getElementById('settingsModal').classList.add('hidden'); }
     function saveSettingsToStorage() { localStorage.setItem('piggy_settings', JSON.stringify(settings)); }
     function saveSettings() {
-      settings.geminiApiKey = document.getElementById('geminiApiKeyInput').value.trim();
-      settings.geminiBaseUrl = document.getElementById('geminiBaseUrlInput').value.trim();
       settings.weeklyTarget = parseInt(document.getElementById('weeklyTargetInput').value) || 3;
       settings.monthlyTarget = parseInt(document.getElementById('monthlyTargetInput').value) || 12;
       settings.height = parseFloat(document.getElementById('heightInput').value) || 0;
@@ -2125,7 +2003,6 @@
       saveSettingsToStorage();
       closeSettingsModal();
       updateDietGoalBadgeUI();
-      updateApiKeyBadge();
       renderCalendar();
       showToast("✅ 設定已成功儲存！");
     }
@@ -2176,7 +2053,6 @@
               localStorage.setItem('piggy_weights', JSON.stringify(weightLogs));
               renderCalendar();
               updateRewardUI();
-              updateApiKeyBadge();
               alert("已成功還原所有紀錄！");
             } else {
               alert("備份檔案格式不正確！");
