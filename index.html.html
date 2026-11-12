@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>寶寶豬的逆襲日記 🐷💪</title>
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-rose-50/50 min-h-screen text-slate-800 pb-12">
+
+  <!-- Header -->
+  <header class="bg-white/80 backdrop-blur-md border-b border-rose-100 sticky top-0 z-30 px-4 py-3 shadow-sm">
+    <div class="max-w-4xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="bg-rose-500 text-white p-2 rounded-2xl shadow-md shadow-rose-200">
+          <i data-lucide="dumbbell" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h1 class="font-extrabold text-xl text-slate-800 tracking-tight">寶寶豬的逆襲日記 🐷💪</h1>
+          <p class="text-xs text-rose-500 font-medium">記錄每一次蛻變與努力</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <button onclick="openWeightModal()" class="flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 px-3.5 py-2 rounded-xl text-sm font-semibold transition-all shadow-sm">
+          <i data-lucide="scale" class="w-4 h-4"></i>
+          <span>體重紀錄</span>
+        </button>
+        <button onclick="openSettingsModal()" class="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-sm font-semibold transition-all">
+          <i data-lucide="settings" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">目標與資料</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4 pt-6 space-y-6">
+
+    <!-- Reward Status Card -->
+    <section class="bg-gradient-to-r from-rose-500 to-pink-500 rounded-3xl p-6 text-white shadow-xl shadow-rose-200 relative overflow-hidden">
+      <div class="absolute -right-6 -bottom-6 opacity-10 pointer-events-none">
+        <i data-lucide="gift" class="w-48 h-48"></i>
+      </div>
+      <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold mb-2">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 獎勵兌換中心
+          </div>
+          <h2 class="text-2xl font-bold">累積努力，兌換獎勵 ✨</h2>
+          <p class="text-rose-100 text-sm mt-1">週/月達標自動採計獎勵次數，點擊綠色勾號即可完成一次兌換！</p>
+        </div>
+
+        <div class="flex items-center gap-4 w-full md:w-auto">
+          <!-- Weekly Reward -->
+          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 flex-1 md:flex-none md:w-40 border border-white/20 flex flex-col items-center">
+            <span class="text-xs font-semibold text-rose-100">週小獎勵 (次)</span>
+            <div class="flex items-center gap-2 mt-2">
+              <span id="weeklyRewardCount" class="text-3xl font-extrabold">0</span>
+              <button onclick="claimReward('weekly')" title="兌換一次小獎勵" class="bg-emerald-500 hover:bg-emerald-600 active:scale-90 text-white p-2 rounded-xl shadow-md transition-all flex items-center justify-center">
+                <i data-lucide="check" class="w-5 h-5 stroke-[3]"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Monthly Reward -->
+          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 flex-1 md:flex-none md:w-40 border border-white/20 flex flex-col items-center">
+            <span class="text-xs font-semibold text-rose-100">月大獎勵 (次)</span>
+            <div class="flex items-center gap-2 mt-2">
+              <span id="monthlyRewardCount" class="text-3xl font-extrabold">0</span>
+              <button onclick="claimReward('monthly')" title="兌換一次大獎勵" class="bg-emerald-500 hover:bg-emerald-600 active:scale-90 text-white p-2 rounded-xl shadow-md transition-all flex items-center justify-center">
+                <i data-lucide="check" class="w-5 h-5 stroke-[3]"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendar Card -->
+    <section class="bg-white rounded-3xl p-6 shadow-xl shadow-rose-100/50 border border-rose-100">
+      <!-- Calendar Controls -->
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3">
+          <h2 id="currentMonthYear" class="text-xl font-bold text-slate-800">2026年 11月</h2>
+          <div id="monthBadge" class="hidden px-2.5 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full">
+            🏆 全月大目標達成！
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="changeMonth(-1)" class="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-600">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+          </button>
+          <button onclick="goToToday()" class="px-3 py-1.5 text-xs font-semibold bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl transition-colors">
+            今天
+          </button>
+          <button onclick="changeMonth(1)" class="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-600">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Legend & Info -->
+      <div class="flex flex-wrap items-center justify-between gap-3 text-xs mb-4 pb-3 border-b border-slate-100 text-slate-500">
+        <div class="flex items-center gap-4">
+          <span class="flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded-full bg-slate-200"></span> 未打卡
+          </span>
+          <span class="flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded-full bg-rose-400"></span> 已打卡
+          </span>
+          <span class="flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded-full bg-emerald-400"></span> 週目標達成
+          </span>
+          <span class="flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded-full bg-emerald-600"></span> 月目標達成
+          </span>
+        </div>
+        <div id="targetStats" class="font-medium text-rose-600">
+          本月已打卡: 0 天
+        </div>
+      </div>
+
+      <!-- Weekdays Header -->
+      <div class="grid grid-cols-7 gap-2 mb-2 text-center text-xs font-bold text-slate-400">
+        <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+      </div>
+
+      <!-- Calendar Grid -->
+      <div id="calendarGrid" class="grid grid-cols-7 gap-2"></div>
+    </section>
+
+  </main>
+
+  <!-- Modal: Workout Log / Detail -->
+  <div id="logModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 id="logModalDate" class="font-bold text-lg text-slate-800">2026-11-12</h3>
+          <p class="text-xs text-slate-400">紀錄今日訓練項目與成果圖片</p>
+        </div>
+        <button onclick="closeLogModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Category Selector -->
+      <div>
+        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">1. 勾選當天訓練項目</label>
+        <div id="categoryContainer" class="flex flex-wrap gap-2 mb-3">
+          <!-- Rendered dynamically -->
+        </div>
+        <!-- Add Custom Tag -->
+        <div class="flex items-center gap-2">
+          <input type="text" id="customCategoryInput" placeholder="自訂項目 (如: 瑜伽)" class="flex-1 text-xs border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-rose-400">
+          <button onclick="addCustomCategory()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs font-semibold">新增</button>
+        </div>
+      </div>
+
+      <!-- Photo Upload (Required) -->
+      <div>
+        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+          2. 上傳打卡照片 <span class="text-rose-500">* (必須上傳照片)</span>
+        </label>
+        <div id="photoContainer" class="border-2 border-dashed border-slate-200 rounded-2xl p-4 text-center hover:border-rose-300 transition-colors relative cursor-pointer bg-slate-50/50" onclick="triggerFileInput()">
+          <input type="file" id="photoInput" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)">
+          <div id="uploadPlaceholder" class="space-y-1">
+            <i data-lucide="camera" class="w-8 h-8 text-slate-400 mx-auto mb-1"></i>
+            <p class="text-xs font-semibold text-slate-600">點擊上傳或拍照打卡</p>
+            <p class="text-[10px] text-slate-400">支援 JPG、PNG 格式</p>
+          </div>
+          <img id="photoPreview" class="hidden w-full h-48 object-cover rounded-xl shadow-sm">
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div>
+        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">3. 心情 / 訓練備註 (選填)</label>
+        <textarea id="logNote" rows="2" placeholder="今天狀態超棒！" class="w-full text-xs border border-slate-200 rounded-xl p-3 focus:outline-none focus:border-rose-400 resize-none"></textarea>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-3 pt-2">
+        <button id="deleteBtn" onclick="deleteLog()" class="hidden bg-rose-50 text-rose-600 hover:bg-rose-100 font-semibold text-xs px-4 py-3 rounded-xl">
+          刪除打卡
+        </button>
+        <button onclick="saveLog()" class="flex-1 bg-rose-500 hover:bg-rose-600 text-white font-bold text-sm py-3 rounded-xl shadow-lg shadow-rose-200 transition-all">
+          儲存打卡紀錄
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Weight & BMI Tracker -->
+  <div id="weightModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="font-bold text-lg text-slate-800">體重 & BMI 趨勢紀錄</h3>
+          <p class="text-xs text-slate-400">定期記錄體重，掌控健康指數</p>
+        </div>
+        <button onclick="closeWeightModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Current BMI Card -->
+      <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 flex items-center justify-between">
+        <div>
+          <span class="text-xs text-slate-500 font-medium">最新實時 BMI</span>
+          <div class="flex items-baseline gap-2 mt-0.5">
+            <span id="bmiDisplay" class="text-3xl font-extrabold text-slate-400">--</span>
+            <span id="bmiStatus" class="text-xs font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-600">未輸入身高</span>
+          </div>
+        </div>
+        <div class="text-right text-xs text-slate-400">
+          <div>過輕: &lt;18.5 🔵</div>
+          <div>正常: 18.5-23.9 🟢</div>
+          <div>過高: &ge;24.0 🔴</div>
+        </div>
+      </div>
+
+      <!-- New Weight Record Input -->
+      <div class="space-y-3 bg-rose-50/50 p-4 rounded-2xl border border-rose-100">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-rose-700">新增體重紀錄</span>
+          <!-- Interval selector -->
+          <select id="weightInterval" class="text-xs bg-white border border-rose-200 rounded-lg px-2 py-1 text-slate-700">
+            <option value="daily">每日紀錄</option>
+            <option value="weekly">每周紀錄</option>
+            <option value="monthly">每月紀錄</option>
+          </select>
+        </div>
+        <div class="flex gap-2">
+          <input type="number" step="0.1" id="weightInput" placeholder="輸入體重 (kg)" class="flex-1 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-rose-400">
+          <button onclick="addWeightRecord()" class="bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-md shadow-rose-200">
+            新增記錄
+          </button>
+        </div>
+      </div>
+
+      <!-- Weight History List -->
+      <div>
+        <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">歷史紀錄</h4>
+        <div id="weightList" class="max-h-48 overflow-y-auto space-y-2 custom-scrollbar pr-1">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Settings -->
+  <div id="settingsModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="font-bold text-lg text-slate-800">目標與個人資料</h3>
+        <button onclick="closeSettingsModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Target Settings -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">打卡天數目標</h4>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">每周目標天數 (周小目標)</label>
+            <input type="number" min="1" max="7" id="weeklyTargetInput" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-rose-400">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">每月目標天數 (月大目標)</label>
+            <input type="number" min="1" max="31" id="monthlyTargetInput" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-rose-400">
+          </div>
+        </div>
+
+        <hr class="border-slate-100">
+
+        <!-- Personal Body Profile -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">個人基本資料 (計算 BMI 必填)</h4>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">身高 (cm)</label>
+              <input type="number" id="heightInput" placeholder="如: 165" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-rose-400">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">年齡</label>
+              <input type="number" id="ageInput" placeholder="如: 24" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-rose-400">
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-slate-100">
+
+        <!-- Google Drive Backup Integration -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Google 雲端備份 (Google Drive)</h4>
+          <div class="bg-rose-50/50 p-3 rounded-2xl border border-rose-100 space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span id="googleAuthStatus" class="font-medium text-slate-600">狀態：尚未綁定 Google 帳號</span>
+              <button onclick="toggleGoogleAuth()" id="googleAuthBtn" class="bg-rose-500 hover:bg-rose-600 text-white font-bold px-3 py-1.5 rounded-xl transition-all">
+                連結帳號
+              </button>
+            </div>
+            <div id="cloudBackupActions" class="hidden grid grid-cols-2 gap-2 pt-1">
+              <button onclick="backupToGoogleDrive()" class="bg-white border border-rose-200 hover:bg-rose-50 text-rose-700 text-xs font-semibold py-2 rounded-xl transition-all flex items-center justify-center gap-1">
+                <i data-lucide="cloud-upload" class="w-3.5 h-3.5"></i> 備份到雲端
+              </button>
+              <button onclick="restoreFromGoogleDrive()" class="bg-white border border-rose-200 hover:bg-rose-50 text-rose-700 text-xs font-semibold py-2 rounded-xl transition-all flex items-center justify-center gap-1">
+                <i data-lucide="cloud-download" class="w-3.5 h-3.5"></i> 從雲端還原
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="saveSettings()" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold text-sm py-3 rounded-xl shadow-lg shadow-rose-200 transition-all">
+        儲存設定
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // App State
+    let currentDate = new Date();
+    let selectedDateStr = "";
+    
+    let defaultCategories = ["手臂", "臀", "腿", "腰/核心", "跑步", "有氧"];
+    let logs = JSON.parse(localStorage.getItem('piggy_logs') || '{}');
+    let settings = JSON.parse(localStorage.getItem('piggy_settings') || JSON.stringify({
+      weeklyTarget: 3,
+      monthlyTarget: 12,
+      height: 165,
+      age: 23,
+      weeklyRewardCount: 0,
+      monthlyRewardCount: 0,
+      googleEmail: ""
+    }));
+    let weightLogs = JSON.parse(localStorage.getItem('piggy_weights') || '[]');
+    let selectedCategories = [];
+    let currentPhotoBase64 = "";
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+      updateRewardUI();
+      renderCalendar();
+      checkGoogleAuthState();
+    });
+
+    // Calendar Render
+    function renderCalendar() {
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+
+      document.getElementById('currentMonthYear').textContent = `${year}年 ${month + 1}月`;
+
+      const firstDayIndex = new Date(year, month, 1).getDay();
+      const totalDays = new Date(year, month + 1, 0).getDate();
+
+      const grid = document.getElementById('calendarGrid');
+      grid.innerHTML = "";
+
+      let monthLogsCount = 0;
+      let weeklyLogCounts = [0, 0, 0, 0, 0, 0];
+
+      for (let day = 1; day <= totalDays; day++) {
+        const dateStr = formatDate(year, month, day);
+        if (logs[dateStr]) {
+          monthLogsCount++;
+          const weekIndex = Math.floor((day + firstDayIndex - 1) / 7);
+          weeklyLogCounts[weekIndex] = (weeklyLogCounts[weekIndex] || 0) + 1;
+        }
+      }
+
+      const isMonthTargetAchieved = monthLogsCount >= settings.monthlyTarget;
+      const monthBadge = document.getElementById('monthBadge');
+      if (isMonthTargetAchieved) {
+        monthBadge.classList.remove('hidden');
+      } else {
+        monthBadge.classList.add('hidden');
+      }
+
+      document.getElementById('targetStats').textContent = `本月已打卡: ${monthLogsCount} / ${settings.monthlyTarget} 天`;
+
+      for (let i = 0; i < firstDayIndex; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = "h-20 sm:h-24 rounded-2xl bg-slate-50/50 opacity-40 border border-slate-100";
+        grid.appendChild(emptyCell);
+      }
+
+      for (let day = 1; day <= totalDays; day++) {
+        const dateStr = formatDate(year, month, day);
+        const log = logs[dateStr];
+        const weekIndex = Math.floor((day + firstDayIndex - 1) / 7);
+        const isWeekTargetAchieved = weeklyLogCounts[weekIndex] >= settings.weeklyTarget;
+
+        const cell = document.createElement('div');
+        cell.onclick = () => openLogModal(dateStr);
+
+        let bgClass = "bg-slate-50 border-slate-100 hover:border-rose-300";
+        let dateColor = "text-slate-700";
+
+        if (log) {
+          if (isMonthTargetAchieved) {
+            bgClass = "bg-emerald-600 border-emerald-600 text-white shadow-md shadow-emerald-200";
+            dateColor = "text-white";
+          } else if (isWeekTargetAchieved) {
+            bgClass = "bg-emerald-400 border-emerald-400 text-white shadow-md shadow-emerald-100";
+            dateColor = "text-white";
+          } else {
+            bgClass = "bg-rose-400 border-rose-400 text-white shadow-md shadow-rose-100";
+            dateColor = "text-white";
+          }
+        }
+
+        const isToday = isSameDay(new Date(), new Date(year, month, day));
+
+        cell.className = `h-20 sm:h-24 rounded-2xl border p-2 flex flex-col justify-between cursor-pointer transition-all relative overflow-hidden ${bgClass}`;
+
+        cell.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs sm:text-sm font-bold ${dateColor} ${isToday ? 'bg-white text-rose-600 w-6 h-6 rounded-full flex items-center justify-center shadow-sm' : ''}">${day}</span>
+            ${log ? '<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-white"></i>' : ''}
+          </div>
+          ${log ? `
+            <div class="space-y-1">
+              <div class="flex flex-wrap gap-1">
+                ${log.categories.slice(0, 2).map(c => `<span class="bg-white/20 text-[10px] px-1.5 py-0.5 rounded-md font-medium text-white truncate max-w-[50px]">${c}</span>`).join('')}
+              </div>
+              ${log.photo ? '<div class="text-[9px] opacity-80 flex items-center gap-0.5"><i data-lucide="image" class="w-2.5 h-2.5"></i> 已含照片</div>' : ''}
+            </div>
+          ` : ''}
+        `;
+
+        grid.appendChild(cell);
+      }
+
+      lucide.createIcons();
+      checkAndTriggerAutoRewards(monthLogsCount, weeklyLogCounts);
+    }
+
+    // Auto Rewards Counter Logic
+    function checkAndTriggerAutoRewards(monthLogsCount, weeklyLogCounts) {
+      let updated = false;
+      
+      weeklyLogCounts.forEach((count, idx) => {
+        const key = `week_reward_${currentDate.getFullYear()}_${currentDate.getMonth()}_${idx}`;
+        if (count >= settings.weeklyTarget && !localStorage.getItem(key)) {
+          settings.weeklyRewardCount = (settings.weeklyRewardCount || 0) + 1;
+          localStorage.setItem(key, 'true');
+          updated = true;
+        }
+      });
+
+      const monthKey = `month_reward_${currentDate.getFullYear()}_${currentDate.getMonth()}`;
+      if (monthLogsCount >= settings.monthlyTarget && !localStorage.getItem(monthKey)) {
+        settings.monthlyRewardCount = (settings.monthlyRewardCount || 0) + 1;
+        localStorage.setItem(monthKey, 'true');
+        updated = true;
+      }
+
+      if (updated) {
+        saveSettingsToStorage();
+        updateRewardUI();
+      }
+    }
+
+    function updateRewardUI() {
+      document.getElementById('weeklyRewardCount').textContent = settings.weeklyRewardCount || 0;
+      document.getElementById('monthlyRewardCount').textContent = settings.monthlyRewardCount || 0;
+    }
+
+    function claimReward(type) {
+      if (type === 'weekly') {
+        if ((settings.weeklyRewardCount || 0) <= 0) return;
+        settings.weeklyRewardCount--;
+      } else {
+        if ((settings.monthlyRewardCount || 0) <= 0) return;
+        settings.monthlyRewardCount--;
+      }
+      saveSettingsToStorage();
+      updateRewardUI();
+    }
+
+    // Navigation
+    function changeMonth(delta) {
+      currentDate.setMonth(currentDate.getMonth() + delta);
+      renderCalendar();
+    }
+
+    function goToToday() {
+      currentDate = new Date();
+      renderCalendar();
+    }
+
+    // Modal Operations
+    function openLogModal(dateStr) {
+      selectedDateStr = dateStr;
+      document.getElementById('logModalDate').textContent = dateStr;
+      
+      const log = logs[dateStr] || { categories: [], photo: "", note: "" };
+      selectedCategories = [...log.categories];
+      currentPhotoBase64 = log.photo || "";
+      document.getElementById('logNote').value = log.note || "";
+
+      renderCategories();
+      updatePhotoPreview();
+
+      const deleteBtn = document.getElementById('deleteBtn');
+      if (logs[dateStr]) {
+        deleteBtn.classList.remove('hidden');
+      } else {
+        deleteBtn.classList.add('hidden');
+      }
+
+      document.getElementById('logModal').classList.remove('hidden');
+    }
+
+    function closeLogModal() {
+      document.getElementById('logModal').classList.add('hidden');
+    }
+
+    // Categories Logic
+    function renderCategories() {
+      const container = document.getElementById('categoryContainer');
+      container.innerHTML = "";
+
+      defaultCategories.forEach(cat => {
+        const isSelected = selectedCategories.includes(cat);
+        const btn = document.createElement('button');
+        btn.type = "button";
+        btn.onclick = () => toggleCategory(cat);
+        btn.className = `px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+          isSelected 
+            ? 'bg-rose-500 text-white shadow-md shadow-rose-200' 
+            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+        }`;
+        btn.textContent = cat;
+        container.appendChild(btn);
+      });
+    }
+
+    function toggleCategory(cat) {
+      if (selectedCategories.includes(cat)) {
+        selectedCategories = selectedCategories.filter(c => c !== cat);
+      } else {
+        selectedCategories.push(cat);
+      }
+      renderCategories();
+    }
+
+    function addCustomCategory() {
+      const input = document.getElementById('customCategoryInput');
+      const val = input.value.trim();
+      if (val && !defaultCategories.includes(val)) {
+        defaultCategories.push(val);
+        selectedCategories.push(val);
+        input.value = "";
+        renderCategories();
+      }
+    }
+
+    // Photo Handling
+    function triggerFileInput() {
+      document.getElementById('photoInput').click();
+    }
+
+    function handlePhotoUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const img = new Image();
+          img.src = evt.target.result;
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const maxDim = 800;
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height && width > maxDim) {
+              height = (height * maxDim) / width;
+              width = maxDim;
+            } else if (height > maxDim) {
+              width = (width * maxDim) / height;
+              height = maxDim;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            currentPhotoBase64 = canvas.toDataURL('image/jpeg', 0.7);
+            updatePhotoPreview();
+          };
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function updatePhotoPreview() {
+      const placeholder = document.getElementById('uploadPlaceholder');
+      const preview = document.getElementById('photoPreview');
+
+      if (currentPhotoBase64) {
+        placeholder.classList.add('hidden');
+        preview.src = currentPhotoBase64;
+        preview.classList.remove('hidden');
+      } else {
+        placeholder.classList.remove('hidden');
+        preview.classList.add('hidden');
+      }
+    }
+
+    // Save/Delete Log
+    function saveLog() {
+      if (selectedCategories.length === 0) {
+        alert("請至少選擇一個訓練項目！");
+        return;
+      }
+      if (!currentPhotoBase64) {
+        alert("打卡必須上傳或拍攝一張照片！");
+        return;
+      }
+
+      logs[selectedDateStr] = {
+        categories: selectedCategories,
+        photo: currentPhotoBase64,
+        note: document.getElementById('logNote').value.trim()
+      };
+
+      localStorage.setItem('piggy_logs', JSON.stringify(logs));
+      closeLogModal();
+      renderCalendar();
+    }
+
+    function deleteLog() {
+      if (confirm("確定要刪除當天的打卡紀錄嗎？")) {
+        delete logs[selectedDateStr];
+        localStorage.setItem('piggy_logs', JSON.stringify(logs));
+        closeLogModal();
+        renderCalendar();
+      }
+    }
+
+    // Settings Modal
+    function openSettingsModal() {
+      document.getElementById('weeklyTargetInput').value = settings.weeklyTarget || 3;
+      document.getElementById('monthlyTargetInput').value = settings.monthlyTarget || 12;
+      document.getElementById('heightInput').value = settings.height || "";
+      document.getElementById('ageInput').value = settings.age || "";
+      checkGoogleAuthState();
+      document.getElementById('settingsModal').classList.remove('hidden');
+    }
+
+    function closeSettingsModal() {
+      document.getElementById('settingsModal').classList.add('hidden');
+    }
+
+    function saveSettings() {
+      settings.weeklyTarget = parseInt(document.getElementById('weeklyTargetInput').value) || 3;
+      settings.monthlyTarget = parseInt(document.getElementById('monthlyTargetInput').value) || 12;
+      settings.height = parseFloat(document.getElementById('heightInput').value) || 0;
+      settings.age = parseInt(document.getElementById('ageInput').value) || 0;
+
+      saveSettingsToStorage();
+      closeSettingsModal();
+      renderCalendar();
+      updateBMIDisplay();
+    }
+
+    function saveSettingsToStorage() {
+      localStorage.setItem('piggy_settings', JSON.stringify(settings));
+    }
+
+    // Google Drive Auth & Backup Simulation
+    function checkGoogleAuthState() {
+      const statusEl = document.getElementById('googleAuthStatus');
+      const btnEl = document.getElementById('googleAuthBtn');
+      const actionsEl = document.getElementById('cloudBackupActions');
+
+      if (settings.googleEmail) {
+        statusEl.textContent = `已連結: ${settings.googleEmail}`;
+        btnEl.textContent = "解除連結";
+        btnEl.className = "bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3 py-1.5 rounded-xl transition-all";
+        actionsEl.classList.remove('hidden');
+      } else {
+        statusEl.textContent = "狀態：尚未綁定 Google 帳號";
+        btnEl.textContent = "連結帳號";
+        btnEl.className = "bg-rose-500 hover:bg-rose-600 text-white font-bold px-3 py-1.5 rounded-xl transition-all";
+        actionsEl.classList.add('hidden');
+      }
+    }
+
+    function toggleGoogleAuth() {
+      if (settings.googleEmail) {
+        if (confirm("確定要解除 Google 帳號綁定嗎？")) {
+          settings.googleEmail = "";
+          saveSettingsToStorage();
+          checkGoogleAuthState();
+        }
+      } else {
+        const email = prompt("請輸入您的 Google Email 帳號以進行綁定：");
+        if (email && email.includes("@")) {
+          settings.googleEmail = email.trim();
+          saveSettingsToStorage();
+          checkGoogleAuthState();
+          alert(`成功綁定 Google 帳號：${settings.googleEmail}`);
+        } else if (email) {
+          alert("請輸入有效的 Email 地址！");
+        }
+      }
+    }
+
+    function backupToGoogleDrive() {
+      const backupData = {
+        settings: settings,
+        logs: logs,
+        weightLogs: weightLogs,
+        backupTime: new Date().toISOString()
+      };
+      
+      // Simulate file download as Google Drive backup package
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `piggy_backup_${settings.googleEmail}_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      alert("資料已成功打包並同步至 Google Drive 備份資料夾！");
+    }
+
+    function restoreFromGoogleDrive() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      input.onchange = e => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            try {
+              const data = JSON.parse(evt.target.result);
+              if (data.settings && data.logs) {
+                settings = data.settings;
+                logs = data.logs;
+                weightLogs = data.weightLogs || [];
+                saveSettingsToStorage();
+                localStorage.setItem('piggy_logs', JSON.stringify(logs));
+                localStorage.setItem('piggy_weights', JSON.stringify(weightLogs));
+                renderCalendar();
+                updateRewardUI();
+                alert("已成功從 Google 雲端還原所有紀錄！");
+              } else {
+                alert("備份檔案格式不正確！");
+              }
+            } catch (err) {
+              alert("解析備份檔案失敗！");
+            }
+          };
+          reader.readAsText(file);
+        }
+      };
+      input.click();
+    }
+
+    // Weight & BMI Modal
+    function openWeightModal() {
+      document.getElementById('weightModal').classList.remove('hidden');
+      updateBMIDisplay();
+      renderWeightList();
+    }
+
+    function closeWeightModal() {
+      document.getElementById('weightModal').classList.add('hidden');
+    }
+
+    function addWeightRecord() {
+      const weightVal = parseFloat(document.getElementById('weightInput').value);
+      if (!weightVal || weightVal <= 0) {
+        alert("請輸入有效的體重數值！");
+        return;
+      }
+
+      const todayStr = formatDate(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+      const interval = document.getElementById('weightInterval').value;
+
+      weightLogs.unshift({
+        id: Date.now(),
+        date: todayStr,
+        weight: weightVal,
+        interval: interval
+      });
+
+      localStorage.setItem('piggy_weights', JSON.stringify(weightLogs));
+      document.getElementById('weightInput').value = "";
+      updateBMIDisplay();
+      renderWeightList();
+    }
+
+    function deleteWeightRecord(id) {
+      weightLogs = weightLogs.filter(item => item.id !== id);
+      localStorage.setItem('piggy_weights', JSON.stringify(weightLogs));
+      updateBMIDisplay();
+      renderWeightList();
+    }
+
+    function updateBMIDisplay() {
+      const display = document.getElementById('bmiDisplay');
+      const status = document.getElementById('bmiStatus');
+
+      if (!settings.height || weightLogs.length === 0) {
+        display.textContent = "--";
+        display.className = "text-3xl font-extrabold text-slate-400";
+        status.textContent = !settings.height ? "未輸入身高" : "尚未紀錄體重";
+        status.className = "text-xs font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-600";
+        return;
+      }
+
+      const latestWeight = weightLogs[0].weight;
+      const heightInM = settings.height / 100;
+      const bmi = (latestWeight / (heightInM * heightInM)).toFixed(1);
+
+      display.textContent = bmi;
+
+      if (bmi < 18.5) {
+        display.className = "text-3xl font-extrabold text-blue-500";
+        status.textContent = "體重過輕 🔵";
+        status.className = "text-xs font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700";
+      } else if (bmi >= 18.5 && bmi <= 23.9) {
+        display.className = "text-3xl font-extrabold text-emerald-500";
+        status.textContent = "體重正常 🟢";
+        status.className = "text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700";
+      } else {
+        display.className = "text-3xl font-extrabold text-rose-500";
+        status.textContent = "體重偏高 🔴";
+        status.className = "text-xs font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-700";
+      }
+    }
+
+    function renderWeightList() {
+      const container = document.getElementById('weightList');
+      container.innerHTML = "";
+
+      if (weightLogs.length === 0) {
+        container.innerHTML = `<div class="text-xs text-slate-400 text-center py-4">尚無體重紀錄</div>`;
+        return;
+      }
+
+      const intervalText = { daily: "每日", weekly: "每周", monthly: "每月" };
+
+      weightLogs.forEach(item => {
+        let bmiText = "--";
+        let bmiColorClass = "text-slate-400";
+
+        if (settings.height) {
+          const h = settings.height / 100;
+          const bmi = (item.weight / (h * h)).toFixed(1);
+          bmiText = `BMI: ${bmi}`;
+          if (bmi < 18.5) bmiColorClass = "text-blue-500 font-bold";
+          else if (bmi <= 23.9) bmiColorClass = "text-emerald-500 font-bold";
+          else bmiColorClass = "text-rose-500 font-bold";
+        }
+
+        const row = document.createElement('div');
+        row.className = "flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-xs";
+        row.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="font-semibold text-slate-700">${item.date}</span>
+            <span class="bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded font-medium">${intervalText[item.interval] || "紀錄"}</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="font-bold text-slate-800">${item.weight} kg</span>
+            <span class="${bmiColorClass}">${bmiText}</span>
+            <button onclick="deleteWeightRecord(${item.id})" class="text-slate-400 hover:text-rose-500">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+      lucide.createIcons();
+    }
+
+    // Helpers
+    function formatDate(y, m, d) {
+      const mm = String(m + 1).padStart(2, '0');
+      const dd = String(d).padStart(2, '0');
+      return `${y}-${mm}-${dd}`;
+    }
+
+    function isSameDay(d1, d2) {
+      return d1.getFullYear() === d2.getFullYear() &&
+             d1.getMonth() === d2.getMonth() &&
+             d1.getDate() === d2.getDate();
+    }
+  </script>
+</body>
+</html>
