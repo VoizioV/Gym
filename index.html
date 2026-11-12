@@ -31,35 +31,35 @@
 
   <!-- Header -->
   <header id="headerBg" class="bg-white/80 backdrop-blur-md border-b border-rose-100 sticky top-0 z-30 px-4 py-3 shadow-sm transition-colors duration-300">
-    <div class="max-w-4xl mx-auto flex items-center justify-between">
+    <div class="max-w-4xl mx-auto flex items-center justify-between gap-2">
       <div class="flex items-center gap-2">
         <div id="headerIconBg" class="bg-rose-500 text-white p-2 rounded-2xl shadow-md shadow-rose-200 transition-colors duration-300">
           <i id="headerIcon" data-lucide="dumbbell" class="w-6 h-6"></i>
         </div>
         <div>
-          <h1 id="mainTitleText" class="font-extrabold text-xl text-slate-800 tracking-tight">寶寶豬的逆襲日記 🐷💪</h1>
-          <p id="mainSubtitleText" class="text-xs text-rose-500 font-medium transition-colors duration-300">記錄每一次蛻變與努力</p>
+          <h1 id="mainTitleText" class="font-extrabold text-lg sm:text-xl text-slate-800 tracking-tight">寶寶豬的逆襲日記 🐷💪</h1>
+          <p id="mainSubtitleText" class="text-[11px] sm:text-xs text-rose-500 font-medium transition-colors duration-300">自律變美，一起養胖小貓咪</p>
         </div>
       </div>
       
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1.5 sm:gap-2">
         <!-- Page Switch Button -->
-        <button id="pageSwitchBtn" onclick="togglePageView()" class="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3.5 py-2 rounded-xl text-sm font-bold transition-all shadow-sm border border-emerald-200">
+        <button id="pageSwitchBtn" onclick="togglePageView()" class="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm border border-emerald-200">
           <i data-lucide="utensils" class="w-4 h-4"></i>
-          <span>切換至飲食記錄</span>
+          <span>飲食記錄</span>
         </button>
 
-        <div id="coinBadgeContainer" class="hidden sm:flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-700 px-3 py-1.5 rounded-xl text-sm font-extrabold shadow-sm">
+        <div id="coinBadgeContainer" class="hidden md:flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-700 px-3 py-1.5 rounded-xl text-sm font-extrabold shadow-sm">
           <span>🐾</span>
           <span id="headerPoints">0</span>
           <span class="text-xs font-semibold">喵幣</span>
         </div>
 
-        <button onclick="openWeightModal()" class="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-sm font-semibold transition-all">
+        <button onclick="openWeightModal()" class="flex items-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all">
           <i data-lucide="scale" class="w-4 h-4"></i>
           <span class="hidden sm:inline">體重</span>
         </button>
-        <button onclick="openSettingsModal()" class="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-sm font-semibold transition-all">
+        <button onclick="openSettingsModal()" class="flex items-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all">
           <i data-lucide="settings" class="w-4 h-4"></i>
           <span class="hidden sm:inline">設定</span>
         </button>
@@ -81,10 +81,10 @@
               <span>🐱 寶寶豬的貓咪小窩</span>
             </div>
             <h2 class="text-lg sm:text-xl font-extrabold text-slate-800 flex items-center gap-2">
-              點擊貓咪互動，累積喵幣換家具！
+              點擊貓咪互動，看看牠們的個性！
               <span id="catCountBadge" class="text-xs bg-rose-100 text-rose-600 px-2.5 py-0.5 rounded-full font-bold">目前 1 隻貓</span>
             </h2>
-            <p class="text-xs text-slate-500 mt-0.5">簽到打卡 +5 喵幣 ｜ 週達標 +15 喵幣 ｜ 月達標 +25 喵幣</p>
+            <p class="text-xs text-slate-500 mt-0.5">打卡 +5 喵幣 ｜ 週達標 +15 喵幣 ｜ 月達標 +25 喵幣</p>
           </div>
 
           <button onclick="openShopModal()" class="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 active:scale-95 text-white px-5 py-3 rounded-2xl text-sm font-extrabold shadow-lg shadow-amber-200 transition-all">
@@ -94,6 +94,7 @@
           </button>
         </div>
 
+        <!-- Interactive Canvas Room -->
         <div class="relative rounded-2xl overflow-hidden border-2 border-amber-200 bg-[#FFF8EE] shadow-inner">
           <canvas id="catCanvas" width="800" height="320" class="w-full h-[250px] sm:h-[310px] block cursor-pointer"></canvas>
           
@@ -199,22 +200,28 @@
         <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div>
             <div class="inline-flex items-center gap-1.5 bg-white/25 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold mb-2">
-              <i data-lucide="apple" class="w-3.5 h-3.5"></i> 🥗 智能飲食與熱量管理
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 🥗 Google Gemini 視覺 AI 營養師
             </div>
-            <h2 class="text-2xl font-bold">吃得健康，精準控卡 ✨</h2>
-            <p class="text-emerald-100 text-sm mt-1">點擊下方日曆日期記錄三餐或加餐，AI 即時幫你換算卡路里與營養！</p>
+            <h2 class="text-2xl font-bold">拍照即識熱量，精準控卡 ✨</h2>
+            <p class="text-emerald-100 text-sm mt-1">點擊日期記錄三餐或加餐，真實視覺 AI 自動辨識食物並換算卡路里！</p>
           </div>
 
-          <button onclick="openDietReportModal()" class="bg-white hover:bg-emerald-50 text-emerald-700 font-extrabold px-5 py-3 rounded-2xl shadow-lg transition-all flex items-center gap-2 text-sm">
-            <i data-lucide="brain" class="w-5 h-5 text-emerald-600"></i>
-            <span>獲取今日 AI 營養報告</span>
-          </button>
+          <div class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+            <button onclick="openSettingsModal()" class="bg-emerald-700/50 hover:bg-emerald-700/70 text-white font-bold px-4 py-3 rounded-2xl border border-white/20 transition-all flex items-center justify-center gap-1.5 text-xs">
+              <i data-lucide="key" class="w-4 h-4"></i>
+              <span id="apiKeyStatusBadge">設定 Gemini API Key</span>
+            </button>
+            <button onclick="openDietReportModal()" class="bg-white hover:bg-emerald-50 text-emerald-700 font-extrabold px-5 py-3 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm">
+              <i data-lucide="brain" class="w-5 h-5 text-emerald-600"></i>
+              <span>獲取今日營養報告</span>
+            </button>
+          </div>
         </div>
       </section>
 
       <!-- Diet Calendar Card -->
       <section class="bg-white rounded-3xl p-6 shadow-xl shadow-emerald-100/50 border border-emerald-100">
-        <div class="flex items-center justify-between mb-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
           <div class="flex items-center gap-3">
             <h2 id="dietMonthYear" class="text-xl font-bold text-slate-800">2026年 11月</h2>
             <div id="dietGoalBadge" class="px-3 py-1 bg-teal-100 text-teal-800 text-xs font-bold rounded-full">
@@ -304,25 +311,21 @@
     </div>
   </div>
 
-  <!-- Modal: Diet Log (Flexible Meals & AI Calorie Calculation) -->
+  <!-- Modal: Diet Log (Flexible Meals & Real Gemini AI Calorie Calculation) -->
   <div id="dietLogModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto custom-scrollbar animate-in fade-in zoom-in duration-200">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3 sticky top-0 bg-white z-10">
         <div>
           <h3 id="dietModalDate" class="font-extrabold text-lg text-slate-800">2026-11-12 飲食記錄</h3>
-          <p class="text-xs text-slate-400">彈性記錄餐次，AI 自動換算卡路里</p>
+          <p class="text-xs text-slate-400">拍照後由 Gemini AI 真正看圖計算卡路里</p>
         </div>
         <button onclick="closeDietLogModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <!-- Meal Items List Container -->
-      <div id="mealItemsContainer" class="space-y-4">
-        <!-- Rendered dynamically -->
-      </div>
+      <div id="mealItemsContainer" class="space-y-4"></div>
 
-      <!-- Add Meal Button -->
       <button onclick="addNewMealEntry()" class="w-full py-3 border-2 border-dashed border-emerald-300 hover:bg-emerald-50 text-emerald-700 font-bold text-xs rounded-2xl transition-all flex items-center justify-center gap-2">
         <i data-lucide="plus" class="w-4 h-4"></i> 新增一餐 / 加餐
       </button>
@@ -343,16 +346,14 @@
           <h3 class="font-extrabold text-lg text-slate-800 flex items-center gap-2">
             <i data-lucide="brain" class="w-5 h-5 text-emerald-600"></i> AI 智能營養與今日報告
           </h3>
-          <p id="reportDateSubtitle" class="text-xs text-slate-400">結合訓練目標與今日攝取數據分析</p>
+          <p id="reportDateSubtitle" class="text-xs text-slate-400">結合訓練目標、身高體重與今日攝取分析</p>
         </div>
         <button onclick="closeDietReportModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <div id="reportContentArea" class="space-y-4 text-sm text-slate-700">
-        <!-- Rendered dynamically -->
-      </div>
+      <div id="reportContentArea" class="space-y-4 text-sm text-slate-700"></div>
 
       <button onclick="closeDietReportModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs py-3 rounded-xl transition-all">
         關閉報告
@@ -379,70 +380,70 @@
       </div>
 
       <div class="space-y-2.5">
-        <h4 class="text-xs font-extrabold text-amber-600 uppercase tracking-wider">🍖 美食與互動玩具</h4>
+        <h4 class="text-xs font-extrabold text-amber-600 uppercase tracking-wider">🍖 美食與互動玩具（可重複購買投放）</h4>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-amber-50/30">
+          <div class="border border-slate-200 hover:border-amber-400 rounded-2xl p-3.5 flex flex-col justify-between bg-amber-50/30">
             <div>
               <div class="text-2xl mb-1">🥫</div>
               <div class="font-bold text-sm text-slate-800">美味貓罐頭</div>
-              <p class="text-[11px] text-slate-500 mt-1">5 喵幣 / 個</p>
+              <p class="text-[11px] text-slate-500 mt-1">吸引貓咪圍過來大口吃飯，貪吃貓最愛！</p>
             </div>
-            <button onclick="buyItem('food', 5)" class="mt-3 w-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (5 點)</button>
+            <button onclick="buyItem('food', 5)" class="mt-3 w-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (5 喵幣)</button>
           </div>
-          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-rose-50/30">
+          <div class="border border-slate-200 hover:border-rose-400 rounded-2xl p-3.5 flex flex-col justify-between bg-rose-50/30">
             <div>
               <div class="text-2xl mb-1">🧶</div>
-              <div class="font-bold text-sm text-slate-800">彈力毛球</div>
-              <p class="text-[11px] text-slate-500 mt-1">10 喵幣 / 個</p>
+              <div class="font-bold text-sm text-slate-800">彈力毛球玩具</div>
+              <p class="text-[11px] text-slate-500 mt-1">貓咪會跑過去把毛球拍飛滾動玩耍。</p>
             </div>
-            <button onclick="buyItem('yarn', 10)" class="mt-3 w-full bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (10 點)</button>
+            <button onclick="buyItem('yarn', 10)" class="mt-3 w-full bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (10 喵幣)</button>
           </div>
-          <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-indigo-50/30">
+          <div class="border border-slate-200 hover:border-indigo-400 rounded-2xl p-3.5 flex flex-col justify-between bg-indigo-50/30">
             <div>
               <div class="text-2xl mb-1">🐭</div>
-              <div class="font-bold text-sm text-slate-800">發條老鼠</div>
-              <p class="text-[11px] text-slate-500 mt-1">15 喵幣 / 個</p>
+              <div class="font-bold text-sm text-slate-800">會動的老鼠玩具</div>
+              <p class="text-[11px] text-slate-500 mt-1">發條老鼠在房間亂竄，引發全場追逐！</p>
             </div>
-            <button onclick="buyItem('mouse', 15)" class="mt-3 w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (15 點)</button>
+            <button onclick="buyItem('mouse', 15)" class="mt-3 w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (15 喵幣)</button>
           </div>
         </div>
       </div>
 
       <div class="space-y-2.5 pt-2">
-        <h4 class="text-xs font-extrabold text-emerald-600 uppercase tracking-wider">🏠 豪華房間設施</h4>
+        <h4 class="text-xs font-extrabold text-emerald-600 uppercase tracking-wider">🏠 豪華房間設施（一次兌換，永久擺放互動）</h4>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-emerald-50/20">
-            <div><div class="text-2xl mb-1">🪵</div><div class="font-bold text-sm text-slate-800">豪華貓爬架</div><p class="text-[11px] text-slate-500 mt-1">20 喵幣</p></div>
-            <button id="btnBuyTree" onclick="buyFurniture('tree', 20)" class="mt-3 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (20 點)</button>
+            <div><div class="text-2xl mb-1">🪵</div><div class="font-bold text-sm text-slate-800">豪華貓爬架</div><p class="text-[11px] text-slate-500 mt-1">貓咪會主動攀爬跳上跳台俯視房間。</p></div>
+            <button id="btnBuyTree" onclick="buyFurniture('tree', 20)" class="mt-3 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (20 喵幣)</button>
           </div>
           <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-sky-50/20">
-            <div><div class="text-2xl mb-1">⛲</div><div class="font-bold text-sm text-slate-800">自動飲水機</div><p class="text-[11px] text-slate-500 mt-1">15 喵幣</p></div>
-            <button id="btnBuyFountain" onclick="buyFurniture('fountain', 15)" class="mt-3 w-full bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (15 點)</button>
+            <div><div class="text-2xl mb-1">⛲</div><div class="font-bold text-sm text-slate-800">自動飲水機</div><p class="text-[11px] text-slate-500 mt-1">流動活水！貓咪口渴會走過去喝水。</p></div>
+            <button id="btnBuyFountain" onclick="buyFurniture('fountain', 15)" class="mt-3 w-full bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (15 喵幣)</button>
           </div>
           <div class="border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between bg-purple-50/20">
-            <div><div class="text-2xl mb-1">🚽</div><div class="font-bold text-sm text-slate-800">清潔貓砂盆</div><p class="text-[11px] text-slate-500 mt-1">15 喵幣</p></div>
-            <button id="btnBuyLitter" onclick="buyFurniture('litter', 15)" class="mt-3 w-full bg-purple-500 hover:bg-purple-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (15 點)</button>
+            <div><div class="text-2xl mb-1">🚽</div><div class="font-bold text-sm text-slate-800">清潔貓砂盆</div><p class="text-[11px] text-slate-500 mt-1">讓貓咪上廁所，上完還會認真撥砂！</p></div>
+            <button id="btnBuyLitter" onclick="buyFurniture('litter', 15)" class="mt-3 w-full bg-purple-500 hover:bg-purple-600 text-white font-bold text-xs py-2 rounded-xl">兌換 (15 喵幣)</button>
           </div>
         </div>
       </div>
 
       <div class="space-y-2.5 pt-2">
-        <h4 class="text-xs font-extrabold text-pink-600 uppercase tracking-wider">🐱 領養新貓咪（每隻 50 喵幣）</h4>
+        <h4 class="text-xs font-extrabold text-pink-600 uppercase tracking-wider">🐱 領養新貓咪（每隻 50 喵幣，隨機賦予 7 種性格之一）</h4>
         <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
-          <button onclick="adoptCat('calico', '花貓')" class="border border-slate-200 hover:border-pink-400 p-3 rounded-2xl text-center">
-            <div class="text-2xl mb-1">🐈</div><div class="font-bold text-xs">三花貓</div><div class="text-[10px] text-pink-600">50 喵幣</div>
+          <button onclick="adoptCat('calico', '花貓')" class="border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center">
+            <div class="text-2xl mb-1">🐈</div><div class="font-bold text-xs">三花貓</div><div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
           </button>
-          <button onclick="adoptCat('black', '黑貓')" class="border border-slate-200 hover:border-pink-400 p-3 rounded-2xl text-center">
-            <div class="text-2xl mb-1">🐈‍⬛</div><div class="font-bold text-xs">酷黑貓</div><div class="text-[10px] text-pink-600">50 喵幣</div>
+          <button onclick="adoptCat('black', '黑貓')" class="border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center">
+            <div class="text-2xl mb-1">🐈‍⬛</div><div class="font-bold text-xs">酷黑貓</div><div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
           </button>
-          <button onclick="adoptCat('white', '白貓')" class="border border-slate-200 hover:border-pink-400 p-3 rounded-2xl text-center">
-            <div class="text-2xl mb-1">🤍</div><div class="font-bold text-xs">雪白貓</div><div class="text-[10px] text-pink-600">50 喵幣</div>
+          <button onclick="adoptCat('white', '白貓')" class="border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center">
+            <div class="text-2xl mb-1">🤍</div><div class="font-bold text-xs">雪白貓</div><div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
           </button>
-          <button onclick="adoptCat('orange', '橘貓')" class="border border-slate-200 hover:border-pink-400 p-3 rounded-2xl text-center">
-            <div class="text-2xl mb-1">🧡</div><div class="font-bold text-xs">大橘貓</div><div class="text-[10px] text-pink-600">50 喵幣</div>
+          <button onclick="adoptCat('orange', '橘貓')" class="border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center">
+            <div class="text-2xl mb-1">🧡</div><div class="font-bold text-xs">大橘貓</div><div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
           </button>
-          <button onclick="adoptCat('ragdoll', '布偶貓')" class="col-span-2 sm:col-span-1 border border-slate-200 hover:border-pink-400 p-3 rounded-2xl text-center">
-            <div class="text-2xl mb-1">👑</div><div class="font-bold text-xs">布偶貓</div><div class="text-[10px] text-pink-600">50 喵幣</div>
+          <button onclick="adoptCat('ragdoll', '布偶貓')" class="col-span-2 sm:col-span-1 border border-slate-200 hover:border-pink-400 hover:bg-pink-50/50 p-3 rounded-2xl text-center">
+            <div class="text-2xl mb-1">👑</div><div class="font-bold text-xs">布偶貓</div><div class="text-[10px] font-bold text-pink-600 mt-1">50 喵幣</div>
           </button>
         </div>
       </div>
@@ -499,21 +500,33 @@
     </div>
   </div>
 
-  <!-- Modal: Settings & Goal Selection -->
+  <!-- Modal: Settings & Gemini API Key -->
   <div id="settingsModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto custom-scrollbar animate-in fade-in zoom-in duration-200">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="font-bold text-lg text-slate-800">目標與個人資料設定</h3>
+        <h3 class="font-bold text-lg text-slate-800">目標、AI 金鑰與資料設定</h3>
         <button onclick="closeSettingsModal()" class="p-2 hover:bg-slate-100 text-slate-400 rounded-xl">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
       <div class="space-y-4">
+        <!-- Real Gemini AI Key Configuration -->
+        <div class="space-y-2 bg-emerald-50/70 p-3.5 rounded-2xl border border-emerald-200">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-extrabold text-emerald-800 uppercase tracking-wider flex items-center gap-1">
+              <span>🤖 Google Gemini 視覺 AI 金鑰</span>
+            </h4>
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-[11px] font-bold text-emerald-600 underline hover:text-emerald-800">免費申請 Key ↗</a>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed">填入免費的 Gemini API Key 後，拍照即可真正精準辨識食物熱量與營養素（僅儲存在您的設備本地，絕不外洩）。</p>
+          <input type="password" id="geminiApiKeyInput" placeholder="貼上您的 AIzaSy... 金鑰" class="w-full border border-emerald-300 bg-white rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-500">
+        </div>
+
         <!-- Training Goal Selection -->
         <div class="space-y-2">
-          <h4 class="text-xs font-bold text-emerald-600 uppercase tracking-wider">🎯 健身與飲食目標 (影響 AI 報告建議)</h4>
-          <select id="trainingGoalSelect" class="w-full border border-emerald-200 bg-emerald-50/50 rounded-xl px-3 py-2.5 text-sm font-bold text-emerald-900 focus:outline-none focus:border-emerald-400">
+          <h4 class="text-xs font-bold text-teal-700 uppercase tracking-wider">🎯 健身與飲食目標 (影響 AI 報告建議)</h4>
+          <select id="trainingGoalSelect" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2.5 text-sm font-bold text-slate-800 focus:outline-none focus:border-emerald-400">
             <option value="muscle">💪 增肌增重 (高蛋白、熱量盈餘)</option>
             <option value="fatloss">🔥 減脂瘦身 (高纖、熱量赤字)</option>
             <option value="maintain">⚖️ 體態維持 (營養均衡)</option>
@@ -524,20 +537,20 @@
 
         <div class="space-y-3">
           <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">打卡天數目標</h4>
-          <div>
-            <label class="block text-xs font-medium text-slate-700 mb-1">每周目標天數 (周小目標)</label>
-            <input type="number" min="1" max="7" id="weeklyTargetInput" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-slate-700 mb-1">每月目標天數 (月大目標)</label>
-            <input type="number" min="1" max="31" id="monthlyTargetInput" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">每周目標天數</label>
+              <input type="number" min="1" max="7" id="weeklyTargetInput" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">每月目標天數</label>
+              <input type="number" min="1" max="31" id="monthlyTargetInput" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm">
+            </div>
           </div>
         </div>
 
-        <hr class="border-slate-100">
-
         <div class="space-y-3">
-          <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">個人基本資料 (計算 BMI 必填)</h4>
+          <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">個人基本資料 (計算 BMI 與基礎代謝)</h4>
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block text-xs font-medium text-slate-700 mb-1">身高 (cm)</label>
@@ -549,6 +562,21 @@
             </div>
           </div>
         </div>
+
+        <hr class="border-slate-100">
+
+        <!-- Google Drive Backup Integration -->
+        <div class="space-y-2">
+          <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">資料備份與還原 (JSON 檔案)</h4>
+          <div class="grid grid-cols-2 gap-2">
+            <button onclick="backupToGoogleDrive()" class="bg-rose-50 border border-rose-200 hover:bg-rose-100 text-rose-700 text-xs font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-1">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> 匯出完整備份
+            </button>
+            <button onclick="restoreFromGoogleDrive()" class="bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-700 text-xs font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-1">
+              <i data-lucide="upload" class="w-3.5 h-3.5"></i> 匯入還原紀錄
+            </button>
+          </div>
+        </div>
       </div>
 
       <button onclick="saveSettings()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold text-sm py-3 rounded-xl shadow-lg transition-all">
@@ -557,7 +585,7 @@
     </div>
   </div>
 
-  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-xl z-50 transition-all opacity-0 pointer-events-none">
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-xl z-50 transition-all opacity-0 pointer-events-none">
     提示訊息
   </div>
 
@@ -565,7 +593,7 @@
     // ==========================================
     // 1. APP STATE & PERSISTENCE
     // ==========================================
-    let currentView = 'workout'; // 'workout' or 'diet'
+    let currentView = 'workout';
 
     let currentDate = new Date();
     let currentDietDate = new Date();
@@ -581,7 +609,8 @@
       monthlyTarget: 12,
       height: 165,
       age: 23,
-      trainingGoal: 'muscle', // 'muscle', 'fatloss', 'maintain'
+      trainingGoal: 'muscle',
+      geminiApiKey: '',
       weeklyRewardCount: 0,
       monthlyRewardCount: 0,
       googleEmail: ""
@@ -590,8 +619,6 @@
     let weightLogs = JSON.parse(localStorage.getItem('piggy_weights') || '[]');
     let selectedCategories = [];
     let currentPhotoBase64 = "";
-
-    // Diet Meal Entries State in Modal
     let currentMealEntries = [];
 
     // Cat Game Persistent State
@@ -633,11 +660,21 @@
       renderFurnitureBadges();
     }
 
+    function updateApiKeyBadge() {
+      const badge = document.getElementById('apiKeyStatusBadge');
+      if (!badge) return;
+      if (settings.geminiApiKey && settings.geminiApiKey.trim().length > 10) {
+        badge.textContent = "Gemini AI 已連線 ✓";
+      } else {
+        badge.textContent = "設定 Gemini API Key";
+      }
+    }
+
     function showToast(msg) {
       const toast = document.getElementById('toast');
       toast.textContent = msg;
       toast.classList.remove('opacity-0');
-      setTimeout(() => toast.classList.add('opacity-0'), 2600);
+      setTimeout(() => toast.classList.add('opacity-0'), 3000);
     }
 
     // ==========================================
@@ -660,40 +697,40 @@
         workoutView.classList.add('hidden');
         dietView.classList.remove('hidden');
 
-        // Switch to Emerald / Green Theme
         bodyBg.className = "bg-emerald-50/50 min-h-screen text-slate-800 pb-12 transition-colors duration-300";
         headerBg.className = "bg-white/80 backdrop-blur-md border-b border-emerald-100 sticky top-0 z-30 px-4 py-3 shadow-sm transition-colors duration-300";
         headerIconBg.className = "bg-emerald-600 text-white p-2 rounded-2xl shadow-md shadow-emerald-200 transition-colors duration-300";
         headerIcon.setAttribute('data-lucide', 'utensils');
         mainTitleText.textContent = "寶寶豬的飲食營養日記 🥗";
-        mainSubtitleText.className = "text-xs text-emerald-600 font-medium transition-colors duration-300";
-        mainSubtitleText.textContent = "AI 拍照計算卡路里，智能飲食管理";
+        mainSubtitleText.className = "text-[11px] sm:text-xs text-emerald-600 font-medium transition-colors duration-300";
+        mainSubtitleText.textContent = "Gemini 視覺 AI 辨識熱量與營養";
         appTitle.textContent = "寶寶豬的飲食營養日記 🥗";
 
-        switchBtn.className = "flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 px-3.5 py-2 rounded-xl text-sm font-bold transition-all shadow-sm border border-rose-200";
-        switchBtn.innerHTML = `<i data-lucide="dumbbell" class="w-4 h-4"></i><span>切換至運動打卡</span>`;
+        switchBtn.className = "flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm border border-rose-200";
+        switchBtn.innerHTML = `<i data-lucide="dumbbell" class="w-4 h-4"></i><span>運動打卡</span>`;
 
         updateDietGoalBadgeUI();
+        updateApiKeyBadge();
         renderDietCalendar();
       } else {
         currentView = 'workout';
         dietView.classList.add('hidden');
         workoutView.classList.remove('hidden');
 
-        // Switch back to Rose / Pink Theme
         bodyBg.className = "bg-rose-50/50 min-h-screen text-slate-800 pb-12 transition-colors duration-300";
         headerBg.className = "bg-white/80 backdrop-blur-md border-b border-rose-100 sticky top-0 z-30 px-4 py-3 shadow-sm transition-colors duration-300";
         headerIconBg.className = "bg-rose-500 text-white p-2 rounded-2xl shadow-md shadow-rose-200 transition-colors duration-300";
         headerIcon.setAttribute('data-lucide', 'dumbbell');
         mainTitleText.textContent = "寶寶豬的逆襲日記 🐷💪";
-        mainSubtitleText.className = "text-xs text-rose-500 font-medium transition-colors duration-300";
-        mainSubtitleText.textContent = "記錄每一次蛻變與努力";
+        mainSubtitleText.className = "text-[11px] sm:text-xs text-rose-500 font-medium transition-colors duration-300";
+        mainSubtitleText.textContent = "自律變美，一起養胖小貓咪";
         appTitle.textContent = "寶寶豬的逆襲日記 🐷💪";
 
-        switchBtn.className = "flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3.5 py-2 rounded-xl text-sm font-bold transition-all shadow-sm border border-emerald-200";
-        switchBtn.innerHTML = `<i data-lucide="utensils" class="w-4 h-4"></i><span>切換至飲食記錄</span>`;
+        switchBtn.className = "flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm border border-emerald-200";
+        switchBtn.innerHTML = `<i data-lucide="utensils" class="w-4 h-4"></i><span>飲食記錄</span>`;
 
         renderCalendar();
+        initCatRoom();
       }
       lucide.createIcons();
     }
@@ -701,15 +738,15 @@
     function updateDietGoalBadgeUI() {
       const badge = document.getElementById('dietGoalBadge');
       const goalTexts = {
-        muscle: "🎯 目前目標：增肌增重 🥩",
-        fatloss: "🎯 目前目標：減脂瘦身 🥗",
-        maintain: "🎯 目前目標：體態維持 ⚖️"
+        muscle: "🎯 目標：增肌增重 🥩",
+        fatloss: "🎯 目標：減脂瘦身 🥗",
+        maintain: "🎯 目標：體態維持 ⚖️"
       };
       badge.textContent = goalTexts[settings.trainingGoal] || "🎯 目標：增肌";
     }
 
     // ==========================================
-    // 3. DIET CALENDAR & LOGGING ENGINE
+    // 3. DIET CALENDAR & REAL GEMINI VISION AI
     // ==========================================
     function renderDietCalendar() {
       const year = currentDietDate.getFullYear();
@@ -726,7 +763,7 @@
       let monthDietCount = 0;
 
       for (let day = 1; day <= totalDays; day++) {
-        const dateStr = formatDietDate(year, month, day);
+        const dateStr = formatDate(year, month, day);
         if (dietLogs[dateStr] && dietLogs[dateStr].length > 0) {
           monthDietCount++;
         }
@@ -741,7 +778,7 @@
       }
 
       for (let day = 1; day <= totalDays; day++) {
-        const dateStr = formatDietDate(year, month, day);
+        const dateStr = formatDate(year, month, day);
         const meals = dietLogs[dateStr] || [];
         const hasLogged = meals.length > 0;
 
@@ -788,23 +825,13 @@
       renderDietCalendar();
     }
 
-    function formatDietDate(y, m, d) {
-      const mm = String(m + 1).padStart(2, '0');
-      const dd = String(d).padStart(2, '0');
-      return `${y}-${mm}-${dd}`;
-    }
-
-    // ==========================================
-    // 4. DIET LOG MODAL & AI CALORIE ESTIMATION
-    // ==========================================
     function openDietLogModal(dateStr) {
       selectedDietDateStr = dateStr;
       document.getElementById('dietModalDate').textContent = `${dateStr} 飲食記錄`;
       
-      // Load existing or empty
       currentMealEntries = JSON.parse(JSON.stringify(dietLogs[dateStr] || []));
       if (currentMealEntries.length === 0) {
-        currentMealEntries.push({ id: Date.now(), title: '早餐', photo: '', foodName: '', calories: '', protein: '' });
+        currentMealEntries.push({ id: Date.now(), title: '早餐', time: '08:30', photo: '', foodName: '', calories: '', protein: '', carbs: '', fat: '', aiAnalyzing: false });
       }
 
       renderMealEntriesUI();
@@ -816,15 +843,21 @@
     }
 
     function addNewMealEntry() {
-      const titles = ['早餐', '午餐', '晚餐', '加餐 / 宵夜', '下午茶'];
+      const titles = ['早餐', '午餐', '晚餐', '加餐 / 下午茶', '宵夜'];
       const defaultTitle = titles[currentMealEntries.length % titles.length];
+      const now = new Date();
+      const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
       currentMealEntries.push({
         id: Date.now(),
         title: defaultTitle,
+        time: timeStr,
         photo: '',
         foodName: '',
         calories: '',
-        protein: ''
+        protein: '',
+        carbs: '',
+        fat: '',
+        aiAnalyzing: false
       });
       renderMealEntriesUI();
     }
@@ -838,46 +871,64 @@
       const container = document.getElementById('mealItemsContainer');
       container.innerHTML = "";
 
-      currentMealEntries.forEach((meal, idx) => {
+      currentMealEntries.forEach((meal) => {
         const card = document.createElement('div');
         card.className = "bg-emerald-50/40 border border-emerald-100 rounded-2xl p-4 space-y-3 relative";
         card.innerHTML = `
-          <div class="flex items-center justify-between">
-            <input type="text" value="${meal.title}" oninput="updateMealField(${meal.id}, 'title', this.value)" placeholder="餐次名稱 (如: 運動後加餐)" class="text-xs font-bold bg-white border border-emerald-200 rounded-lg px-2.5 py-1.5 text-emerald-900 w-44">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <input type="text" value="${meal.title}" oninput="updateMealField(${meal.id}, 'title', this.value)" placeholder="餐次名稱" class="text-xs font-bold bg-white border border-emerald-200 rounded-lg px-2.5 py-1.5 text-emerald-900 w-32">
+              <input type="time" value="${meal.time || '12:00'}" oninput="updateMealField(${meal.id}, 'time', this.value)" class="text-xs bg-white border border-emerald-200 rounded-lg px-2 py-1 text-slate-600">
+            </div>
             <button onclick="removeMealEntry(${meal.id})" class="text-slate-400 hover:text-rose-500 p-1">
               <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
-            <!-- Photo upload for AI -->
             <div class="border-2 border-dashed border-emerald-200 bg-white rounded-xl p-3 text-center cursor-pointer hover:border-emerald-400 transition-colors relative" onclick="triggerDietPhotoInput(${meal.id})">
               <input type="file" id="dietPhoto_${meal.id}" accept="image/*" class="hidden" onchange="handleDietPhotoUpload(event, ${meal.id})">
               ${meal.photo ? `
-                <img src="${meal.photo}" class="w-full h-28 object-cover rounded-lg shadow-sm">
+                <div class="relative">
+                  <img src="${meal.photo}" class="w-full h-32 object-cover rounded-lg shadow-sm ${meal.aiAnalyzing ? 'opacity-40' : ''}">
+                  ${meal.aiAnalyzing ? `
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-white/70 rounded-lg">
+                      <span class="text-xs font-extrabold text-emerald-700 animate-pulse">🤖 Gemini AI 辨識中...</span>
+                    </div>
+                  ` : ''}
+                </div>
               ` : `
-                <div class="py-3 space-y-1">
+                <div class="py-4 space-y-1">
                   <i data-lucide="camera" class="w-6 h-6 text-emerald-500 mx-auto"></i>
                   <p class="text-[11px] font-bold text-emerald-700">點擊拍照 / 上傳食物</p>
-                  <p class="text-[9px] text-slate-400">AI 將自動換算卡路里</p>
+                  <p class="text-[9px] text-slate-400">必須拍照，AI 將精準計算熱量</p>
                 </div>
               `}
             </div>
 
-            <!-- AI Results & Manual Edit -->
             <div class="space-y-2 text-xs">
               <div>
-                <label class="block font-bold text-slate-600 mb-1">AI 辨識食物名稱</label>
-                <input type="text" id="foodName_${meal.id}" value="${meal.foodName || ''}" oninput="updateMealField(${meal.id}, 'foodName', this.value)" placeholder="上傳照片後 AI 自動填寫" class="w-full border border-slate-200 rounded-xl px-3 py-2 bg-white">
+                <label class="block font-bold text-slate-600 mb-1">食物名稱 (AI 自動辨識 / 可微調)</label>
+                <input type="text" value="${meal.foodName || ''}" oninput="updateMealField(${meal.id}, 'foodName', this.value)" placeholder="拍照後自動辨識食物..." class="w-full border border-slate-200 rounded-xl px-3 py-2 bg-white">
               </div>
               <div class="grid grid-cols-2 gap-2">
                 <div>
                   <label class="block font-bold text-slate-600 mb-1">熱量 (kcal)</label>
-                  <input type="number" id="cals_${meal.id}" value="${meal.calories || ''}" oninput="updateMealField(${meal.id}, 'calories', this.value)" placeholder="如: 550" class="w-full border border-slate-200 rounded-xl px-3 py-2 bg-white font-bold text-emerald-700">
+                  <input type="number" value="${meal.calories || ''}" oninput="updateMealField(${meal.id}, 'calories', this.value)" placeholder="0" class="w-full border border-slate-200 rounded-xl px-3 py-2 bg-white font-extrabold text-emerald-700">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-600 mb-1">蛋白質 (g)</label>
-                  <input type="number" id="protein_${meal.id}" value="${meal.protein || ''}" oninput="updateMealField(${meal.id}, 'protein', this.value)" placeholder="如: 35" class="w-full border border-slate-200 rounded-xl px-3 py-2 bg-white">
+                  <input type="number" value="${meal.protein || ''}" oninput="updateMealField(${meal.id}, 'protein', this.value)" placeholder="0" class="w-full border border-slate-200 rounded-xl px-3 py-2 bg-white font-bold text-teal-700">
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block font-bold text-slate-500 mb-1">碳水 (g)</label>
+                  <input type="number" value="${meal.carbs || ''}" oninput="updateMealField(${meal.id}, 'carbs', this.value)" placeholder="0" class="w-full border border-slate-200 rounded-xl px-2.5 py-1.5 bg-white">
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-500 mb-1">脂肪 (g)</label>
+                  <input type="number" value="${meal.fat || ''}" oninput="updateMealField(${meal.id}, 'fat', this.value)" placeholder="0" class="w-full border border-slate-200 rounded-xl px-2.5 py-1.5 bg-white">
                 </div>
               </div>
             </div>
@@ -897,39 +948,110 @@
       document.getElementById(`dietPhoto_${id}`).click();
     }
 
+    // Compress image & Call Real Google Gemini Vision API
     function handleDietPhotoUpload(e, id) {
       const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-          const meal = currentMealEntries.find(m => m.id === id);
-          if (meal) {
-            meal.photo = evt.target.result;
-            
-            // SIMULATE AI VISION ANALYSIS
-            showToast("🤖 AI 正在掃描食物照片並計算卡路里...");
-            setTimeout(() => {
-              const simulatedResults = [
-                { name: "香煎雞胸肉沙拉佐橄欖油", cals: 380, protein: 32 },
-                { name: "日式豚骨拉麵加半熟蛋", cals: 720, protein: 28 },
-                { name: "全麥牛排三明治配黑咖啡", cals: 520, protein: 40 },
-                { name: "高蛋白乳清蛋白飲 + 香蕉", cals: 310, protein: 30 }
-              ];
-              const randomRes = simulatedResults[Math.floor(Math.random() * simulatedResults.length)];
-              
-              meal.foodName = randomRes.name;
-              meal.calories = randomRes.cals;
-              meal.protein = randomRes.protein;
-              renderMealEntriesUI();
-              showToast("✨ AI 辨識完成！卡路里已自動換算！");
-            }, 1000);
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = new Image();
+        img.src = evt.target.result;
+        img.onload = async function() {
+          // Compress photo for fast API transmission & localStorage saving
+          const canvas = document.createElement('canvas');
+          const maxDim = 768;
+          let width = img.width;
+          let height = img.height;
+          if (width > height && width > maxDim) {
+            height = (height * maxDim) / width;
+            width = maxDim;
+          } else if (height > maxDim) {
+            width = (width * maxDim) / height;
+            height = maxDim;
           }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
+
+          const meal = currentMealEntries.find(m => m.id === id);
+          if (!meal) return;
+
+          meal.photo = compressedBase64;
+          meal.aiAnalyzing = true;
+          renderMealEntriesUI();
+
+          await analyzeImageWithGemini(meal, compressedBase64);
         };
-        reader.readAsDataURL(file);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function analyzeImageWithGemini(meal, dataUrl) {
+      const apiKey = (settings.geminiApiKey || "").trim();
+      if (!apiKey) {
+        meal.aiAnalyzing = false;
+        renderMealEntriesUI();
+        showToast("⚠️ 尚未設定 Gemini API Key！請先點擊右上角「設定」貼上免費金鑰，或手動輸入熱量。");
+        return;
+      }
+
+      try {
+        const base64Data = dataUrl.split(',')[1];
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [
+                {
+                  text: "請仔細觀察這張食物照片，辨識裡面的所有食物與估算份量，計算總熱量(kcal)、蛋白質(g)、碳水化合物(g)與脂肪(g)。請務必只回傳純 JSON 格式，不要包含 markdown 標記或任何其他文字，格式如下：{\"foodName\": \"食物名稱與份量\", \"calories\": 500, \"protein\": 30, \"carbs\": 50, \"fat\": 15}"
+                },
+                {
+                  inline_data: {
+                    mime_type: "image/jpeg",
+                    data: base64Data
+                  }
+                }
+              ]
+            }]
+          })
+        });
+
+        const data = await response.json();
+        if (data.error) {
+          throw new Error(data.error.message || "API 呼叫失敗");
+        }
+
+        const rawText = data.candidates[0].content.parts[0].text;
+        const cleanJson = rawText.replace(/```json|```/g, '').trim();
+        const parsed = JSON.parse(cleanJson);
+
+        meal.foodName = parsed.foodName || "已辨識餐點";
+        meal.calories = Math.round(parsed.calories || 0);
+        meal.protein = Math.round(parsed.protein || 0);
+        meal.carbs = Math.round(parsed.carbs || 0);
+        meal.fat = Math.round(parsed.fat || 0);
+        showToast(`✨ Gemini 辨識成功：${meal.foodName} (${meal.calories} kcal)`);
+      } catch (err) {
+        console.error(err);
+        showToast("❌ AI 辨識失敗，請檢查 API Key 是否正確，或手動輸入數值。");
+      } finally {
+        meal.aiAnalyzing = false;
+        renderMealEntriesUI();
       }
     }
 
     function saveDietLog() {
+      // Check photo requirement
+      for (const m of currentMealEntries) {
+        if (!m.photo) {
+          alert(`請為「${m.title}」上傳食物照片！`);
+          return;
+        }
+      }
       dietLogs[selectedDietDateStr] = currentMealEntries;
       localStorage.setItem('piggy_diet_logs', JSON.stringify(dietLogs));
       closeDietLogModal();
@@ -938,10 +1060,10 @@
     }
 
     // ==========================================
-    // 5. AI DIET REPORT & ADVICE GENERATOR
+    // 4. AI DIET REPORT & ADVICE GENERATOR
     // ==========================================
     function openDietReportModal() {
-      const todayStr = formatDietDate(currentDietDate.getFullYear(), currentDietDate.getMonth(), currentDietDate.getDate());
+      const todayStr = formatDate(currentDietDate.getFullYear(), currentDietDate.getMonth(), currentDietDate.getDate());
       const meals = dietLogs[todayStr] || [];
 
       document.getElementById('reportDateSubtitle').textContent = `${todayStr} 營養數據智能分析報告`;
@@ -958,49 +1080,79 @@
       } else {
         let totalCals = meals.reduce((sum, m) => sum + (parseInt(m.calories) || 0), 0);
         let totalProtein = meals.reduce((sum, m) => sum + (parseInt(m.protein) || 0), 0);
-        
+        let totalCarbs = meals.reduce((sum, m) => sum + (parseInt(m.carbs) || 0), 0);
+        let totalFat = meals.reduce((sum, m) => sum + (parseInt(m.fat) || 0), 0);
+
+        // Calculate personalized recommended intake based on weight & height
+        const latestWeight = weightLogs.length > 0 ? weightLogs[0].weight : 55;
+        const height = settings.height || 165;
+        const age = settings.age || 24;
+        const baseBMR = Math.round(10 * latestWeight + 6.25 * height - 5 * age - 100);
+        const tdee = Math.round(baseBMR * 1.45);
+
         const goal = settings.trainingGoal;
         let goalTitle = goal === 'muscle' ? "增肌增重 🥩" : (goal === 'fatloss' ? "減脂瘦身 🥗" : "體態維持 ⚖️");
-        
-        // AI advice logic based on Goal
-        let adviceHtml = "";
+        let targetCals = goal === 'muscle' ? tdee + 300 : (goal === 'fatloss' ? tdee - 350 : tdee);
+        let targetProtein = Math.round(latestWeight * (goal === 'muscle' ? 1.8 : 1.5));
+
+        let adviceList = [];
         if (goal === 'muscle') {
-          if (totalCals < 2400) {
-            adviceHtml = `<span class="text-amber-600 font-bold">⚠️ 熱量稍微偏低：</span>目前處於增肌期，建議每日總熱量可再提高至 2500-2800 kcal，並確保碳水化合物充足以支援重訓表現。`;
+          if (totalCals < targetCals - 200) {
+            adviceList.push(`🔥 <b>熱量盈餘不足：</b>你的增肌建議攝取量約為 <b>${targetCals} kcal</b>，目前還差 ${targetCals - totalCals} kcal，建議訓練後補充優質碳水（如地瓜、香蕉、燕麥）與蛋白質。`);
           } else {
-            adviceHtml = `<span class="text-emerald-600 font-bold">🎉 熱量達標：</span>符合增肌期熱量盈餘標準，繼續保持高強度訓練！`;
+            adviceList.push(`🎉 <b>熱量達標：</b>今日總熱量已達到增肌期標準（目標 ${targetCals} kcal），非常有助於肌肉合成！`);
           }
         } else if (goal === 'fatloss') {
-          if (totalCals > 1800) {
-            adviceHtml = `<span class="text-rose-600 font-bold">⚠️ 熱量略微超標：</span>目前處於減脂期，建議控制碳水攝取，多增加綠色蔬菜與水分。`;
+          if (totalCals > targetCals + 150) {
+            adviceList.push(`⚠️ <b>熱量超出減脂目標：</b>你的減脂建議攝取量約為 <b>${targetCals} kcal</b>，今日超出了 ${totalCals - targetCals} kcal，建議晚餐減少精緻澱粉並多喝水。`);
           } else {
-            adviceHtml = `<span class="text-emerald-600 font-bold">🔥 減脂赤字優秀：</span>今日熱量控制在理想範圍內，蛋白質攝取也很到位！`;
+            adviceList.push(`🔥 <b>減脂赤字完美：</b>今日熱量精準控制在目標（${targetCals} kcal）內，持續保持一定會順利掉秤！`);
           }
         } else {
-          adviceHtml = `<span class="text-teal-600 font-bold">⚖️ 營養均衡：</span>今日攝取穩定，維持目前的健康飲食習慣即可。`;
+          adviceList.push(`⚖️ <b>體態維持良好：</b>你的每日維持熱量約為 <b>${targetCals} kcal</b>，目前飲食節奏非常穩定。`);
+        }
+
+        if (totalProtein < targetProtein) {
+          adviceList.push(`🥩 <b>蛋白質提醒：</b>依你目前體重（${latestWeight}kg），建議每日攝取至少 <b>${targetProtein}g</b> 蛋白質，目前還差 ${targetProtein - totalProtein}g，可補充雞胸肉、水煮蛋或無糖豆漿。`);
+        } else {
+          adviceList.push(`💪 <b>蛋白質充足：</b>今日已攝取 ${totalProtein}g 蛋白質（達標 ${targetProtein}g），能有效修復運動後的肌肉纖維！`);
         }
 
         contentArea.innerHTML = `
           <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 space-y-3">
-            <div class="flex items-center justify-between text-xs font-bold text-emerald-800">
-              <span>🎯 當前訓練目標：${goalTitle}</span>
-              <span>今日記錄：${meals.length} 餐</span>
+            <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-bold text-emerald-800">
+              <span>🎯 目標：${goalTitle}（建議 ${targetCals} kcal）</span>
+              <span>已記錄 ${meals.length} 餐</span>
             </div>
-            <div class="grid grid-cols-2 gap-3 pt-2">
-              <div class="bg-white p-3 rounded-xl border border-emerald-100 text-center">
-                <span class="text-xs text-slate-400">總攝取熱量</span>
-                <div class="text-2xl font-extrabold text-emerald-700 mt-0.5">${totalCals} <span class="text-xs font-normal">kcal</span></div>
+            <div class="grid grid-cols-4 gap-2 pt-1">
+              <div class="bg-white p-2.5 rounded-xl border border-emerald-100 text-center">
+                <span class="text-[10px] text-slate-400">總熱量</span>
+                <div class="text-lg font-extrabold text-emerald-700">${totalCals}</div>
+                <span class="text-[9px] text-slate-400">kcal</span>
               </div>
-              <div class="bg-white p-3 rounded-xl border border-emerald-100 text-center">
-                <span class="text-xs text-slate-400">總蛋白質攝取</span>
-                <div class="text-2xl font-extrabold text-teal-600 mt-0.5">${totalProtein} <span class="text-xs font-normal">g</span></div>
+              <div class="bg-white p-2.5 rounded-xl border border-emerald-100 text-center">
+                <span class="text-[10px] text-slate-400">蛋白質</span>
+                <div class="text-lg font-extrabold text-teal-600">${totalProtein}g</div>
+                <span class="text-[9px] text-slate-400">目標 ${targetProtein}g</span>
+              </div>
+              <div class="bg-white p-2.5 rounded-xl border border-emerald-100 text-center">
+                <span class="text-[10px] text-slate-400">碳水</span>
+                <div class="text-lg font-extrabold text-amber-600">${totalCarbs}g</div>
+                <span class="text-[9px] text-slate-400">供能</span>
+              </div>
+              <div class="bg-white p-2.5 rounded-xl border border-emerald-100 text-center">
+                <span class="text-[10px] text-slate-400">脂肪</span>
+                <div class="text-lg font-extrabold text-rose-500">${totalFat}g</div>
+                <span class="text-[9px] text-slate-400">油脂</span>
               </div>
             </div>
           </div>
 
           <div class="space-y-2 bg-slate-50 p-4 rounded-2xl border border-slate-100">
-            <h4 class="font-extrabold text-xs text-slate-700 uppercase tracking-wider">💡 AI 專家智能建議</h4>
-            <p class="text-xs leading-relaxed">${adviceHtml}</p>
+            <h4 class="font-extrabold text-xs text-slate-700 uppercase tracking-wider">💡 個人化 AI 營養師建議</h4>
+            <ul class="space-y-2 text-xs leading-relaxed list-disc pl-4">
+              ${adviceList.map(item => `<li>${item}</li>`).join('')}
+            </ul>
           </div>
 
           <div class="space-y-2">
@@ -1009,10 +1161,10 @@
               ${meals.map(m => `
                 <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-slate-100 text-xs">
                   <div class="flex items-center gap-2">
-                    <span class="font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">${m.title}</span>
-                    <span class="text-slate-700 font-medium">${m.foodName || '未命名食物'}</span>
+                    <span class="font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">${m.title} (${m.time || ''})</span>
+                    <span class="text-slate-700 font-medium truncate max-w-[140px]">${m.foodName || '未命名食物'}</span>
                   </div>
-                  <div class="font-bold text-slate-600">${m.calories || 0} kcal / ${m.protein || 0}g 蛋白質</div>
+                  <div class="font-bold text-slate-600">${m.calories || 0} kcal / ${m.protein || 0}g 蛋</div>
                 </div>
               `).join('')}
             </div>
@@ -1028,14 +1180,14 @@
     }
 
     // ==========================================
-    // 6. CAT ROOM & WORKOUT CALENDAR ENGINE
+    // 5. FULL RESTORED 2D CAT ROOM ENGINE (CANVAS)
     // ==========================================
-    const canvas = document.getElementById('catCanvas');
-    const ctx = canvas.getContext('2d');
+    let canvas, ctx;
     let catEntities = [];
     let activeItems = [];
     let floatingParticles = [];
     let animFrame = 0;
+    let loopStarted = false;
 
     const FURNITURE_POS = {
       tree: { x: 105, y: 235 },
@@ -1044,9 +1196,22 @@
     };
 
     function initCatRoom() {
-      catEntities = [];
-      catGame.cats.forEach(c => spawnCatEntity(c));
-      requestAnimationFrame(gameLoop);
+      canvas = document.getElementById('catCanvas');
+      if (!canvas) return;
+      ctx = canvas.getContext('2d');
+
+      // Sync catEntities with catGame.cats without resetting existing positions if already spawned
+      if (catEntities.length !== catGame.cats.length) {
+        catEntities = [];
+        catGame.cats.forEach(c => spawnCatEntity(c));
+      }
+
+      canvas.onclick = handleCanvasClick;
+
+      if (!loopStarted) {
+        loopStarted = true;
+        requestAnimationFrame(gameLoop);
+      }
     }
 
     function spawnCatEntity(catData) {
@@ -1067,7 +1232,7 @@
       });
     }
 
-    canvas.addEventListener('click', (e) => {
+    function handleCanvasClick(e) {
       const rect = canvas.getBoundingClientRect();
       const scaleX = canvas.width / rect.width;
       const scaleY = canvas.height / rect.height;
@@ -1076,14 +1241,14 @@
 
       for (let i = catEntities.length - 1; i >= 0; i--) {
         const cat = catEntities[i];
-        const hitY = cat.y - (cat.onTreeLevel * 45);
+        const hitY = cat.y - (cat.onTreeLevel * 48);
         const dist = Math.hypot(clickX - cat.x, clickY - (hitY - 18));
-        if (dist < 42) {
+        if (dist < 45) {
           handleCatClick(cat);
           return;
         }
       }
-    });
+    }
 
     function handleCatClick(cat) {
       cat.onTreeLevel = 0;
@@ -1096,15 +1261,39 @@
         cat.stateTimer = 110;
         cat.bubble = "哈氣！別碰本喵 💢";
         cat.bubbleTimer = 110;
-        actionDesc = "炸毛生氣了！";
+        actionDesc = "炸毛生氣了，過一會再哄牠吧！";
         spawnParticles(cat.x, cat.y - 35, "💢", 3);
+      } else if (p === "高冷" && Math.random() < 0.5) {
+        cat.state = 'groom';
+        cat.stateTimer = 120;
+        cat.bubble = "哼，勉強讓你摸一下 舔毛~";
+        cat.bubbleTimer = 120;
+        actionDesc = "一臉高冷地低頭舔毛理毛";
+        spawnParticles(cat.x, cat.y - 35, "✨", 2);
       } else {
-        cat.state = 'pet_love';
-        cat.stateTimer = 130;
-        cat.bubble = "呼嚕嚕～好喜歡你 ❤️";
-        cat.bubbleTimer = 130;
-        actionDesc = "翻肚皮撒嬌，發出開心的呼嚕聲！";
-        spawnParticles(cat.x, cat.y - 35, "❤️", 4);
+        const roll = Math.random();
+        if (p === "粘人" || p === "脾氣好" || roll < 0.45) {
+          cat.state = 'pet_love';
+          cat.stateTimer = 130;
+          cat.bubble = "呼嚕嚕～好喜歡你 ❤️";
+          cat.bubbleTimer = 130;
+          actionDesc = "翻肚皮撒嬌，發出開心的呼嚕聲！";
+          spawnParticles(cat.x, cat.y - 35, "❤️", 4);
+        } else if (roll < 0.75) {
+          cat.state = 'stretch';
+          cat.stateTimer = 110;
+          cat.bubble = "喵嗚～伸個大懶腰！";
+          cat.bubbleTimer = 110;
+          actionDesc = "前腳伸直，舒服地伸了個大懶腰～";
+          spawnParticles(cat.x, cat.y - 35, "🎵", 2);
+        } else {
+          cat.state = 'groom';
+          cat.stateTimer = 120;
+          cat.bubble = "舔舔爪子保持帥氣 ✨";
+          cat.bubbleTimer = 120;
+          actionDesc = "認真地舉起小爪子舔毛洗臉";
+          spawnParticles(cat.x, cat.y - 35, "✨", 2);
+        }
       }
 
       const infoBox = document.getElementById('selectedCatInfo');
@@ -1127,50 +1316,181 @@
     }
 
     function gameLoop() {
-      animFrame++;
-      updateEntities();
-      drawRoom();
+      if (currentView === 'workout' && canvas) {
+        animFrame++;
+        updateEntities();
+        drawRoom();
+      }
       requestAnimationFrame(gameLoop);
     }
 
     function updateEntities() {
+      // 1. Update Active Consumables/Toys
       for (let i = activeItems.length - 1; i >= 0; i--) {
         const item = activeItems[i];
-        if (item.type === 'food' && item.bites <= 0) activeItems.splice(i, 1);
-        if (item.type === 'yarn') {
+        if (item.type === 'food') {
+          if (item.bites <= 0) activeItems.splice(i, 1);
+        } else if (item.type === 'yarn') {
           item.x += item.vx;
           item.vx *= 0.96;
           if (item.x < 160 || item.x > 640) item.vx *= -1;
           item.life--;
           if (item.life <= 0) activeItems.splice(i, 1);
-        }
-        if (item.type === 'mouse') {
+        } else if (item.type === 'mouse') {
           item.x += item.vx * item.dir;
           if (item.x < 165) item.dir = 1;
           if (item.x > 635) item.dir = -1;
+          if (Math.random() < 0.02) item.dir *= -1;
           item.life--;
           if (item.life <= 0) activeItems.splice(i, 1);
         }
       }
 
+      // 2. Update Cats AI
       catEntities.forEach(cat => {
         if (cat.bubbleTimer > 0) cat.bubbleTimer--;
         else cat.bubble = "";
 
         if (['pet_love', 'stretch', 'groom', 'angry'].includes(cat.state)) {
           cat.stateTimer--;
-          if (cat.stateTimer <= 0) { cat.state = 'idle'; cat.stateTimer = 60; }
+          if (cat.stateTimer <= 0) {
+            cat.state = 'idle';
+            cat.stateTimer = 60;
+          }
           return;
         }
 
+        const food = activeItems.find(it => it.type === 'food' && it.bites > 0);
+        const toy = activeItems.find(it => it.type === 'mouse' || it.type === 'yarn');
+
+        if (food && (cat.personality === '貪吃' || !toy)) {
+          cat.onTreeLevel = 0;
+          const dx = food.x - cat.x;
+          const dy = food.y - cat.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist > 26) {
+            cat.state = 'walk';
+            cat.dir = dx >= 0 ? 1 : -1;
+            const speed = cat.personality === '貪吃' ? 2.4 : 1.7;
+            cat.x += (dx / dist) * speed;
+            cat.y += (dy / dist) * speed;
+          } else {
+            cat.state = 'eat';
+            cat.dir = dx >= 0 ? 1 : -1;
+            food.bites -= 0.14;
+            if (animFrame % 45 === 0) {
+              cat.bubble = "嚼嚼嚼～真香 🥫";
+              cat.bubbleTimer = 40;
+              spawnParticles(cat.x, cat.y - 30, "❤️", 1);
+            }
+          }
+          return;
+        }
+
+        if (toy) {
+          cat.onTreeLevel = 0;
+          const dx = toy.x - cat.x;
+          const dy = toy.y - cat.y;
+          const dist = Math.hypot(dx, dy);
+          if (cat.personality === '懶惰' && dist > 120) {
+            // lazy cat ignores far toys
+          } else if (dist > 24) {
+            cat.state = 'walk';
+            cat.dir = dx >= 0 ? 1 : -1;
+            const speed = cat.personality === '活潑' ? 2.6 : 1.9;
+            cat.x += (dx / dist) * speed;
+            cat.y += (dy / dist) * speed;
+          } else {
+            cat.state = 'play';
+            if (toy.type === 'yarn') {
+              toy.vx = (Math.random() > 0.5 ? 1 : -1) * (3 + Math.random() * 3);
+            }
+            if (animFrame % 40 === 0) {
+              cat.bubble = toy.type === 'mouse' ? "抓到老鼠啦！🐭" : "拍拍毛球！🧶";
+              cat.bubbleTimer = 40;
+              spawnParticles(cat.x, cat.y - 30, "✨", 1);
+            }
+          }
+          return;
+        }
+
+        // Furniture Interactions
+        if (['climb', 'drink', 'poop'].includes(cat.state)) {
+          const targetPos = FURNITURE_POS[cat.state === 'climb' ? 'tree' : (cat.state === 'drink' ? 'fountain' : 'litter')];
+          const dx = targetPos.x - cat.x;
+          const dy = targetPos.y - cat.y;
+          const dist = Math.hypot(dx, dy);
+
+          if (dist > 15 && cat.onTreeLevel === 0) {
+            cat.dir = dx >= 0 ? 1 : -1;
+            cat.x += (dx / dist) * 1.4;
+            cat.y += (dy / dist) * 1.4;
+          } else {
+            if (cat.state === 'climb') {
+              cat.onTreeLevel = 2;
+              if (cat.stateTimer % 60 === 0) {
+                cat.bubble = "站得高看得遠～ 🪵";
+                cat.bubbleTimer = 50;
+              }
+            } else if (cat.state === 'drink') {
+              if (cat.stateTimer % 50 === 0) {
+                cat.bubble = "咕嚕咕嚕喝水 💧";
+                cat.bubbleTimer = 45;
+              }
+            } else if (cat.state === 'poop') {
+              if (cat.stateTimer > 40) {
+                cat.bubble = "用力上廁所中... 🚽";
+                cat.bubbleTimer = 40;
+              } else {
+                cat.bubble = "沙沙沙～埋好貓砂！✨";
+                cat.bubbleTimer = 40;
+              }
+            }
+            cat.stateTimer--;
+            if (cat.stateTimer <= 0) {
+              cat.onTreeLevel = 0;
+              cat.state = 'idle';
+              cat.stateTimer = 80;
+            }
+          }
+          return;
+        }
+
+        // Autonomous Wander / Sleep / Furniture
         cat.onTreeLevel = 0;
         cat.stateTimer--;
         if (cat.stateTimer <= 0) {
-          cat.state = 'walk';
-          cat.dir = Math.random() > 0.5 ? 1 : -1;
-          cat.vx = cat.dir * 1.0;
-          cat.stateTimer = 90;
+          const r = Math.random();
+          if (cat.personality === '懶惰' && r < 0.55) {
+            cat.state = 'sleep';
+            cat.stateTimer = 180;
+            cat.bubble = "Zzz... 💤";
+            cat.bubbleTimer = 120;
+          } else if (catGame.furniture.tree && r < 0.22 && (cat.personality === '活潑' || Math.random() < 0.5)) {
+            cat.state = 'climb';
+            cat.stateTimer = 180;
+          } else if (catGame.furniture.fountain && r < 0.36) {
+            cat.state = 'drink';
+            cat.stateTimer = 130;
+          } else if (catGame.furniture.litter && r < 0.48) {
+            cat.state = 'poop';
+            cat.stateTimer = 140;
+          } else if (r < 0.72) {
+            cat.state = 'walk';
+            cat.dir = Math.random() > 0.5 ? 1 : -1;
+            cat.vx = cat.dir * (cat.personality === '活潑' ? 1.5 : 0.9);
+            cat.stateTimer = 90 + Math.random() * 80;
+          } else if (r < 0.88) {
+            cat.state = 'sleep';
+            cat.stateTimer = 150;
+            cat.bubble = "打個盹 Zzz";
+            cat.bubbleTimer = 90;
+          } else {
+            cat.state = 'groom';
+            cat.stateTimer = 100;
+          }
         }
+
         if (cat.state === 'walk') {
           cat.x += cat.vx;
           if (cat.x < 175) { cat.x = 175; cat.dir = 1; cat.vx = Math.abs(cat.vx); }
@@ -1178,6 +1498,7 @@
         }
       });
 
+      // 3. Update Particles
       for (let i = floatingParticles.length - 1; i >= 0; i--) {
         const p = floatingParticles[i];
         p.y += p.vy;
@@ -1187,26 +1508,88 @@
     }
 
     function drawRoom() {
+      if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Wall & Wallpaper Stripes
       ctx.fillStyle = "#FFF9F0";
       ctx.fillRect(0, 0, canvas.width, 210);
+      ctx.fillStyle = "#FDF2E3";
+      for (let x = 0; x < canvas.width; x += 40) {
+        ctx.fillRect(x, 0, 18, 210);
+      }
 
+      // Cozy Window
+      ctx.fillStyle = "#BAE6FD";
+      ctx.fillRect(280, 35, 130, 115);
+      ctx.strokeStyle = "#FFFFFF";
+      ctx.lineWidth = 6;
+      ctx.strokeRect(280, 35, 130, 115);
+      ctx.beginPath();
+      ctx.moveTo(345, 35); ctx.lineTo(345, 150);
+      ctx.moveTo(280, 92); ctx.lineTo(410, 92);
+      ctx.stroke();
+
+      // Sun
+      ctx.fillStyle = "#FDE047";
+      ctx.beginPath(); ctx.arc(312, 62, 14, 0, Math.PI * 2); ctx.fill();
+
+      // Wall Picture Frame
+      ctx.fillStyle = "#FFE4E6";
+      ctx.fillRect(470, 48, 75, 60);
+      ctx.strokeStyle = "#F43F5E";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(470, 48, 75, 60);
+      ctx.font = "22px sans-serif";
+      ctx.fillText("🐷❤️🐱", 476, 86);
+
+      // Wooden Floor
       ctx.fillStyle = "#F3D5B5";
       ctx.fillRect(0, 210, canvas.width, 110);
+      ctx.strokeStyle = "#E7BC91";
+      ctx.lineWidth = 2;
+      for (let y = 235; y < 320; y += 26) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
 
+      // Pink Center Rug
       ctx.fillStyle = "#FFE4E6";
       ctx.beginPath();
       ctx.ellipse(400, 265, 175, 36, 0, 0, Math.PI * 2);
       ctx.fill();
+      ctx.strokeStyle = "#FDA4AF";
+      ctx.lineWidth = 3;
+      ctx.stroke();
 
+      // Furniture
       if (catGame.furniture.tree) drawCatTree(FURNITURE_POS.tree.x, FURNITURE_POS.tree.y);
       if (catGame.furniture.fountain) drawWaterFountain(FURNITURE_POS.fountain.x, FURNITURE_POS.fountain.y);
       if (catGame.furniture.litter) drawLitterBox(FURNITURE_POS.litter.x, FURNITURE_POS.litter.y);
 
+      // Consumables & Toys
       activeItems.forEach(item => {
         if (item.type === 'food') {
           ctx.fillStyle = "#EF4444";
           ctx.fillRect(item.x - 14, item.y - 10, 28, 14);
+          ctx.fillStyle = "#FDE047";
+          ctx.beginPath(); ctx.ellipse(item.x, item.y - 10, 14, 5, 0, 0, Math.PI * 2); ctx.fill();
+        } else if (item.type === 'yarn') {
+          ctx.fillStyle = "#F43F5E";
+          ctx.beginPath(); ctx.arc(item.x, item.y - 8, 11, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = "#FFE4E6";
+          ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.arc(item.x - 2, item.y - 8, 6, 0, Math.PI); ctx.stroke();
+        } else if (item.type === 'mouse') {
+          ctx.fillStyle = "#94A3B8";
+          ctx.beginPath(); ctx.ellipse(item.x, item.y - 6, 13, 8, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = "#F472B6";
+          ctx.beginPath(); ctx.arc(item.x + (item.dir * 8), item.y - 12, 4, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = "#64748B";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(item.x - (item.dir * 12), item.y - 6);
+          ctx.lineTo(item.x - (item.dir * 22), item.y - 10 + Math.sin(animFrame * 0.4) * 4);
+          ctx.stroke();
         }
       });
 
@@ -1224,6 +1607,9 @@
       ctx.fillRect(x - 42, y - 8, 84, 12);
       ctx.fillStyle = "#F59E0B";
       ctx.fillRect(x - 25, y - 95, 12, 87);
+      ctx.fillRect(x + 15, y - 55, 12, 47);
+      ctx.fillStyle = "#FEF3C7";
+      ctx.fillRect(x + 2, y - 62, 44, 10);
       ctx.fillStyle = "#FDE68A";
       ctx.fillRect(x - 45, y - 102, 56, 12);
     }
@@ -1231,43 +1617,145 @@
     function drawWaterFountain(x, y) {
       ctx.fillStyle = "#38BDF8";
       ctx.beginPath(); ctx.ellipse(x, y - 6, 24, 10, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillRect(x - 24, y - 14, 48, 8);
+      ctx.fillStyle = "#BAE6FD";
+      ctx.beginPath(); ctx.ellipse(x, y - 14, 22, 7, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#0284C7";
+      ctx.fillRect(x - 4, y - 26, 8, 12);
+      const offset = (animFrame % 20) * 0.4;
+      ctx.fillStyle = "#E0F2FE";
+      ctx.beginPath(); ctx.arc(x - 8, y - 22 + offset, 2.5, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(x + 8, y - 22 + offset, 2.5, 0, Math.PI * 2); ctx.fill();
     }
 
     function drawLitterBox(x, y) {
       ctx.fillStyle = "#A855F7";
       ctx.fillRect(x - 30, y - 16, 60, 18);
+      ctx.fillStyle = "#FDE68A";
+      ctx.beginPath(); ctx.ellipse(x, y - 16, 26, 6, 0, 0, Math.PI * 2); ctx.fill();
     }
 
     function drawCat(cat) {
       const drawY = cat.y - (cat.onTreeLevel * 48);
       ctx.save();
       ctx.translate(cat.x, drawY);
+
+      ctx.fillStyle = "rgba(0,0,0,0.12)";
+      ctx.beginPath(); ctx.ellipse(0, 4, 22, 6, 0, 0, Math.PI * 2); ctx.fill();
+
       ctx.scale(cat.dir, 1);
 
-      ctx.fillStyle = cat.type === 'black' ? "#334155" : (cat.type === 'white' ? "#FFFFFF" : "#FB923C");
-      ctx.beginPath(); ctx.ellipse(0, -13, 20, 15, 0, 0, Math.PI * 2); ctx.fill();
+      const palettes = {
+        orange: { body: "#FB923C", ear: "#EA580C", patch: "#FED7AA" },
+        black: { body: "#334155", ear: "#0F172A", patch: "#475569" },
+        white: { body: "#FFFFFF", ear: "#FBCFE8", patch: "#F8FAFC" },
+        calico: { body: "#FFFBEB", ear: "#F97316", patch: "#1E293B" },
+        ragdoll: { body: "#F8FAFC", ear: "#78350F", patch: "#92400E" }
+      };
+      const pal = palettes[cat.type] || palettes.orange;
 
-      ctx.fillStyle = "#1E293B";
-      ctx.beginPath(); ctx.arc(12, -26, 14, 0, Math.PI * 2); ctx.fill();
+      const tailWag = Math.sin(animFrame * 0.15) * (cat.state === 'angry' ? 14 : 6);
+      ctx.strokeStyle = pal.body;
+      ctx.lineWidth = 6;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(-16, -8);
+      ctx.quadraticCurveTo(-30, -22 + tailWag, -26, -34 + tailWag);
+      ctx.stroke();
+
+      ctx.fillStyle = pal.body;
+      ctx.strokeStyle = "#CBD5E1";
+      ctx.lineWidth = cat.type === 'white' ? 1.5 : 0;
+
+      if (cat.state === 'stretch') {
+        ctx.beginPath(); ctx.ellipse(0, -10, 28, 11, -0.1, 0, Math.PI * 2); ctx.fill();
+        if (cat.type === 'white') ctx.stroke();
+      } else if (cat.state === 'sleep') {
+        ctx.beginPath(); ctx.ellipse(0, -10, 22, 13, 0, 0, Math.PI * 2); ctx.fill();
+      } else {
+        ctx.beginPath(); ctx.ellipse(0, -13, 20, 15, 0, 0, Math.PI * 2); ctx.fill();
+        if (cat.type === 'white') ctx.stroke();
+      }
+
+      if (cat.type === 'calico') {
+        ctx.fillStyle = "#F97316";
+        ctx.beginPath(); ctx.arc(-6, -15, 6, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#1E293B";
+        ctx.beginPath(); ctx.arc(5, -10, 5, 0, Math.PI * 2); ctx.fill();
+      }
+
+      const headX = cat.state === 'stretch' ? 20 : 12;
+      const headY = (cat.state === 'eat' || cat.state === 'drink') ? -16 : -26;
+
+      ctx.fillStyle = pal.body;
+      ctx.beginPath(); ctx.arc(headX, headY, 14, 0, Math.PI * 2); ctx.fill();
+      if (cat.type === 'white') ctx.stroke();
+
+      if (cat.type === 'ragdoll') {
+        ctx.fillStyle = pal.patch;
+        ctx.beginPath(); ctx.ellipse(headX + 2, headY + 1, 9, 7, 0, 0, Math.PI * 2); ctx.fill();
+      }
+
+      ctx.fillStyle = pal.ear;
+      ctx.beginPath();
+      ctx.moveTo(headX - 9, headY - 9); ctx.lineTo(headX - 12, headY - 22); ctx.lineTo(headX - 1, headY - 12);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(headX + 2, headY - 12); ctx.lineTo(headX + 9, headY - 22); ctx.lineTo(headX + 11, headY - 9);
+      ctx.fill();
+
+      ctx.fillStyle = cat.type === 'ragdoll' ? "#38BDF8" : "#1E293B";
+      if (cat.state === 'sleep' || cat.state === 'pet_love') {
+        ctx.strokeStyle = "#1E293B";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(headX + 5, headY - 2, 3, Math.PI, 0);
+        ctx.stroke();
+      } else {
+        ctx.beginPath(); ctx.arc(headX + 6, headY - 2, 2.5, 0, Math.PI * 2); ctx.fill();
+      }
+
+      if (cat.state === 'pet_love') {
+        ctx.fillStyle = "#FDA4AF";
+        ctx.beginPath(); ctx.arc(headX + 6, headY + 3, 3.5, 0, Math.PI * 2); ctx.fill();
+      }
+
+      if (cat.state === 'groom') {
+        const pawY = headY + 2 + Math.sin(animFrame * 0.3) * 4;
+        ctx.fillStyle = pal.body;
+        ctx.beginPath(); ctx.arc(headX + 11, pawY, 4.5, 0, Math.PI * 2); ctx.fill();
+      }
+
       ctx.restore();
 
-      ctx.font = "bold 11px sans-serif";
+      ctx.font = "bold 11px 'Plus Jakarta Sans', sans-serif";
       ctx.textAlign = "center";
       ctx.fillStyle = "#64748B";
       ctx.fillText(cat.name, cat.x, drawY + 16);
 
       if (cat.bubble) {
+        ctx.font = "bold 11px sans-serif";
+        const textWidth = ctx.measureText(cat.bubble).width;
+        const boxW = textWidth + 16;
+        const boxH = 22;
+        const boxX = cat.x - boxW / 2;
+        const boxY = drawY - 66;
+
         ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
         ctx.beginPath();
-        ctx.roundRect(cat.x - 40, drawY - 66, 80, 22, 10);
+        ctx.roundRect(boxX, boxY, boxW, boxH, 10);
         ctx.fill();
+        ctx.strokeStyle = "#FDBA74";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
         ctx.fillStyle = "#1E293B";
-        ctx.fillText(cat.bubble, cat.x, drawY - 51);
+        ctx.fillText(cat.bubble, cat.x, boxY + 15);
       }
     }
 
     // ==========================================
-    // 7. SHOP & WORKOUT CALENDAR
+    // 6. SHOP, REWARDS & WORKOUT CALENDAR
     // ==========================================
     function openShopModal() { updatePointsUI(); document.getElementById('shopModal').classList.remove('hidden'); }
     function closeShopModal() { document.getElementById('shopModal').classList.add('hidden'); }
@@ -1277,48 +1765,74 @@
       const btnFountain = document.getElementById('btnBuyFountain');
       const btnLitter = document.getElementById('btnBuyLitter');
       if (!btnTree) return;
-      if (catGame.furniture.tree) { btnTree.textContent = "已擁有 ✓"; btnTree.disabled = true; }
-      if (catGame.furniture.fountain) { btnFountain.textContent = "已擁有 ✓"; btnFountain.disabled = true; }
-      if (catGame.furniture.litter) { btnLitter.textContent = "已擁有 ✓"; btnLitter.disabled = true; }
+      if (catGame.furniture.tree) { btnTree.textContent = "已擁有 ✓"; btnTree.disabled = true; btnTree.className = "mt-3 w-full bg-slate-200 text-slate-500 font-bold text-xs py-2 rounded-xl"; }
+      if (catGame.furniture.fountain) { btnFountain.textContent = "已擁有 ✓"; btnFountain.disabled = true; btnFountain.className = "mt-3 w-full bg-slate-200 text-slate-500 font-bold text-xs py-2 rounded-xl"; }
+      if (catGame.furniture.litter) { btnLitter.textContent = "已擁有 ✓"; btnLitter.disabled = true; btnLitter.className = "mt-3 w-full bg-slate-200 text-slate-500 font-bold text-xs py-2 rounded-xl"; }
     }
 
     function renderFurnitureBadges() {
       const bar = document.getElementById('furnitureStatusBar');
       if (!bar) return;
       let html = "";
-      if (catGame.furniture.tree) html += `<span class="bg-white/90 border text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full">🪵 爬架</span>`;
-      if (catGame.furniture.fountain) html += `<span class="bg-white/90 border text-sky-700 text-[10px] font-bold px-2 py-0.5 rounded-full">⛲ 飲水機</span>`;
-      if (catGame.furniture.litter) html += `<span class="bg-white/90 border text-purple-700 text-[10px] font-bold px-2 py-0.5 rounded-full">🚽 貓砂盆</span>`;
+      if (catGame.furniture.tree) html += `<span class="bg-white/90 border border-emerald-200 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">🪵 爬架</span>`;
+      if (catGame.furniture.fountain) html += `<span class="bg-white/90 border border-sky-200 text-sky-700 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">⛲ 飲水機</span>`;
+      if (catGame.furniture.litter) html += `<span class="bg-white/90 border border-purple-200 text-purple-700 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">🚽 貓砂盆</span>`;
       bar.innerHTML = html;
     }
 
     function buyItem(itemType, cost) {
-      if (catGame.points < cost) { showToast("喵幣不足！"); return; }
+      if (catGame.points < cost) {
+        showToast(`喵幣不足喔！還差 ${cost - catGame.points} 點，快去運動打卡吧 💪`);
+        return;
+      }
       catGame.points -= cost;
       saveCatGame();
-      activeItems.push({ id: Date.now(), type: itemType, x: 300 + Math.random() * 200, y: 250, bites: 100 });
-      showToast("成功放置道具！");
+
+      const spawnX = 240 + Math.random() * 320;
+      const spawnY = 235 + Math.random() * 45;
+
+      if (itemType === 'food') {
+        activeItems.push({ id: Date.now(), type: 'food', x: spawnX, y: spawnY, bites: 100 });
+        showToast("🥫 放好美味貓罐頭啦！貓咪們圍過來了～");
+      } else if (itemType === 'yarn') {
+        activeItems.push({ id: Date.now(), type: 'yarn', x: spawnX, y: spawnY, vx: (Math.random() - 0.5) * 4, vy: 0, life: 1500 });
+        showToast("🧶 丟出彈力毛球！快看貓咪拍球～");
+      } else if (itemType === 'mouse') {
+        activeItems.push({ id: Date.now(), type: 'mouse', x: spawnX, y: spawnY, vx: 2.5, dir: 1, life: 1800 });
+        showToast("🐭 啟動發條老鼠！全場貓咪進入狩獵模式！");
+      }
       closeShopModal();
     }
 
     function buyFurniture(type, cost) {
-      if (catGame.furniture[type] || catGame.points < cost) return;
+      if (catGame.furniture[type]) return;
+      if (catGame.points < cost) {
+        showToast(`喵幣不足！兌換需要 ${cost} 點喵幣 🐾`);
+        return;
+      }
       catGame.points -= cost;
       catGame.furniture[type] = true;
       saveCatGame();
-      showToast("成功解鎖家具！");
+      const names = { tree: "豪華貓爬架", fountain: "自動飲水機", litter: "清潔貓砂盆" };
+      showToast(`🎉 成功兌換【${names[type]}】，已擺進房間裡囉！`);
       closeShopModal();
     }
 
     function adoptCat(type, label) {
-      if (catGame.points < 50) { showToast("喵幣不足 50 點！"); return; }
+      if (catGame.points < 50) {
+        showToast(`領養${label}需要 50 喵幣喔！目前有 ${catGame.points} 點`);
+        return;
+      }
       catGame.points -= 50;
+      const pool = CAT_NAMES[type] || ["小可愛"];
+      const name = pool[catGame.cats.length % pool.length] + (catGame.cats.length >= pool.length ? (catGame.cats.length + 1) : "");
       const personality = PERSONALITIES[Math.floor(Math.random() * PERSONALITIES.length)];
-      const newCat = { id: Date.now(), type, name: label + catGame.cats.length, personality };
-      catGame.cats.push(newCat);
+
+      const newCatData = { id: Date.now(), type, name, personality };
+      catGame.cats.push(newCatData);
       saveCatGame();
-      spawnCatEntity(newCat);
-      showToast("新貓咪加入！");
+      spawnCatEntity(newCatData);
+      showToast(`🎊 歡迎新成員【${name}】（性格：${personality}）加入小窩！`);
       closeShopModal();
     }
 
@@ -1326,6 +1840,7 @@
       lucide.createIcons();
       updateRewardUI();
       updatePointsUI();
+      updateApiKeyBadge();
       renderCalendar();
       initCatRoom();
     });
@@ -1334,6 +1849,7 @@
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth();
       document.getElementById('currentMonthYear').textContent = `${year}年 ${month + 1}月`;
+
       const firstDayIndex = new Date(year, month, 1).getDay();
       const totalDays = new Date(year, month + 1, 0).getDate();
       const grid = document.getElementById('calendarGrid');
@@ -1351,6 +1867,11 @@
         }
       }
 
+      const isMonthTargetAchieved = monthLogsCount >= settings.monthlyTarget;
+      const monthBadge = document.getElementById('monthBadge');
+      if (isMonthTargetAchieved) monthBadge.classList.remove('hidden');
+      else monthBadge.classList.add('hidden');
+
       document.getElementById('targetStats').textContent = `本月已打卡: ${monthLogsCount} / ${settings.monthlyTarget} 天`;
 
       for (let i = 0; i < firstDayIndex; i++) {
@@ -1362,15 +1883,109 @@
       for (let day = 1; day <= totalDays; day++) {
         const dateStr = formatDate(year, month, day);
         const log = logs[dateStr];
+        const weekIndex = Math.floor((day + firstDayIndex - 1) / 7);
+        const isWeekTargetAchieved = weeklyLogCounts[weekIndex] >= settings.weeklyTarget;
+
         const cell = document.createElement('div');
         cell.onclick = () => openLogModal(dateStr);
 
-        let bgClass = log ? "bg-rose-400 text-white shadow-md shadow-rose-100" : "bg-slate-50 border-slate-100";
-        cell.className = `h-20 sm:h-24 rounded-2xl border p-2 flex flex-col justify-between cursor-pointer transition-all ${bgClass}`;
-        cell.innerHTML = `<div class="flex items-center justify-between"><span class="text-xs font-bold">${day}</span>${log ? '<i data-lucide="check" class="w-3.5 h-3.5"></i>' : ''}</div>`;
+        let bgClass = "bg-slate-50 border-slate-100 hover:border-rose-300";
+        let dateColor = "text-slate-700";
+
+        if (log) {
+          if (isMonthTargetAchieved) {
+            bgClass = "bg-emerald-600 border-emerald-600 text-white shadow-md shadow-emerald-200";
+            dateColor = "text-white";
+          } else if (isWeekTargetAchieved) {
+            bgClass = "bg-emerald-400 border-emerald-400 text-white shadow-md shadow-emerald-100";
+            dateColor = "text-white";
+          } else {
+            bgClass = "bg-rose-400 border-rose-400 text-white shadow-md shadow-rose-100";
+            dateColor = "text-white";
+          }
+        }
+
+        const isToday = isSameDay(new Date(), new Date(year, month, day));
+        cell.className = `h-20 sm:h-24 rounded-2xl border p-2 flex flex-col justify-between cursor-pointer transition-all relative overflow-hidden ${bgClass}`;
+
+        cell.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs sm:text-sm font-bold ${dateColor} ${isToday ? 'bg-white text-rose-600 w-6 h-6 rounded-full flex items-center justify-center shadow-sm' : ''}">${day}</span>
+            ${log ? '<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-white"></i>' : ''}
+          </div>
+          ${log ? `
+            <div class="space-y-1">
+              <div class="flex flex-wrap gap-1">
+                ${log.categories.slice(0, 2).map(c => `<span class="bg-white/20 text-[10px] px-1.5 py-0.5 rounded-md font-medium text-white truncate max-w-[50px]">${c}</span>`).join('')}
+              </div>
+              ${log.photo ? '<div class="text-[9px] opacity-80 flex items-center gap-0.5"><i data-lucide="image" class="w-2.5 h-2.5"></i> 已含照片</div>' : ''}
+            </div>
+          ` : ''}
+        `;
         grid.appendChild(cell);
       }
+
       lucide.createIcons();
+      checkAndTriggerAutoRewards(monthLogsCount, weeklyLogCounts);
+    }
+
+    function checkAndTriggerAutoRewards(monthLogsCount, weeklyLogCounts) {
+      let updated = false;
+      let pointsEarned = 0;
+      
+      weeklyLogCounts.forEach((count, idx) => {
+        const key = `week_reward_${currentDate.getFullYear()}_${currentDate.getMonth()}_${idx}`;
+        if (count >= settings.weeklyTarget && !localStorage.getItem(key)) {
+          settings.weeklyRewardCount = (settings.weeklyRewardCount || 0) + 1;
+          localStorage.setItem(key, 'true');
+          updated = true;
+
+          if (!catGame.rewardedWeeks.includes(key)) {
+            catGame.rewardedWeeks.push(key);
+            catGame.points += 15;
+            pointsEarned += 15;
+          }
+        }
+      });
+
+      const monthKey = `month_reward_${currentDate.getFullYear()}_${currentDate.getMonth()}`;
+      if (monthLogsCount >= settings.monthlyTarget && !localStorage.getItem(monthKey)) {
+        settings.monthlyRewardCount = (settings.monthlyRewardCount || 0) + 1;
+        localStorage.setItem(monthKey, 'true');
+        updated = true;
+
+        if (!catGame.rewardedMonths.includes(monthKey)) {
+          catGame.rewardedMonths.push(monthKey);
+          catGame.points += 25;
+          pointsEarned += 25;
+        }
+      }
+
+      if (updated) {
+        saveSettingsToStorage();
+        updateRewardUI();
+      }
+      if (pointsEarned > 0) {
+        saveCatGame();
+        showToast(`🎉 目標達成！額外獲得 +${pointsEarned} 喵幣 🐾`);
+      }
+    }
+
+    function updateRewardUI() {
+      document.getElementById('weeklyRewardCount').textContent = settings.weeklyRewardCount || 0;
+      document.getElementById('monthlyRewardCount').textContent = settings.monthlyRewardCount || 0;
+    }
+
+    function claimReward(type) {
+      if (type === 'weekly') {
+        if ((settings.weeklyRewardCount || 0) <= 0) return;
+        settings.weeklyRewardCount--;
+      } else {
+        if ((settings.monthlyRewardCount || 0) <= 0) return;
+        settings.monthlyRewardCount--;
+      }
+      saveSettingsToStorage();
+      updateRewardUI();
     }
 
     function changeMonth(delta) { currentDate.setMonth(currentDate.getMonth() + delta); renderCalendar(); }
@@ -1385,6 +2000,9 @@
       document.getElementById('logNote').value = log.note || "";
       renderCategories();
       updatePhotoPreview();
+      const deleteBtn = document.getElementById('deleteBtn');
+      if (logs[dateStr]) deleteBtn.classList.remove('hidden');
+      else deleteBtn.classList.add('hidden');
       document.getElementById('logModal').classList.remove('hidden');
     }
 
@@ -1402,7 +2020,7 @@
           else selectedCategories.push(cat);
           renderCategories();
         };
-        btn.className = `px-3 py-1.5 rounded-xl text-xs font-semibold ${isSelected ? 'bg-rose-500 text-white' : 'bg-slate-100 text-slate-600'}`;
+        btn.className = `px-3 py-1.5 rounded-xl text-xs font-semibold ${isSelected ? 'bg-rose-500 text-white shadow-md shadow-rose-200' : 'bg-slate-100 text-slate-600'}`;
         btn.textContent = cat;
         container.appendChild(btn);
       });
@@ -1425,12 +2043,26 @@
       if (file) {
         const reader = new FileReader();
         reader.onload = evt => {
-          currentPhotoBase64 = evt.target.result;
-          updatePhotoPreview();
+          const img = new Image();
+          img.src = evt.target.result;
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const maxDim = 800;
+            let width = img.width;
+            let height = img.height;
+            if (width > height && width > maxDim) { height = (height * maxDim) / width; width = maxDim; }
+            else if (height > maxDim) { width = (width * maxDim) / height; height = maxDim; }
+            canvas.width = width;
+            canvas.height = height;
+            canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+            currentPhotoBase64 = canvas.toDataURL('image/jpeg', 0.7);
+            updatePhotoPreview();
+          };
         };
         reader.readAsDataURL(file);
       }
     }
+
     function updatePhotoPreview() {
       const placeholder = document.getElementById('uploadPlaceholder');
       const preview = document.getElementById('photoPreview');
@@ -1449,57 +2081,121 @@
         alert("請至少選擇一個項目並上傳照片！");
         return;
       }
-      logs[selectedDateStr] = { categories: selectedCategories, photo: currentPhotoBase64, note: document.getElementById('logNote').value };
+      logs[selectedDateStr] = { categories: selectedCategories, photo: currentPhotoBase64, note: document.getElementById('logNote').value.trim() };
       localStorage.setItem('piggy_logs', JSON.stringify(logs));
 
       if (!catGame.rewardedDates.includes(selectedDateStr)) {
         catGame.rewardedDates.push(selectedDateStr);
         catGame.points += 5;
         saveCatGame();
-        showToast("簽到成功 +5 喵幣！");
+        showToast("🐾 簽到成功！獲得 +5 喵幣！");
       }
       closeLogModal();
       renderCalendar();
     }
 
     function deleteLog() {
-      delete logs[selectedDateStr];
-      localStorage.setItem('piggy_logs', JSON.stringify(logs));
-      closeLogModal();
-      renderCalendar();
+      if (confirm("確定要刪除當天的打卡紀錄嗎？")) {
+        delete logs[selectedDateStr];
+        localStorage.setItem('piggy_logs', JSON.stringify(logs));
+        closeLogModal();
+        renderCalendar();
+      }
     }
 
-    function updateRewardUI() {}
-    function claimReward(type) {}
-
-    // Settings & Weight Modals
+    // Settings, Backup & Weight Modals
     function openSettingsModal() {
-      document.getElementById('weeklyTargetInput').value = settings.weeklyTarget;
-      document.getElementById('monthlyTargetInput').value = settings.monthlyTarget;
-      document.getElementById('heightInput').value = settings.height;
-      document.getElementById('ageInput').value = settings.age;
+      document.getElementById('geminiApiKeyInput').value = settings.geminiApiKey || "";
+      document.getElementById('weeklyTargetInput').value = settings.weeklyTarget || 3;
+      document.getElementById('monthlyTargetInput').value = settings.monthlyTarget || 12;
+      document.getElementById('heightInput').value = settings.height || "";
+      document.getElementById('ageInput').value = settings.age || "";
       document.getElementById('trainingGoalSelect').value = settings.trainingGoal || 'muscle';
       document.getElementById('settingsModal').classList.remove('hidden');
     }
     function closeSettingsModal() { document.getElementById('settingsModal').classList.add('hidden'); }
+    function saveSettingsToStorage() { localStorage.setItem('piggy_settings', JSON.stringify(settings)); }
     function saveSettings() {
+      settings.geminiApiKey = document.getElementById('geminiApiKeyInput').value.trim();
       settings.weeklyTarget = parseInt(document.getElementById('weeklyTargetInput').value) || 3;
       settings.monthlyTarget = parseInt(document.getElementById('monthlyTargetInput').value) || 12;
       settings.height = parseFloat(document.getElementById('heightInput').value) || 0;
       settings.age = parseInt(document.getElementById('ageInput').value) || 0;
       settings.trainingGoal = document.getElementById('trainingGoalSelect').value;
-      localStorage.setItem('piggy_settings', JSON.stringify(settings));
+      saveSettingsToStorage();
       closeSettingsModal();
       updateDietGoalBadgeUI();
-      showToast("設定已儲存！");
+      updateApiKeyBadge();
+      renderCalendar();
+      showToast("✅ 設定已成功儲存！");
+    }
+
+    function backupToGoogleDrive() {
+      const backupData = {
+        settings: settings,
+        logs: logs,
+        dietLogs: dietLogs,
+        weightLogs: weightLogs,
+        catGame: catGame,
+        backupTime: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `piggy_full_backup_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      showToast("📦 完整備份檔（含運動、飲食與貓咪進度）已下載！");
+    }
+
+    function restoreFromGoogleDrive() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = evt => {
+          try {
+            const data = JSON.parse(evt.target.result);
+            if (data.settings && data.logs) {
+              settings = data.settings;
+              logs = data.logs;
+              dietLogs = data.dietLogs || {};
+              weightLogs = data.weightLogs || [];
+              if (data.catGame) {
+                catGame = data.catGame;
+                saveCatGame();
+                catEntities = [];
+                initCatRoom();
+              }
+              saveSettingsToStorage();
+              localStorage.setItem('piggy_logs', JSON.stringify(logs));
+              localStorage.setItem('piggy_diet_logs', JSON.stringify(dietLogs));
+              localStorage.setItem('piggy_weights', JSON.stringify(weightLogs));
+              renderCalendar();
+              updateRewardUI();
+              updateApiKeyBadge();
+              alert("已成功還原所有紀錄！");
+            } else {
+              alert("備份檔案格式不正確！");
+            }
+          } catch (err) {
+            alert("解析備份檔案失敗！");
+          }
+        };
+        reader.readAsText(file);
+      };
+      input.click();
     }
 
     function openWeightModal() { document.getElementById('weightModal').classList.remove('hidden'); updateBMIDisplay(); renderWeightList(); }
     function closeWeightModal() { document.getElementById('weightModal').classList.add('hidden'); }
     function addWeightRecord() {
       const w = parseFloat(document.getElementById('weightInput').value);
-      if (!w) return;
-      weightLogs.unshift({ id: Date.now(), date: formatDate(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()), weight: w });
+      if (!w || w <= 0) return;
+      weightLogs.unshift({ id: Date.now(), date: formatDate(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()), weight: w, interval: document.getElementById('weightInterval').value });
       localStorage.setItem('piggy_weights', JSON.stringify(weightLogs));
       document.getElementById('weightInput').value = "";
       updateBMIDisplay();
@@ -1517,11 +2213,13 @@
       if (!settings.height || weightLogs.length === 0) { display.textContent = "--"; return; }
       const bmi = (weightLogs[0].weight / Math.pow(settings.height/100, 2)).toFixed(1);
       display.textContent = bmi;
-      status.textContent = bmi < 18.5 ? "過輕" : (bmi <= 23.9 ? "正常" : "過高");
+      if (bmi < 18.5) { display.className = "text-3xl font-extrabold text-blue-500"; status.textContent = "體重過輕 🔵"; }
+      else if (bmi <= 23.9) { display.className = "text-3xl font-extrabold text-emerald-500"; status.textContent = "體重正常 🟢"; }
+      else { display.className = "text-3xl font-extrabold text-rose-500"; status.textContent = "體重偏高 🔴"; }
     }
     function renderWeightList() {
       const container = document.getElementById('weightList');
-      container.innerHTML = weightLogs.map(w => `<div class="flex justify-between bg-slate-50 p-2 rounded text-xs"><span>${w.date}</span><b>${w.weight} kg</b><button onclick="deleteWeightRecord(${w.id})" class="text-rose-500">刪除</button></div>`).join('');
+      container.innerHTML = weightLogs.map(w => `<div class="flex justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-xs"><span>${w.date}</span><b>${w.weight} kg</b><button onclick="deleteWeightRecord(${w.id})" class="text-rose-500 font-bold">刪除</button></div>`).join('');
     }
 
     function formatDate(y, m, d) { return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
